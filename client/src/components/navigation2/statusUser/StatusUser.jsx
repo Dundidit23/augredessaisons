@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './statusUser.scss';
 import { BsBasket } from "react-icons/bs";
-import Modal from './modal/Modal';  // Assurez-vous que le chemin est correct
+import Modal from '../../modal/Modal';  // Assurez-vous que le chemin est correct
 import LoginForm from '../../forms/connect/Login';
 
 const StatusUser = () => {

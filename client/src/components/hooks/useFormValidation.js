@@ -1,46 +1,46 @@
 import { useState } from 'react';
 
-export const useFormValidation = (initialState) => {
+export const useFormValidation = (initialState, loginType) => {
   const [data, setData] = useState(initialState);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
+    setData({
+      ...data,
+      [name]: value,
+    });
   };
 
-  const validate = (validations) => {
-    let results = [];
-    let validationErrors = {};
+  const validate = () => {
+    let tempErrors = {};
 
-    const validEmail = (str) => {
-      let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-      return regex.test(str);
-    };
-
-    const minLength = (str, length) => {
-      return str.length < length;
-    };
-
-    Object.entries(validations).forEach(([key, value]) => {
-      if (value.isRequired && !data[key]) {
-        results.push({ [key]: `Veuillez saisir votre ${key}` });
-      } else if (value.isEmail && !validEmail(data[key])) {
-        results.push({ [key]: `Votre ${key} doit être valide` });
-      } else if (value.minLength && minLength(data[key], value.minLength)) {
-        results.push({ [key]: `Le mot de passe doit avoir au moins ${value.minLength} caractères.` });
+    if (loginType === 'admin') {
+      if (!data.username) {
+        tempErrors.username = "Username is required";
       }
-    });
-
-    if (results.length > 0) {
-      validationErrors = Object.assign({}, ...results);
-      setErrors(validationErrors);
-      return { errors: validationErrors };
+    } else if (loginType === 'customer') {
+      if (!data.email) {
+        tempErrors.email = "Email is required";
+      } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+        tempErrors.email = "Email is invalid";
+      }
     }
 
-    setErrors({});
-    return null;
+    if (!data.password) {
+      tempErrors.password = "Password is required";
+    } else if (data.password.length < 6) {
+      tempErrors.password = "Password must be at least 6 characters long";
+    }
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
   };
 
-  return { data, errors, handleChange, validate };
+  return {
+    data,
+    errors,
+    handleChange,
+    validate,
+  };
 };

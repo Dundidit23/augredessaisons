@@ -11,21 +11,24 @@ import './dashboard.scss';
 
 const Dashboard = () => {
   return (
+    <>
     <div className='dashboard'>
       <DashboardHeader />
       <div className='dashboard-principal'>
+        
         <AsideBar />
-        <div className='dashboard-content'>
-          <Routes>
+        <Routes>
             <Route path="/" element={ <DashboardMain />} />
-            <Route path="/products" element={<ProductList />} />
-            <Route path="/product" element={<Product />} />
-            <Route path="/dash" element={<Dash />} />
+            <Route path="/dashboard/products" element={<ProductList />} />
+            <Route path="/dashboard/dash" element={<Dash />} />
             {/* Add more routes as needed */}
           </Routes>
+        <div className='dashboard-content'>
+        
         </div>
       </div>
     </div>
+    </>
   );
 };
 

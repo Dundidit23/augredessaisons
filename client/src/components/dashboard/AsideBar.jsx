@@ -1,15 +1,27 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link} from 'react-router-dom';
 import { MdDashboard, MdReceipt, MdInsights, MdEmail, MdAdminPanelSettings, MdOutlineLogout, MdClose } from "react-icons/md";
 import { FaPeopleGroup, FaProductHunt } from "react-icons/fa6";
+import DashboardMain from './DashboardMain';
+import ProductList from '../products/ProductList';
+import ClientList from '../clients/ClientList';
+import Dash from './Dash';
 import './asidebar.scss';
 
 const AsideBar = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <aside>
+    <>
+     
+    <aside className={isSidebarOpen ? 'open' : 'closed'}>
       <div className="top">
-        <div className="close" id="close-btn">
-          <span className="material-icons-sharp"> <MdClose /> </span>
+        <div className="close" id="close-btn" onClick={handleSidebarToggle}>
+          <span className="material-icons-sharp"><MdClose /></span>
         </div>
         <h4>Au gré des saisons</h4>
       </div>
@@ -24,7 +36,7 @@ const AsideBar = () => {
           <h3>Clients</h3>
         </Link>
 
-        <Link to="/Products">
+        <Link to="/dashboard/products">
           <span className="material-icons-sharp"><FaProductHunt /></span>
           <h3>Produits</h3>
         </Link>
@@ -55,8 +67,11 @@ const AsideBar = () => {
           <h3>Logout</h3>
         </Link>
       </div>
+    
     </aside>
+    </>
+
   );
-}
+};
 
 export default AsideBar;

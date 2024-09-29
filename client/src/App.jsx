@@ -7,21 +7,23 @@ import Boutique from './pages/Boutique';
 import Soins from './pages/Soins';
 import Ateliers from './pages/Ateliers';
 import Register from './pages/Register';
-//import Login from './pages/Login';
 import AdminLogin from './pages/admin/AdminLogin';
-import AdminRegister from './pages/admin/AdminRegister'; // Ensure this matches the actual file name
-import Dashboard from './pages/admin/Dashboard';
+import AdminRegister from './pages/admin/AdminRegister';
+import DashboardLayout from './components/dashboard/DashboardLayout';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const location = useLocation();
   const path = location.pathname.toLowerCase();
-  const isAdminPath = path.includes('/admin-login') || path === '/dashboard' || path.includes('/admin/admin-register');  const isDashboardPath = path === '/dashboard';
+
+  // Vérifiez si le chemin commence par "/dashboard" pour exclure le header sur toutes les routes du dashboard
+  const isDashboardPath = path.startsWith('/dashboard');
 
   return (
     <AuthProvider>
-      {!isAdminPath && <Header />}
-      {isDashboardPath && <h1>Admin</h1>}
+      {/* Affichez le Header si on n'est pas sur une route liée au Dashboard */}
+      {!isDashboardPath && <Header />}
+
       <ErrorBoundary>
         <Routes>
           <Route path='/' element={<Home />} />
@@ -29,10 +31,11 @@ function App() {
           <Route path="/soins" element={<Soins />} />
           <Route path="/ateliers" element={<Ateliers />} />
           <Route path='/register' element={<Register />} />
-          {/* <Route path='/login' element={<Login />} /> */}
           <Route path='/adminLogin' element={<AdminLogin />} />
-          <Route path='/admin/admin-register' element={<AdminRegister />} /> {/* Ensure this matches the actual file name */}
-          <Route path='/dashboard' element={<PrivateRoute element={<Dashboard />} />} />
+          <Route path='/admin/admin-register' element={<AdminRegister />} />
+          
+          {/* Route du dashboard protégée */}
+          <Route path='/dashboard/*' element={<PrivateRoute element={<DashboardLayout />} />} />
         </Routes>
       </ErrorBoundary>
     </AuthProvider>
