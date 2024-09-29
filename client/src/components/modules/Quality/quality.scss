@@ -1,0 +1,47 @@
+.quality{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 1rem;
+    @media screen and (min-width:650px) {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    &__right, &__left{
+        padding : 2rem
+    }
+    p{
+        line-height: 1.5;
+    }
+    &__left{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-between;
+        @media screen and (min-width:650px) {
+            display: grid;
+            grid-template-columns: 1fr 1fr ;
+            gap: 1rem;
+        }
+        &__card{
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 1.3rem;
+            margin-bottom: 2rem;
+            background-color: $bg-card;
+            border-radius: 1rem;
+            transition: background-color 0.3s ease-in-out;
+            &:hover{
+                background-color: $hover;
+        }
+        h2, p{
+            color: $white-col;
+        }
+        span{
+            font-size: 1.8rem;
+        }
+    }
+    }
+}   

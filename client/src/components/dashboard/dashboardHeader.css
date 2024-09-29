@@ -1,0 +1,9 @@
+.dashboardHeader {
+  background-color: #354f0d;
+  height: 15vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  width: 100%;
+}/*# sourceMappingURL=dashboardHeader.css.map */

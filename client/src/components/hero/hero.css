@@ -1,0 +1,6 @@
+.heropic {
+  max-height: 45vh;
+  width: 100vw;
+     object-fit: cover;
+  filter: saturate(25%);
+}/*# sourceMappingURL=hero.css.map */

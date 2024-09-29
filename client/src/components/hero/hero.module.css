@@ -1,0 +1,8 @@
+img.heropic {
+  max-height: 55vh;
+  width: 100vw;
+  -o-object-fit: cover;
+     object-fit: cover;
+  filter: saturate(35%);
+  border-radius: unset;
+}/*# sourceMappingURL=hero.module.css.map */

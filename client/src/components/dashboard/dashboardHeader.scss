@@ -1,0 +1,9 @@
+.dashboardHeader{
+    background-color: transparentize($color: #354f0d, $amount: 0);
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    width: 100%;
+}

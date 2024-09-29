@@ -1,0 +1,125 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+  }
+.nav {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    background: white;
+    text-transform: uppercase;
+
+}
+
+.nav__brand {
+    text-transform: uppercase;
+}
+
+.nav__menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav__toggler {
+    display: none;
+    margin-right: 2rem;
+
+}
+
+@media screen and (max-width: 768px) {
+    .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 2;
+    }
+
+    .nav__toggler {
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        z-index: 999;
+        display: block;
+        padding: 2px;
+        position: relative;
+    }
+
+    .nav__toggler span {
+        display: block;
+        width: 25px; /* Larger for better visibility */
+        height: 3px; 
+        margin: 0.2rem;
+        background: $bg-nav;
+        transition: 0.3s ease-in-out;
+    }
+
+    .nav__toggler.toggle span:nth-child(1) {
+        transform: rotate(-45deg) translate(-4px, 5px);
+        background: $white-col;
+    }
+
+    .nav__toggler.toggle span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav__toggler.toggle span:nth-child(3) {
+        transform: rotate(45deg) translate(-4px, -5px);
+        background: $white-col;
+    }
+
+    .nav__menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 60vw; /* Adjust width for better responsiveness */
+        background: $bg-nav;
+        color: $white-col;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: 0.5s ease-in;
+        z-index: 1;
+    }
+
+    .nav__menu::before {
+        content: "";
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(37, 33, 33, 0.3);
+        opacity: 0;
+        transition: opacity 0.5s ease-in;
+        z-index: -1;
+    }
+
+    .nav__active::before {
+        opacity: 1;
+    }
+
+    .navitem {
+        padding: 1rem;
+    }
+
+    .navitem:first-child {
+        margin-top: 5rem;
+    }
+
+    .nav__active {
+        transform: translateX(0%);
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .nav__menu {
+        width: 80vw; /* Wider menu for smaller screens */
+    }
+    
+    .nav__menu::before {
+        right: 50vw; /* Adjust filter positioning to match the new menu width */
+    }
+}

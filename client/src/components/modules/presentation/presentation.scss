@@ -1,0 +1,44 @@
+@import '../../../assets/styles/utils/mixins';
+
+.insider{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    background-color: $white-col;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);    margin: 2rem auto;
+    &__img{
+        overflow: hidden; 
+        width: 100%;
+        .presentation__img{
+            width: 100%;
+            object-fit: cover;
+            &:hover{ 
+                width: 100%;
+                transform: scale(1.1);
+                -transition:1s ease-in-out;transition:1s ease-in-out;
+            }}}
+    &__text{
+        margin: auto 1.5rem;
+        p{
+            padding-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        };
+    }
+    @include for-size(tablet-landscape-up) {    
+        flex-direction: row; 
+        &__img{
+        overflow: hidden;
+        height: auto;
+        }
+        &__text{
+            width: 88%;
+            margin: auto 4rem;
+        }
+        .presentation__img{
+            height: 100vh;
+        }
+    } 
+
+}
+

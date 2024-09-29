@@ -1,0 +1,41 @@
+.buttons-statusUser {
+  display: flex;
+  justify-content: space-around;
+}
+.buttons-statusUser__button {
+  border: none;
+  cursor: pointer;
+}
+.buttons-statusUser__button__login {
+  background-image: url("../../../assets/images/icons/userg.png");
+  background-size: cover;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+  height: 2rem;
+  width: 2rem;
+}
+.buttons-statusUser__button__basket {
+  position: relative;
+  margin: 3px 1.2rem;
+  color: white;
+  background: #BDCF2B;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 8px;
+}
+.buttons-statusUser__button__basket__items-in {
+  position: absolute;
+  top: -12px;
+  right: -5px;
+  background-color: #DC2626;
+  color: #ffffff;
+  font-size: 0.8rem;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+}/*# sourceMappingURL=statusUser.css.map */

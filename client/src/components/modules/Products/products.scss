@@ -1,0 +1,51 @@
+.decouvre{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgb(234, 245, 234);
+    margin: 1rem;
+    padding: 2rem;
+    align-items: center;
+    // @media screen and (min-width:650px) {
+    //     grid-template-columns: 1fr 1fr;
+    //     gap: 1rem;
+    // }
+   
+}
+h2{
+    margin: 0;
+    font-size: 1.5rem;
+    padding: 2rem;
+    text-align: left;
+}
+p{
+    line-height: 1.5;
+    font-size: 1.3rem;
+}
+.button{
+    display: flex;
+    width: 100px;
+    margin: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+}
+.category{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: none;
+    margin: 1rem;
+    padding: 2rem;
+    border: 1px solid lightgray;
+  
+    button, .voir{
+  
+        width: 100px;
+        padding: 0.5rem;
+        text-align: center;
+        margin: auto;
+        background: white;
+    }
+}
+ img, .bycategory{
+    width: 100%;
+    height: auto; 
+}

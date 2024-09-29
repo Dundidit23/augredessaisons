@@ -1,0 +1,28 @@
+.boutique {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.boutique__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.boutique__container {
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 17vw auto;
+}
+.boutique__container__sidebar {
+  padding: 1rem;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  transition: background-color 0.3s ease;
+}
+.boutique__container__sidebar__products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 2rem;
+}/*# sourceMappingURL=boutique.css.map */

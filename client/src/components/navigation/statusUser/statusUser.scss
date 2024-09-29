@@ -1,0 +1,44 @@
+.buttons-statusUser{
+  display: flex;
+  justify-content: space-around;
+  :hover{
+    cursor: pointer;
+  }
+&__button {
+    &__login {
+      background-image: url("../../../assets/images/icons/userg.png");
+      background-size: cover;
+      background-color: transparent;
+      border-radius: 50%;
+      border: none;
+      height: 2rem;
+      width: 2rem;
+      }
+ &__basket {
+    position: relative;
+    margin: 3px 1.2rem;
+    color: $white-col;
+    background: $primary-col;
+    border-radius: 50%;
+    border: none;
+
+
+   // font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    padding: 8px;
+  &__items-in {
+    position: absolute; 
+    top: -12px; 
+    right: -5px; 
+    background-color: $alert-col; 
+    color: $white-col; 
+    font-size: 0.8rem;
+   // justify-content: center; 
+   // align-items: center; 
+    padding: 3px;
+    }
+  }
+  }
+}

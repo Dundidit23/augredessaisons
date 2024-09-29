@@ -1,0 +1,33 @@
+/* Modal.scss */
+.modal-overlay {
+  background: none;
+  -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+  z-index: 1000;
+  color: white;
+}
+
+.modal-content {
+  padding: 2px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  top: 31vh;
+  left: 20vw;
+  z-index: 1001;
+  background-color: white;
+}
+
+.animate {
+  animation: animatezoom 0.6s ease-in;
+}
+
+@keyframes animatezoom {
+  from {
+    transform: translateX(0);
+    width: 0;
+  }
+  to {
+    transform: translateX(65vw);
+    width: 100%;
+  }
+}/*# sourceMappingURL=modal.css.map */
