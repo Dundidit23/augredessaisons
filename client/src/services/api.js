@@ -32,9 +32,16 @@ const loginUser = async (e) => {
   }
 };
 
-export const fetchProducts = () => handleResponse(api.get('api/products'));
+
+
+export const fetchProducts = () => handleResponse(api.get('api/product'));
+export const addProduct = (product) => handleResponse(api.post('api/product', { json: product }));
+
 export const fetchUsers = () => handleResponse(api.get('api/users'));
-export const addProduct = (product) => handleResponse(api.post('api/products', { json: product }));
+export const addUser = (user) => handleResponse(api.post('api/user', { json: product }));
+
+export const fetchCategories = () => handleResponse(api.get('api/categories'));
+
 export const processPayment = (paymentData) => handleResponse(api.post('api/paiement', { json: paymentData }));
 
 export { handleResponse };

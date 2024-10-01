@@ -5,8 +5,11 @@ const connectDB = require('./config/db');
 const normalizePort = require('./config/normalizePort');
 const errorHandler = require('./config/errorHandler');
 const productRoutes = require('./routes/productRoutes');
+const categoriesRouter = require('./routes/categories');
 const userRoutes = require('./routes/userRoutes');
 const app = express();
+
+// server/app.js or server/index.js
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +32,7 @@ app.use('/api/product', productRoutes);
 
 // Use the user routes
 app.use('/api/users', userRoutes); // Add user routes
-
+app.use('/api/categories', categoriesRouter);
 
 // Start server
 const server = app.listen(port, () => {

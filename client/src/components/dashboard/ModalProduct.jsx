@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import './modal.scss';
+import './modalProduct.scss';
 
 const ModalProduct = ({ onClose, onSave }) => {
   const [product, setProduct] = useState({

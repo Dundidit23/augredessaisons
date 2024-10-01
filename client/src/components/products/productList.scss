@@ -23,3 +23,28 @@ li{
     display: flex;
     align-items: flex-end;
 }
+.product-list-principal {
+    .title-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+  
+    .product-list-container {
+      max-height: 500px; /* Adjust the height as needed */
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  
+    .gridView {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+  
+    .tableView {
+      display: block;
+    }
+  }

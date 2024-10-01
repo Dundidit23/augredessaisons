@@ -1,50 +1,52 @@
-//ProductList.jsx
-import React, { useState, useEffect } from 'react';
-import ky from 'ky';
-import ProductItem from './ProductItem';
+import React, { useState, useEffect, useCallback } from 'react';
+import { fetchProducts, addProduct } from '../../services/api';
+import AllProducts from './AllProducts';
 import DashAction from '../dashboard/DashAction';
 import './productList.scss';
 
-const ProductList = ({ products, onEdit, onDelete }) => {
+const ProductList = () => {
   const [productList, setProductList] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [viewMode, setViewMode] = useState('table'); // Can be 'table' or 'grid'
+  const [viewMode, setViewMode] = useState('table');
 
   useEffect(() => {
-    ky.get('http://localhost:5000/api/product')
-      .json()
+    fetchProducts()
       .then(data => {
         setProductList(data);
         setFilteredProducts(data);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error('Erreur lors de la récupération des produits:', err));
   }, []);
-console.log(productList);
+
   const handleEdit = (product) => {
-    console.log('Edit product:', product);
-    // Implement editing logic here
+    console.log('Modification du produit:', product);
+    // Logique de modification du produit (ajout d'une modal ou d'un formulaire)
   };
 
   const handleDelete = (productId) => {
-    const updatedProduct = productList.filter(product => product.id !== productId);
-    setProductList(updatedProduct);
-    setFilteredProducts(updatedProduct);
+    const updatedProducts = productList.filter(product => product._id !== productId);
+    setProductList(updatedProducts);
+    setFilteredProducts(updatedProducts);
   };
 
   const handleAdd = (newProduct) => {
-    const updatedProduct = [...productList, newProduct];
-    setProductList(updatedProduct);
-    setFilteredProducts(updatedProduct);
+    console.log('New product to add:', newProduct);
+    addProduct(newProduct)
+      .then(() => {
+        const updatedProducts = [...productList, newProduct];
+        setProductList(updatedProducts);
+        setFilteredProducts(updatedProducts);
+      })
+      .catch(err => console.error('Erreur lors de l\'ajout du produit:', err));
   };
 
-  const handleFilter = (category) => {
-    if (category === 'All Categories') {
+  const handleFilter = useCallback((category) => {
+    if (category === "All Categories") {
       setFilteredProducts(productList);
     } else {
-      const filtered = productList.filter(product => product.category === category);
-      setFilteredProducts(filtered);
+      setFilteredProducts(productList.filter(product => product.category === category));
     }
-  };
+  }, [productList]);
 
   const handleViewChange = (mode) => {
     setViewMode(mode);
@@ -53,7 +55,7 @@ console.log(productList);
   return (
     <div className='product-list-principal'>
       <div className="title-action">
-        <h1>Product List</h1>
+        <h1>Produits en ligne</h1>
         <DashAction 
           onAdd={handleAdd} 
           onFilter={handleFilter} 
@@ -61,14 +63,12 @@ console.log(productList);
         />
       </div>
       <div className={`product-grid ${viewMode === 'grid' ? 'gridView' : 'tableView'}`}>
-        {productList.map(product => (
-          <ProductItem
-            key={product._id}
-            product={product}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
-        ))}
+        <AllProducts 
+          products={filteredProducts} 
+          onEdit={handleEdit} 
+          onDelete={handleDelete} 
+          viewMode={viewMode} // Pass viewMode to AllProducts
+        />
       </div>
     </div>
   );

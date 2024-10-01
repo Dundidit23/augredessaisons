@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 //import { useNavigate } from 'react-router-dom';
-import './dash.scss';
-import DarkMode from '../../DarkMode/DarkMode';
-import ProductsOnline from '../../produits/products';
+import './modal.scss';
+//import DarkMode from '../../DarkMode/DarkMode';
+//import ProductsOnline from '../../produits/products';
 
 const Dashboard = () => {
   const [theme, setTheme] = useState('light');

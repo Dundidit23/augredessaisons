@@ -1,5 +1,6 @@
+// server/models/Product.js
 const mongoose = require('mongoose');
-const categoryEnum = ['Infusions', 'huiles', 'Baumes'];
+const categories = require('../config/categories');
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -26,7 +27,7 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: categoryEnum, // Implement enum for category field
+    enum: categories, // Use imported categories
     required: true,
   },
   stock: {
@@ -39,14 +40,10 @@ const productSchema = new mongoose.Schema({
       message: 'Stock must be a non-negative number.'
     }
   },
-},
- { timestamps: true }
-
-);
+}, { timestamps: true });
 
 productSchema.methods.formatPrice = function() {
   return this.price.toLocaleString();
 };
-
 
 module.exports = mongoose.model('Product', productSchema);

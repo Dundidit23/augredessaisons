@@ -5,7 +5,6 @@ import DashboardHeader from './DashboardHeader';
 import DashboardMain from './DashboardMain';
 import ProductList from './ModalProduct';
 import Dash from './Dash';
-import Product from '../products/ProductItem';
 
 import './dashboard.scss';
 

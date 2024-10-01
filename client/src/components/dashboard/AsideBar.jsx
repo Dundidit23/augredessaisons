@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import { Link} from 'react-router-dom';
 import { MdDashboard, MdReceipt, MdInsights, MdEmail, MdAdminPanelSettings, MdOutlineLogout, MdClose } from "react-icons/md";
 import { FaPeopleGroup, FaProductHunt } from "react-icons/fa6";
-import DashboardMain from './DashboardMain';
-import ProductList from '../products/ProductList';
-import ClientList from '../clients/ClientList';
-import Dash from './Dash';
 import './asidebar.scss';
 
 const AsideBar = () => {

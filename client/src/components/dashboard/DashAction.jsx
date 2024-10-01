@@ -1,39 +1,99 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import ModalProduct from './ModalProduct'; // Import the Modal component
-import './dash.scss';
+import Modal from '../modal/Modal'; 
+import CreateProduct from '../forms/CreateProduct';
+
+import './dashAction.scss';
 
 const DashAction = ({ onAdd, onFilter, onViewChange }) => {
-  const [filterCategory, setFilterCategory] = useState("All Categories");
-  const categories = ["Infusion", "Huiles", "Gemmo", "Teintures"];
-  const [showAddModal, setShowAddModal] = useState(false);
+    const [filterCategory, setFilterCategory] = useState("All Categories");
+    const categories = ["Infusions", "Huiles", "Gemmo", "Teintures"];
+    const [newProduct, setNewProduct] = useState({
+        name: '', 
+        category: '', 
+        description: '',
+        stock: 0, 
+        price: 0,
+        imageUrl: ''
+    });
+    const [showModal, setShowModal] = useState(false);
+    const [showFilterMenu, setShowFilterMenu] = useState(false);
 
-  const handleAddProduct = (product) => {
-    if (product.name && product.category) {
-      const newProductId = uuidv4();
-      onAdd({ ...product, id: newProductId });
-      setShowAddModal(false);
-    }
-  };
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
 
-  return (
-    <div className="dash-action">
-      <button onClick={() => setShowAddModal(true)}>Add Product</button>
-      <select onChange={(e) => onFilter(e.target.value)} value={filterCategory}>
-        <option value="All Categories">All Categories</option>
-        {categories.map(category => (
-          <option key={category} value={category}>{category}</option>
-        ))}
-      </select>
-      <button onClick={onViewChange}>Toggle Theme</button>
-      {showAddModal && (
-        <ModalProduct 
-          onClose={() => setShowAddModal(false)} 
-          onSave={handleAddProduct} 
-        />
-      )}
-    </div>
-  );
+    const handleAddProduct = (product) => {
+        console.log('Adding product:', product); // Add this line
+        if (product.name && product.category) {
+            const newProductId = uuidv4();
+            onAdd({ ...product, id: newProductId });
+            setNewProduct({ name: '', category: '', description: '', stock: 0, price: 0, imageUrl: '' });
+            setShowModal(false);
+        } else {
+            console.error('Product name and category are required');
+        }
+    };
+
+    const toggleFilterMenu = () => {
+        setShowFilterMenu(!showFilterMenu);
+    };
+
+    useEffect(() => {
+        onFilter(filterCategory);
+    }, [filterCategory, onFilter]);
+
+    return (
+        <div className="app-content-actions-wrapper">
+            <div className="filter-button-wrapper">
+                <button className="action-button filter jsFilter" onClick={toggleFilterMenu}>
+                    <span>Filter</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-filter">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                    </svg>
+                </button>
+                {showFilterMenu && (
+                    <div className="filter-menu active">
+                        <label htmlFor='Category'>Category</label>
+                        <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+                            <option>All Categories</option>
+                            {categories.map(category => (
+                                <option key={category} value={category}>{category}</option>
+                            ))}
+                        </select>
+                    </div>
+                )}
+            </div>
+
+            <button className="action-button add" onClick={toggleModal}>
+                Add Product
+            </button>
+
+            <Modal show={showModal} onClose={toggleModal}>
+                <CreateProduct onSubmit={handleAddProduct} />
+            </Modal>
+
+            <button className="action-button list" title="List View" onClick={() => onViewChange('table')}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-list">
+                    <line x1="8" y1="6" x2="21" y2="6" />
+                    <line x1="8" y1="12" x2="21" y2="12" />
+                    <line x1="8" y1="18" x2="21" y2="18" />
+                    <line x1="3" y1="6" x2="3.01" y2="6" />
+                    <line x1="3" y1="12" x2="3.01" y2="12" />
+                    <line x1="3" y1="18" x2="3.01" y2="18" />
+                </svg>
+            </button>
+            
+            <button className="action-button grid" title="Grid View" onClick={() => onViewChange('grid')}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-grid">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                </svg>
+            </button>
+        </div>
+    );
 };
 
 export default DashAction;

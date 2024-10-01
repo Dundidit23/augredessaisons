@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import ProductList from '../products/ProductList';
+import AllProducts from '../products/AllProducts';
 import ClientList from '../clients/ClientList';
 import DashboardMain from './DashboardMain';
 import AsideBar from './AsideBar';
@@ -16,7 +17,7 @@ const DashboardLayout = () => {
           <Routes>
             <Route path="/" element={<DashboardMain />} />
             <Route path="products" element={<ProductList />} />
-            <Route path="clients" element={<ClientList />} />
+            <Route path="clients" element={<AllProducts />} />
             {/* Autres sous-routes */}
           </Routes>
           <Outlet />
