@@ -105,7 +105,7 @@ $font-large: 24px;
   max-height: 100%;
   max-width: 1280px;
   display: flex;
-  overflow: hidden;
+ // overflow: hidden;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   max-width: 2000px;
   margin: 0 auto;
@@ -208,7 +208,7 @@ $font-large: 24px;
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    overflow: hidden;
+ //   overflow: hidden;
     flex-shrink: 0;
     
     img {
@@ -222,7 +222,7 @@ $font-large: 24px;
     font-size: $font-small;
     color: $sidebar-main-color;
     margin: 0 8px;
-    overflow: hidden;
+    //overflow: hidden;
     max-width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;

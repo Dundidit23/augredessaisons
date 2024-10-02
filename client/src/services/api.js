@@ -1,3 +1,4 @@
+//api.js
 import ky from 'ky';
 
 const api = ky.create({
@@ -36,9 +37,17 @@ const loginUser = async (e) => {
 
 export const fetchProducts = () => handleResponse(api.get('api/product'));
 export const addProduct = (product) => handleResponse(api.post('api/product', { json: product }));
+export const updateProduct = (product) => handleResponse(api.put(`api/product/${product._id}`, { json: product }));
+export const deleteProduct = (productId) => handleResponse(api.delete(`api/product/${productId}`));
 
 export const fetchUsers = () => handleResponse(api.get('api/users'));
 export const addUser = (user) => handleResponse(api.post('api/user', { json: product }));
+
+export const fetchClients = () => handleResponse(api.get('api/users'));
+export const addClient = (client) => handleResponse(api.post('api/user', { json: client }));
+export const updateClient = (client) => handleResponse(api.put(`api/user/${client._id}`, { json: client }));
+export const deleteClient = (clientId) => handleResponse(api.delete(`api/user/${clientId}`));
+
 
 export const fetchCategories = () => handleResponse(api.get('api/categories'));
 

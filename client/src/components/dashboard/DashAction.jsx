@@ -43,8 +43,30 @@ const DashAction = ({ onAdd, onFilter, onViewChange }) => {
         onFilter(filterCategory);
     }, [filterCategory, onFilter]);
 
+    useEffect(() => {
+        const modeSwitch = document.querySelector('.mode-switch');
+        if (modeSwitch) {
+            const handleModeSwitch = () => {
+                document.documentElement.classList.toggle('light');
+                modeSwitch.classList.toggle('active');
+            };
+            modeSwitch.addEventListener('click', handleModeSwitch);
+
+            // Cleanup event listener on component unmount
+            return () => {
+                modeSwitch.removeEventListener('click', handleModeSwitch);
+            };
+        }
+    }, []);
+
     return (
         <div className="app-content-actions-wrapper">
+             <button class="mode-switch" title="Switch Theme">
+        <svg class="moon" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
             <div className="filter-button-wrapper">
                 <button className="action-button filter jsFilter" onClick={toggleFilterMenu}>
                     <span>Filter</span>

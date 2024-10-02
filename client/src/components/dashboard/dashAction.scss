@@ -43,7 +43,7 @@ body, html {
 }
 
 body {
-  overflow: hidden;
+  //overflow: hidden;
   font-family: 'Poppins', sans-serif;
   background-color: var(--app-bg);
   -webkit-font-smoothing: antialiased;
@@ -57,7 +57,7 @@ body {
   max-height: 100%;
   max-width: 1280px;
   display: flex;
-  overflow: hidden;
+  //overflow: hidden;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   max-width: 2000px;
   margin: 0 auto;
@@ -139,7 +139,7 @@ body {
 }
 
 .mode-switch.active .moon {
-  fill: none;
+  fill: blue;
 }
 
 .account-info {
@@ -166,7 +166,7 @@ body {
     font-size: $font-small;
     color: var(--sidebar-main-color);
     margin: 0 8px;
-    overflow: hidden;
+    //overflow: hidden;
     max-width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -430,7 +430,7 @@ body {
     display: flex;
     align-items: center;
     border-radius: 4px;
-    background-color: var(--app-content-secondary-color);
+    background-color: blue;
     position: sticky;
     top: 0;
   }
@@ -459,8 +459,8 @@ body {
     align-items: center;
         
     img {
-      width: 32px;
-      height: 32px;
+      width: 42px;
+      height: 42px;
       border-radius: 6px;
       margin-right: 6px;
     }

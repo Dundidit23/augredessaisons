@@ -5,7 +5,7 @@
     display: grid;
     margin: 1rem;
       grid-gap: 5px;
-    background-color: white;
+    background-color: #9cbae7;
 
 
 }
@@ -28,23 +28,27 @@ li{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin: 1rem;
+      
     }
   
-    .product-list-container {
-      max-height: 500px; /* Adjust the height as needed */
-      overflow-y: auto;
-      border: 1px solid #ccc;
+    .all-products  {
+      max-height: 70vh; /* Adjust the height as needed */
+      overflow: scroll;
+      scrollbar-color: red orange;
+      scrollbar-width: large;
       padding: 10px;
     }
   
     .gridView {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 10px;
     }
   
     .tableView {
       display: block;
+      border: 2px solid #a30c0c;
+
     }
   }
