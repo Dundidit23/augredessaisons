@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCategories } from '../../services/api';
+import useCategories from '../hooks/useCategories';
 import './createProduct.scss';
 
 const CreateProduct = ({ product, onSubmit, isEditing }) => {
@@ -12,7 +12,7 @@ const CreateProduct = ({ product, onSubmit, isEditing }) => {
     stock: ''
   });
 
-  const [categories, setCategories] = useState([]);
+  const categories = useCategories();
 
   useEffect(() => {
     // Remplissage des champs si édition
@@ -21,19 +21,6 @@ const CreateProduct = ({ product, onSubmit, isEditing }) => {
     }
   }, [isEditing, product]);
 
-  useEffect(() => {
-    // Récupération des catégories
-    const loadCategories = async () => {
-      try {
-        const fetchedCategories = await fetchCategories();
-        setCategories(fetchedCategories);
-      } catch (error) {
-        console.error('Failed to fetch categories', error);
-      }
-    };
-
-    loadCategories();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,15 +55,16 @@ const CreateProduct = ({ product, onSubmit, isEditing }) => {
       <input id="imageFile" name="imageFile" type="file" onChange={handleChange} />
 
       <label htmlFor="category">Category</label>
-      <select id="category" name="category" value={formData.category} onChange={handleChange} required>
-        <option value="">Select a category</option>
+      <select id="category"  className="small-width-select" name="category" value={formData.category} onChange={handleChange} required>
+        <option value="">Sélectionnez une catégorie</option>
         {categories.map((category) => (
-          <option key={category._id} value={category._id}>
-            {category.name}
+          <option key={category.id} value={category.id}>
+            {category}
           </option>
         ))}
       </select>
 
+     
       <label htmlFor="stock">Stock</label>
       <input id="stock" name="stock" type="number" value={formData.stock} onChange={handleChange} required />
 

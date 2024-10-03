@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../modal/Modal'; 
 import CreateProduct from '../forms/CreateProduct';
-
+import useCategories from '../hooks/useCategories';
 import './dashAction.scss';
 
 const DashAction = ({ onAdd, onFilter, onViewChange }) => {
     const [filterCategory, setFilterCategory] = useState("All Categories");
-    const categories = ["Infusions", "Huiles", "Gemmo", "Teintures"];
+    const categories = useCategories();
     const [newProduct, setNewProduct] = useState({
         name: '', 
         category: '', 
@@ -77,12 +77,20 @@ const DashAction = ({ onAdd, onFilter, onViewChange }) => {
                 {showFilterMenu && (
                     <div className="filter-menu active">
                         <label htmlFor='Category'>Category</label>
-                        <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
-                            <option>All Categories</option>
-                            {categories.map(category => (
-                                <option key={category} value={category}>{category}</option>
-                            ))}
-                        </select>
+                        <select
+  value={filterCategory}
+  onChange={(e) => {
+    setFilterCategory(e.target.value);
+    setShowFilterMenu(false); // Close the filter menu
+  }}
+>
+  <option>All Categories</option>
+  {categories.map((category) => (
+    <option key={category} value={category}>
+      {category}
+    </option>
+  ))}
+</select>
                     </div>
                 )}
             </div>
