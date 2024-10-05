@@ -1,6 +1,5 @@
 // server/models/Product.js
 const mongoose = require('mongoose');
-const categories = require('../config/categories');
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -23,13 +22,13 @@ const productSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
-    required: false,
+    required: true,
   },
   category: {
     type: String,
-    enum: categories, // Use imported categories
     required: true,
   },
+  //category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
   stock: {
     type: Number,
     required: true,

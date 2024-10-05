@@ -1,6 +1,7 @@
-//api.js
+// api.js
 import ky from 'ky';
 
+// Create an instance of ky with default settings
 const api = ky.create({
   prefixUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000',
   headers: {
@@ -9,23 +10,16 @@ const api = ky.create({
   timeout: 10000, // Optional: Set a timeout for requests
 });
 
-const handleResponse = async (request) => {
-  try {
-    return await request.json();
-  } catch (error) {
-    console.error('API request failed', error);
-    throw error;
-  }
-};
 
-const loginUser = async (e) => {
+// User-related API calls
+export const loginUser = async (e) => {
   e.preventDefault();
   if (!validate()) {
     console.error('Validation failed', errors);
     return;
   }
   try {
-    await api.post('api/users/login', { formData }).json();
+    const response = await api.post('api/users/login', { json: formData });
     login();
     navigate('/dashboard');
   } catch (error) {
@@ -33,25 +27,28 @@ const loginUser = async (e) => {
   }
 };
 
+export const addUser = (user) => api.post('api/user', { json: user }).json();
+export const fetchUsers = () => api.get('api/users').json();
+export const updateUser = (user) => api.put(`api/user/${user._id}`, { json: user }).json();
+export const deleteUser = (userId) => api.delete(`api/user/${userId}`).json();
 
+// Product-related API calls
+export const fetchProducts = () => api.get('api/product').json();
+export const addProduct = (product) => api.post('api/product', { json: product }).json();
+export const deleteProduct = (productId) => api.delete(`api/product/${productId}`).json();
+export const updateProduct = (productId, productData) => {
+  if (!productId) {
+    throw new Error('Product ID is required');
+  }
+  return api.put(`api/product/${productId}`, {
+    body: productData, // Use 'body' instead of 'json' for FormData
+  });
+};
+// Category-related API calls
+export const fetchCategories = () => api.get('api/categories').json();
 
-export const fetchProducts = () => handleResponse(api.get('api/product'));
-export const addProduct = (product) => handleResponse(api.post('api/product', { json: product }));
-export const updateProduct = (product) => handleResponse(api.put(`api/product/${product._id}`, { json: product }));
-export const deleteProduct = (productId) => handleResponse(api.delete(`api/product/${productId}`));
+// Payment-related API calls
+export const processPayment = (paymentData) => api.post('api/paiement', { json: paymentData }).json();;
 
-export const fetchUsers = () => handleResponse(api.get('api/users'));
-export const addUser = (user) => handleResponse(api.post('api/user', { json: product }));
-
-export const fetchClients = () => handleResponse(api.get('api/users'));
-export const addClient = (client) => handleResponse(api.post('api/user', { json: client }));
-export const updateClient = (client) => handleResponse(api.put(`api/user/${client._id}`, { json: client }));
-export const deleteClient = (clientId) => handleResponse(api.delete(`api/user/${clientId}`));
-
-
-export const fetchCategories = () => handleResponse(api.get('api/categories'));
-
-export const processPayment = (paymentData) => handleResponse(api.post('api/paiement', { json: paymentData }));
-
-export { handleResponse };
+// Export the API instance and the handleResponse function
 export default api;

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
-* { box-sizing: border-box; }
 
 :root {
   --app-bg: #101827;
@@ -325,7 +324,7 @@ body {
    background-color: var(--app-content-secondary-color);
   position: absolute;
   top: calc(100% + 16px);
-  right: -74px;
+  right: -150px;
   border-radius: 4px;
   padding: 8px;
   width: 220px;
@@ -374,7 +373,7 @@ body {
     color: var(--app-content-main-color);
     font-size: 12px;
     background-color: transparent;
-    margin-bottom: 16px;
+   margin: 0;
     width: 100%;
     option { font-size: 14px; }
     

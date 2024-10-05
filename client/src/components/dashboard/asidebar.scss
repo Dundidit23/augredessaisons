@@ -107,7 +107,7 @@ aside .close{
 aside .sidebar{
     display: flex;
     flex-direction: column;
-    height: 86vh;
+    height: 100%;
     position: relative;
     top: 3rem;
 }
@@ -131,7 +131,7 @@ aside .sidebar a span{
 }
  aside .sidebar a:last-child {
     position: absolute;
-    bottom: 2rem;
+    bottom: 0rem;
     width: 100%;
  }
  aside .sidebar a .active {
@@ -561,3 +561,9 @@ main .recent-orders a{
         font-size: 2rem;
     }
 }
+.submenu {
+    display: none;
+  }
+  .submenu.open {
+    display: block;
+  }

@@ -4,7 +4,6 @@ import AsideBar from './AsideBar';
 import DashboardHeader from './DashboardHeader';
 import DashboardMain from './DashboardMain';
 import ProductList from './ModalProduct';
-import Dash from './Dash';
 
 import './dashboard.scss';
 
@@ -19,7 +18,6 @@ const Dashboard = () => {
         <Routes>
             <Route path="/" element={ <DashboardMain />} />
             <Route path="/dashboard/products" element={<ProductList />} />
-            <Route path="/dashboard/dash" element={<Dash />} />
             {/* Add more routes as needed */}
           </Routes>
         <div className='dashboard-content'>

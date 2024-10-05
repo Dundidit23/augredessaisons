@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
+const path = require('path');
 const connectDB = require('./config/db');
 const normalizePort = require('./config/normalizePort');
 const errorHandler = require('./config/errorHandler');
@@ -33,6 +34,9 @@ app.use('/api/product', productRoutes);
 // Use the user routes
 app.use('/api/users', userRoutes); // Add user routes
 app.use('/api/categories', categoriesRoutes);
+
+// Use uploads routes
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Start server
 const server = app.listen(port, () => {

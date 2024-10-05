@@ -1,10 +1,10 @@
-// server/routes/categories.js
 const express = require('express');
+const { getAllCategories, createCategory, updateCategory, deleteCategory } = require('../controllers/categoryControllers');
 const router = express.Router();
-const categories = require('../config/categories');
 
-router.get('/', (req, res) => {
-    res.json(categories);
-});
+router.get('/', getAllCategories);
+router.post('/', createCategory);
+router.put('/:id', updateCategory);
+router.delete('/:id', deleteCategory);
 
 module.exports = router;

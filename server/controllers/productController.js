@@ -3,8 +3,29 @@ const Product = require('../models/Product');
 
 const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
-    res.status(200).json(products);
+    const { page = 1, limit = 10, sortBy = 'createdAt', order = 'desc', ...filters } = req.query;
+
+    // Convert page and limit to numbers
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+
+    // Build the query with filters
+    const query = { ...filters };
+
+    // Execute the query with pagination and sorting
+    const products = await Product.find(query)
+      .sort({ [sortBy]: order === 'asc' ? 1 : -1 })
+      .skip((pageNumber - 1) * limitNumber)
+      .limit(limitNumber);
+
+    // Get the total count for pagination
+    const totalProducts = await Product.countDocuments(query);
+
+    res.status(200).json({
+      products,
+      totalPages: Math.ceil(totalProducts / limitNumber),
+      currentPage: pageNumber,
+    });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: 'Server error' });
@@ -13,11 +34,25 @@ const getAllProducts = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body);
+    // Ensure that the file is uploaded
+    if (!req.file) {
+      return res.status(400).json({ message: 'Image file is required' });
+    }
+
+    // Construct product data
+    const productData = {
+      ...req.body,
+      imageUrl: req.file.path, // Save the file path
+    };
+
+    // Create the product in the database
+    const product = await Product.create(productData);
+
+    // Respond with the created product
     res.status(201).json(product);
   } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ message: 'Bad request' });
+    console.error('Error creating product:', error.message);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

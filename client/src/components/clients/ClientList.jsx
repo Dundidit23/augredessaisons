@@ -1,87 +1,87 @@
-//ClientList.jsx
+//UserList.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { fetchClients, addClient, updateClient, deleteClient } from '../../services/api';
+import { fetchUsers, addUser, updateUser, deleteUser } from '../../services/api';
 import DashAction from '../dashboard/DashAction';
 import Modal from '../modal/Modal';
-import CreateClient from '../forms/CreateClient'; // Votre composant de formulaire pour les clients
+import CreateUser from '../forms/CreateClient'; // Votre composant de formulaire pour les users
 import '../products/productList.scss';
 
-const ClientList = () => {
-  const [clientList, setClientList] = useState([]);
-  const [filteredClients, setFilteredClients] = useState([]);
+const UserList = () => {
+  const [userList, setUserList] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [editingClient, setEditingClient] = useState(null);
+  const [editingUser, setEditingUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    fetchClients()
+    fetchUsers()
       .then(data => {
-        setClientList(data);
-        setFilteredClients(data);
+        setUserList(data);
+        setFilteredUsers(data);
       })
-      .catch(err => console.error('Erreur lors de la récupération des clients:', err));
+      .catch(err => console.error('Erreur lors de la récupération des users:', err));
   }, []);
 
-  const handleAdd = (newClient) => {
-    addClient(newClient) // Utilisez addClient ici
+  const handleAdd = (newUser) => {
+    adduser(newUser) // Utilisez addUser ici
       .then(() => {
-        const updatedClients = [...clientList, newClient];
-        setClientList(updatedClients);
-        setFilteredClients(updatedClients);
+        const updatedUser = [...userList, newUser];
+        setUserList(updatedUsers);
+        setFilteredUsers(updatedUsers);
       })
-      .catch(err => console.error('Erreur lors de l\'ajout du client:', err));
+      .catch(err => console.error('Erreur lors de l\'ajout du user:', err));
 };
 
-  const handleEdit = (client) => {
-    setEditingClient(client);
+  const handleEdit = (user) => {
+    setEditingUser(user);
     setIsEditing(true);
     setShowModal(true);
   };
 
-  const handleUpdate = (updatedClient) => {
-    updateClient(updatedClient)
+  const handleUpdate = (updatedUser) => {
+    updateUser(updatedUser)
       .then(() => {
-        const updatedClients = clientList.map(client =>
-          client._id === updatedClient._id ? updatedClient : client
+        const updatedUsers = userList.map(user =>
+          user._id === updatedUser._id ? updatedUser : user
         );
-        setClientList(updatedClients);
-        setFilteredClients(updatedClients);
+        setUserList(updatedUsers);
+        setFilteredUsers(updatedUsers);
         setShowModal(false);
-        setEditingClient(null);
+        setEditingUser(null);
         setIsEditing(false);
       })
-      .catch(err => console.error('Erreur lors de la mise à jour du client:', err));
+      .catch(err => console.error('Erreur lors de la mise à jour du user:', err));
   };
 
-  const handleDelete = (clientId) => {
-    deleteClient(clientId)
+  const handleDelete = (userId) => {
+    deleteUser(userId)
       .then(() => {
-        const updatedClients = clientList.filter(client => client._id !== clientId);
-        setClientList(updatedClients);
-        setFilteredClients(updatedClients);
+        const updatedUsers = userList.filter(user => user._id !== userId);
+        setUserList(updatedUsers);
+        setFilteredUsers(updatedUsers);
       })
-      .catch(err => console.error('Erreur lors de la suppression du client:', err));
+      .catch(err => console.error('Erreur lors de la suppression du user:', err));
   };
 
   return (
-    <div className='client-list-principal'>
-      <h1>Clients</h1>
+    <div className='user-list-principal'>
+      <h1>Users</h1>
       <DashAction 
         onAdd={handleAdd} 
       />
-      <div className='client-grid'>
-        {filteredClients.map(client => (
-          <div key={client._id}>
-            <h2>{client.name}</h2>
-            <button onClick={() => handleEdit(client)}>Edit</button>
-            <button onClick={() => handleDelete(client._id)}>Delete</button>
+      <div className='user-grid'>
+        {filteredUsers.map(user => (
+          <div key={user._id}>
+            <h2>{user.name}</h2>
+            <button onClick={() => handleEdit(user)}>Edit</button>
+            <button onClick={() => handleDelete(user._id)}>Delete</button>
           </div>
         ))}
       </div>
       {showModal && (
         <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <CreateClient 
-            client={editingClient} 
+          <CreateUser 
+            user={editingUser} 
             onSubmit={isEditing ? handleUpdate : handleAdd} 
           />
         </Modal>
@@ -90,4 +90,4 @@ const ClientList = () => {
   );
 };
 
-export default ClientList;
+export default UserList;

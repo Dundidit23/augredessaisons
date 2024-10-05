@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api, { handleResponse } from '../../services/api';
+//import api, { handleResponse } from '../../services/api';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
