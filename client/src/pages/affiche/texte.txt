@@ -1,0 +1,1 @@
+I'm confused about the way I should use the hook useCategories. It was supposed to make the code in Categories.jsx cleaner avoiding repetitions (I also need to call the function loadCategories in the DashAction.jsx) 

@@ -1,3 +1,5 @@
+//DashboarLayout.jsx
+
 import { Routes, Route, Outlet } from 'react-router-dom';
 import ProductList from '../products/ProductList';
 import Categories from '../categories/Categories.jsx';

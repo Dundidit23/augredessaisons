@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import useCategories from '../hooks/useCategories';
-import './createCategory.scss';
 
-const CreateCategory = ({ category, onSubmit, isEditing }) => {
-  const [formData, setFormData] = useState({
-    name: ''
-  });
+const CreateCategory = ({ onSubmit, isEditing, category }) => {
+  const [formData, setFormData] = useState({ category: '' });
+  const { addNewCategory, updateExistingCategory } = useCategories();
 
-  const categories = useCategories();
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
 
   useEffect(() => {
     if (isEditing && category) {
@@ -15,51 +16,47 @@ const CreateCategory = ({ category, onSubmit, isEditing }) => {
     }
   }, [isEditing, category]);
 
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'file' ? files[0] : value, // Handle file input
-    });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    for (const key in formData) {
-      data.append(key, formData[key]);
-    }
-    if (isEditing && category && category.id) {
-      onSubmit(category.id, data); // Pass category ID for update
-    } else {
-      onSubmit(data); // For creating a new category
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if (isEditing) {
+        // Update the existing category
+        const updatedCategory = await updateExistingCategory(category._id, formData);
+        console.log("Category updated successfully:", updateExistingCategory);
+        onSubmit(updateExistingCategory);
+      } else {
+        // Create a new category
+        const categoryWithId = { ...formData, id: uuidv4() }; // Add a unique ID
+        const newCategory = await addNewCategory(categoryWithId);
+        console.log("Category added successfully:", newCategory);
+        onSubmit(newCategory);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        console.error('Conflict error: Category already exists:', error);
+        alert('A category with this name already exists. Please use a different name.');
+      } else {
+        console.error('Error adding/updating category:', error);
+      }
+      onSubmit(null, error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>{isEditing ? 'Edit Category' : 'Add Category'}</h2>
-      
+      <h2>{isEditing ? 'Editer une catégorie' : 'Ajouter une catégorie'}</h2>
       <fieldset>
-        <label htmlFor="name">Catégorie</label>
-        <input id="category" name="category" value={formData.name} onChange={handleChange} required />
-        <select
+        <label htmlFor="category">Catégorie</label>
+        <input
           id="category"
-          className="small-width-select"
           name="category"
-          value={formData.name}
+          value={formData.category}
           onChange={handleChange}
           required
-        >
-          <option value="">Sélectionnez une catégorie</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name} {/* Assuming category has a 'name' property */}
-            </option>
-          ))}
-        </select>
+        />
       </fieldset>
-      <button type="submit">{isEditing ? 'Update Category' : 'Create Category'}</button>
+      <button type="submit">{isEditing ? 'Editer une catégorie' : 'Ajouter une catégorie'}</button>
     </form>
   );
 };

@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { CategoryProvider } from './context/CategoryContext';
 import Header from './layout/header/Header';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
+import ConseilsEnHerboristerie from './pages/ConseilEnHerboristerie';
 import Boutique from './pages/Boutique';
 import Soins from './pages/Soins';
 import Ateliers from './pages/Ateliers';
@@ -20,24 +22,28 @@ function App() {
   const isDashboardPath = path.startsWith('/dashboard');
 
   return (
+    
     <AuthProvider>
-      {/* Affichez le Header si on n'est pas sur une route liée au Dashboard */}
-      {!isDashboardPath && <Header />}
+      <CategoryProvider>
+        {/* Affichez le Header si on n'est pas sur une route liée au Dashboard */}
+        {!isDashboardPath && <Header />} 
+        
+        <ErrorBoundary>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path="/Conseils_En_Herboristerie" element={<ConseilsEnHerboristerie />} />            <Route path="/boutique" element={<Boutique />} />
+            <Route path="/soins" element={<Soins />} />
+            <Route path="/ateliers" element={<Ateliers />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/adminLogin' element={<AdminLogin />} />
+            <Route path='/admin/admin-register' element={<AdminRegister />} />
+            
+            {/* Route du dashboard protégée */}
+            <Route path='/dashboard/*' element={<PrivateRoute element={<DashboardLayout />} />} />
 
-      <ErrorBoundary>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path="/boutique" element={<Boutique />} />
-          <Route path="/soins" element={<Soins />} />
-          <Route path="/ateliers" element={<Ateliers />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/adminLogin' element={<AdminLogin />} />
-          <Route path='/admin/admin-register' element={<AdminRegister />} />
-          
-          {/* Route du dashboard protégée */}
-          <Route path='/dashboard/*' element={<PrivateRoute element={<DashboardLayout />} />} />
-        </Routes>
-      </ErrorBoundary>
+          </Routes>
+        </ErrorBoundary>
+      </CategoryProvider>
     </AuthProvider>
   );
 }

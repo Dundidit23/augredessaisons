@@ -2,29 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../modal/Modal'; 
 import CreateProduct from '../forms/CreateProduct';
-import useCategories from '../hooks/useCategories';
+import { useCategory } from '../../context/CategoryContext';
 import './dashAction.scss';
 
 const DashAction = ({ onAdd, onFilter, onViewChange }) => {
-    const [filterCategory, setFilterCategory] = useState("All Categories");
-    const categories = useCategories();
-    const [newProduct, setNewProduct] = useState({
-        name: '', 
-        category: '', 
-        description: '',
-        stock: 0, 
-        price: 0,
-        imageUrl: ''
-    });
+    const { categories } = useCategory();  
     const [showModal, setShowModal] = useState(false);
     const [showFilterMenu, setShowFilterMenu] = useState(false);
+    const [filterCategory, setFilterCategory] = useState('All Categories'); // État pour le filtre de catégorie
+    const [newProduct, setNewProduct] = useState({ name: '', category: '', description: '', stock: 0, price: 0, imageUrl: '' });
 
     const toggleModal = () => {
         setShowModal(!showModal);
     };
 
-    const handleAddProduct = (product) => {
-        console.log('Adding product:', product); // Add this line
+    const handleAddProduct = async (product) => {
+        console.log('Adding product:', product);
         if (product.name && product.category) {
             const newProductId = uuidv4();
             onAdd({ ...product, id: newProductId });
@@ -40,7 +33,7 @@ const DashAction = ({ onAdd, onFilter, onViewChange }) => {
     };
 
     useEffect(() => {
-        onFilter(filterCategory);
+        onFilter(filterCategory === 'All Categories' ? null : filterCategory);
     }, [filterCategory, onFilter]);
 
     useEffect(() => {
@@ -52,7 +45,6 @@ const DashAction = ({ onAdd, onFilter, onViewChange }) => {
             };
             modeSwitch.addEventListener('click', handleModeSwitch);
 
-            // Cleanup event listener on component unmount
             return () => {
                 modeSwitch.removeEventListener('click', handleModeSwitch);
             };
@@ -61,12 +53,11 @@ const DashAction = ({ onAdd, onFilter, onViewChange }) => {
 
     return (
         <div className="app-content-actions-wrapper">
-             <button className="mode-switch" title="Switch Theme">
-        <svg className="moon" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" width="24" height="24" viewBox="0 0 24 24">
-          <defs></defs>
-          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-        </svg>
-      </button>
+            <button className="mode-switch" title="Switch Theme">
+                <svg className="moon" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                </svg>
+            </button>
             <div className="filter-button-wrapper">
                 <button className="action-button filter jsFilter" onClick={toggleFilterMenu}>
                     <span>Filter</span>
@@ -76,21 +67,20 @@ const DashAction = ({ onAdd, onFilter, onViewChange }) => {
                 </button>
                 {showFilterMenu && (
                     <div className="filter-menu active">
-                        {/* <label htmlFor='Category'>Category</label> */}
                         <select
-  value={filterCategory}
-  onChange={(e) => {
-    setFilterCategory(e.target.value);
-    setShowFilterMenu(false); // Close the filter menu
-  }}
->
-  <option>All Categories</option>
-  {categories.map((category) => (
-    <option key={category} value={category}>
-      {category}
-    </option>
-  ))}
-</select>
+                            value={filterCategory}
+                            onChange={(e) => {
+                                setFilterCategory(e.target.value);
+                                setShowFilterMenu(false); // Fermer le menu de filtre
+                            }}
+                        >
+                            <option value="All Categories">All Categories</option>
+                            {categories.map((category) => (
+                                <option key={category._id} value={category.category}>
+                                    {category.category}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 )}
             </div>

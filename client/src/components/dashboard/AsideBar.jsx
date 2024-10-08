@@ -1,3 +1,4 @@
+//AsideBar.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDashboard, MdReceipt, MdInsights, MdEmail, MdAdminPanelSettings, MdOutlineLogout, MdClose } from "react-icons/md";
@@ -70,7 +71,7 @@ const AsideBar = () => {
             </li>
           </ul>
 
-          <Link to="#">
+          <Link to="#" className='logout'>
             <span className="material-icons-sharp"><MdOutlineLogout /></span>
             <h3>Logout</h3>
           </Link>

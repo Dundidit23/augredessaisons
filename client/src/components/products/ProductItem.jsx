@@ -11,9 +11,10 @@ const ProductItem = ({ product, onEdit, onDelete }) => {
       <div className="product-cell image">
         <img src={product.imageUrl} alt={product.name} />
       </div>
-      <h4 className="product-cell name">{product.name}</h4>
-      <div className="product-cell description">{product.description}</div>
+      <h3 className="product-cell name">{product.name}</h3>
       <div className="product-cell category">{product.category}</div>
+
+      <p className="product-cell description">{product.description}</p>
       <div className="product-cell sales">{product.sales}</div>
       <div className="product-cell price">{product.price} €</div>
       {isDashboard && <div className="product-cell stock">{product.stock}</div>}

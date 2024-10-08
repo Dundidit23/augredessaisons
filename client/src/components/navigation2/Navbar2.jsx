@@ -14,13 +14,16 @@ function Navbar() {
       <Logo />
       <StatusUser />
       <ul className={`nav__menu ${isNavOpen ? 'nav__active' : ''}`}>
-        {["/", "/boutique", "/soins", "/ateliers", "/dashboard"].map((path, index) => (
-          <li key={index} className="navitem">
-            <NavLink to={path} onClick={() => setIsNavOpen(false)}>
-              {index === 0 ? "Home" : path.substring(1).charAt(0).toUpperCase() + path.substring(2)}
-            </NavLink>
-          </li>
-        ))}
+        {["/", "/Conseils_En_Herboristerie", "/boutique", "/soins", "/ateliers", "/dashboard"].map((path, index) => {
+          const formattedPath = path.substring(1).split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+          return (
+            <li key={index} className="navitem">
+              <NavLink to={path} onClick={() => setIsNavOpen(false)}>
+                {index === 0 ? "Home" : formattedPath}
+              </NavLink>
+            </li>
+          );
+        })}
       </ul>
       <button onClick={navToggle} className={`nav__toggler ${isNavOpen ? 'toggle' : ''}`}>
         <span></span>

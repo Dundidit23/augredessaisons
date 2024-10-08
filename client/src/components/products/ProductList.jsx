@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { fetchProducts, addProduct, updateProduct, deleteProduct } from '../../services/api';
 import AllProducts from './AllProducts';
 import DashAction from '../dashboard/DashAction';
-import Modal from '../modal/Modal'; // Assuming you have a Modal component
-import CreateProduct from '../forms/CreateProduct'; // Assuming you have a CreateProduct component
+import Modal from '../modal/Modal';
+import CreateProduct from '../forms/CreateProduct';
 import './productList.scss';
 
 const ProductList = () => {
@@ -12,32 +12,36 @@ const ProductList = () => {
   const [viewMode, setViewMode] = useState('table');
   const [editingProduct, setEditingProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [isEditing, setIsEditing] = useState(false); // Ajoutez cette ligne
+  const [isEditing, setIsEditing] = useState(false);
 
-
+  // Fetch des produits depuis l'API une seule fois au chargement du composant
   useEffect(() => {
-    fetchProducts()
-      .then(data => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchProducts();
         setProductList(data);
-        setFilteredProducts(data);
-      })
-      .catch(err => console.error('Erreur lors de la récupération des produits:', err));
-  }, []);
+        setFilteredProducts(data); // Assigner initialement la même liste
+      } catch (err) {
+        console.error('Erreur lors de la récupération des produits:', err);
+      }
+    };
 
+    fetchData();
+  }, []); // Le tableau de dépendances est vide, donc ça s'exécute une seule fois.
 
-  const handleDelete = (productId) => {
-    deleteProduct(productId)  // Appel à l'API pour supprimer le produit côté serveur
+  // Utilise useCallback pour mémoriser la fonction handleDelete
+  const handleDelete = useCallback((productId) => {
+    deleteProduct(productId)
       .then(() => {
-        // Mise à jour de l'état local si la suppression est réussie
         const updatedProducts = productList.filter(product => product._id !== productId);
         setProductList(updatedProducts);
         setFilteredProducts(updatedProducts);
       })
       .catch(err => console.error('Erreur lors de la suppression du produit:', err));
-  };
+  }, [productList]); // Dépend de productList, mais ne se recrée que quand productList change.
 
-  const handleAdd = (newProduct) => {
-    console.log('New product to add:', newProduct);
+  // Utilise useCallback pour mémoriser la fonction handleAdd
+  const handleAdd = useCallback((newProduct) => {
     addProduct(newProduct)
       .then(() => {
         const updatedProducts = [...productList, newProduct];
@@ -45,14 +49,10 @@ const ProductList = () => {
         setFilteredProducts(updatedProducts);
       })
       .catch(err => console.error('Erreur lors de l\'ajout du produit:', err));
-  };
-  const handleEdit = (product) => {
-    setEditingProduct(product);
-    setIsEditing(true); // Passer en mode édition
-    setShowModal(true);
-  };
+  }, [productList]); // Dépend de productList, mais ne se recrée que quand productList change.
 
-  const handleUpdate = (updatedProduct) => {
+  // Utilise useCallback pour mémoriser la fonction handleUpdate
+  const handleUpdate = useCallback((updatedProduct) => {
     updateProduct(updatedProduct)
       .then(() => {
         const updatedProducts = productList.map(product =>
@@ -62,23 +62,23 @@ const ProductList = () => {
         setFilteredProducts(updatedProducts);
         setShowModal(false);
         setEditingProduct(null);
-        setIsEditing(false); // Réinitialiser l'état d'édition
+        setIsEditing(false);
       })
       .catch(err => console.error('Erreur lors de la mise à jour du produit:', err));
-  };
+  }, [productList]); // Dépend de productList, mais ne se recrée que quand productList change.
 
+  // Utilise useCallback pour gérer le filtrage des produits par catégorie
+  const handleFilter = useCallback((selectedCategory) => {
+    const filtered = Array.isArray(productList)
+      ? productList.filter(product => product.category === selectedCategory)
+      : [];
+    setFilteredProducts(filtered);
+  }, [productList]); // Dépend de productList, mais ne se recrée que quand productList change.
 
-  const handleFilter = useCallback((category) => {
-    if (category === "All Categories") {
-      setFilteredProducts(productList);
-    } else {
-      setFilteredProducts(productList.filter(product => product.category === category));
-    }
-  }, [productList]);
-
-  const handleViewChange = (mode) => {
+  // Utilise useCallback pour gérer le changement de vue (grille ou tableau)
+  const handleViewChange = useCallback((mode) => {
     setViewMode(mode);
-  };
+  }, []); // Ne change jamais, donc ne déclenche pas de re-rendu.
 
   return (
     <div className='product-list-principal'>
@@ -90,24 +90,26 @@ const ProductList = () => {
           onViewChange={handleViewChange} 
         />
       </div>
+
       <div className={`product-grid ${viewMode === 'grid' ? 'gridView' : 'tableView'}`}>
         <AllProducts 
           products={filteredProducts} 
-          onEdit={handleEdit} 
+          onEdit={setEditingProduct} 
           onDelete={handleDelete} 
-          viewMode={viewMode} // Pass viewMode to AllProducts
+          viewMode={viewMode}
         />
       </div>
+
       {showModal && (
         <Modal show={showModal} onClose={() => {
           setShowModal(false);
           setEditingProduct(null);
-          setIsEditing(false); // Réinitialiser l'état d'édition lors de la fermeture
+          setIsEditing(false);
         }}>
           <CreateProduct 
             product={editingProduct} 
-            onSubmit={isEditing ? handleUpdate : handleAdd} // Passer la fonction appropriée
-            isEditing={isEditing} // Passer l'état d'édition
+            onSubmit={isEditing ? handleUpdate : handleAdd} 
+            isEditing={isEditing} 
           />
         </Modal>
       )}

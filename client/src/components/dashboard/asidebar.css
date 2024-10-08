@@ -116,7 +116,7 @@ aside .close {
 aside .sidebar {
   display: flex;
   flex-direction: column;
-  height: 86vh;
+  height: 100%;
   position: relative;
   top: 3rem;
 }
@@ -139,12 +139,6 @@ aside .sidebar a {
 aside .sidebar a span {
   font-size: 1.6rem;
   transition: all 300ms ease;
-}
-
-aside .sidebar a:last-child {
-  position: absolute;
-  bottom: 2rem;
-  width: 100%;
 }
 
 aside .sidebar a .active {
@@ -498,10 +492,6 @@ main .recent-orders a {
   aside .sidebar a {
     width: 5.6rem;
   }
-  aside .sidebar a:last-child {
-    position: relative;
-    margin-top: 1.8rem;
-  }
   main .insights {
     grid-template-columns: 1fr;
     gap: 0;
@@ -539,6 +529,15 @@ main .recent-orders a {
     display: none;
     animation: showMenu 400ms ease forwards;
   }
+  aside.open {
+    transform: translateX(0);
+  }
+  aside.closed {
+    transform: translateX(-100%);
+  }
+  .close {
+    cursor: pointer;
+  }
   @keyframes showMenu {
     to {
       left: 0;
@@ -557,9 +556,8 @@ main .recent-orders a {
     width: 100%;
     height: 3.4rem;
   }
-  aside .sidebar a:last-child {
-    position: absolute;
-    bottom: 5rem;
+  .logout {
+    margin-top: 1rem;
   }
   aside .close {
     display: inline-block;
@@ -614,4 +612,11 @@ main .recent-orders a {
   .right .top button span {
     font-size: 2rem;
   }
+}
+.submenu {
+  display: none;
+}
+
+.submenu.open {
+  display: block;
 }/*# sourceMappingURL=asidebar.css.map */

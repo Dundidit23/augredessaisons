@@ -1,6 +1,7 @@
 .boutique {
   margin-bottom: 2rem;
   width: 100%;
+  background-color: white;
 }
 .boutique__title {
   font-size: 1.5rem;
@@ -20,9 +21,16 @@
   border-radius: 10px;
   margin-bottom: 2rem;
   transition: background-color 0.3s ease;
+  background-color: red;
 }
-.boutique__container__sidebar__products {
+
+.undefined {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 2rem;
+}
+
+.card {
+  background-color: pink;
+  border: 2px solid black;
 }/*# sourceMappingURL=boutique.css.map */

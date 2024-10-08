@@ -6,7 +6,7 @@ const connectDB = require('./config/db');
 const normalizePort = require('./config/normalizePort');
 const errorHandler = require('./config/errorHandler');
 const productRoutes = require('./routes/productRoutes');
-const categoriesRoutes = require('./routes/categories');
+const categoriesRoutes = require('./routes/categoriesRoutes');
 const userRoutes = require('./routes/userRoutes');
 const app = express();
 

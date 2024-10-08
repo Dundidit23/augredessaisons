@@ -1,0 +1,38 @@
+@charset "UTF-8";
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  /* Pour les écrans larges (Desktop) */
+  /* AsideBar */
+  /* Dashboard Content */
+}
+@media (min-width: 768px) {
+  .dashboard {
+    flex-direction: row;
+  }
+}
+.dashboard .dashboard-principal {
+  display: flex;
+  width: 100%;
+}
+.dashboard .asidebar {
+  flex: 0 0 250px; /* Taille fixe de la sidebar sur Desktop */
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+@media (max-width: 768px) {
+  .dashboard .asidebar {
+    flex: 1 1 auto;
+    padding: 15px;
+  }
+}
+.dashboard .dashboard-content {
+  flex: 1; /* Remplit l'espace restant */
+  padding: 20px;
+  background-color: #fff;
+}
+@media (max-width: 768px) {
+  .dashboard .dashboard-content {
+    padding: 15px;
+  }
+}/*# sourceMappingURL=dashboardLayout.css.map */

@@ -1,6 +1,31 @@
 //productController.js
 const Product = require('../models/Product');
 
+const createProduct = async (req, res) => {
+  try {
+    // Ensure that the file is uploaded
+    if (!req.file) {
+      return res.status(400).json({ message: 'Image file is required' });
+    }
+
+    // Construct product data
+    const productData = {
+      ...req.body,
+      imageUrl: req.file.path, // Save the file path
+    };
+
+    // Create the product in the database
+    const product = await Product.create(productData);
+
+    // Respond with the created product
+    res.status(201).json(product);
+  } catch (error) {
+    console.error('Error creating product:', error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
 const getAllProducts = async (req, res) => {
   try {
     const { page = 1, limit = 10, sortBy = 'createdAt', order = 'desc', ...filters } = req.query;
@@ -32,29 +57,7 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-const createProduct = async (req, res) => {
-  try {
-    // Ensure that the file is uploaded
-    if (!req.file) {
-      return res.status(400).json({ message: 'Image file is required' });
-    }
 
-    // Construct product data
-    const productData = {
-      ...req.body,
-      imageUrl: req.file.path, // Save the file path
-    };
-
-    // Create the product in the database
-    const product = await Product.create(productData);
-
-    // Respond with the created product
-    res.status(201).json(product);
-  } catch (error) {
-    console.error('Error creating product:', error.message);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
 
 const getOneProduct = async (req, res) => {
   try {

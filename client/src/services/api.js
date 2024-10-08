@@ -12,18 +12,23 @@ const api = ky.create({
 
 
 // User-related API calls
-export const loginUser = async (e) => {
+export const handleLogin = async (e) => {
   e.preventDefault();
+  
   if (!validate()) {
     console.error('Validation failed', errors);
     return;
   }
+  
   try {
     const response = await api.post('api/users/login', { json: formData });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     login();
     navigate('/dashboard');
   } catch (error) {
-    console.error('Login failed', error);
+    console.error('Login failed', error.message || error);
   }
 };
 
@@ -41,11 +46,29 @@ export const updateProduct = (productId, productData) => {
     throw new Error('Product ID is required');
   }
   return api.put(`api/product/${productId}`, {
-    body: productData, // Use 'body' instead of 'json' for FormData
+    body: productData, // Utilisez 'body' au lieu de 'json' pour FormData
   });
 };
 // Category-related API calls
+// Add this function to client\src\services\api.js
+
+export const addCategory = (category) => api.post('api/categories', { json: category}).json();
 export const fetchCategories = () => api.get('api/categories').json();
+export const fetchCategoryById = (categoryId) => api.get(`api/categories/${categoryId}`).json();
+
+export const updateCategory = (categoryId, categoryData) => {
+  if (!categoryId) {
+    throw new Error('Category ID is required');
+  }
+  return api.put(`api/categories/${categoryId}`, { json: categoryData }).json();
+};
+
+export const deleteCategory = (categoryId) => {
+  if (!categoryId) {
+    throw new Error('Category ID is required');
+  }
+  return api.delete(`api/categories/${categoryId}`).json();
+};
 
 // Payment-related API calls
 export const processPayment = (paymentData) => api.post('api/paiement', { json: paymentData }).json();;
