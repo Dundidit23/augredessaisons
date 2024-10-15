@@ -1,34 +1,30 @@
 //DashboarLayout.jsx
 
 import { Routes, Route, Outlet } from 'react-router-dom';
-import ProductList from '../products/ProductList';
-import Categories from '../categories/Categories.jsx';
+import DashboardAccueil from './DashboardAccueil';
+import AdminProducts from '../products/AdminProducts.jsx';
 import ClientList from '../clients/ClientList';
-import DashboardMain from './DashboardMain';
-import AsideBar from './AsideBar';
 import Parameters from './Parameters.jsx';
-
-
+import Categories from '../categories/Categories.jsx';
 import DashboardHeader from './DashboardHeader';
-import './dashboard.scss';
+import AsideBar from './AsideBar';
+import './dashboardLayout.scss';
 
 const DashboardLayout = () => {
   return (
-    <div className="dashboard">
+    <div className="dashboard-layout">
       <DashboardHeader />
-      <div className="dashboard-principal">
+      <div className="dashboard-main">
         <AsideBar />
-        <div className="dashboard-content">
+        <Outlet />
           <Routes>
-            <Route path="/" element={<DashboardMain />} />
-            <Route path="products" element={<ProductList />} />
+            <Route path="/" element={<DashboardAccueil />} />
+            <Route path="produits" element={<AdminProducts />} />
             <Route path="clients" element={<ClientList />} />
             <Route path="/paramètres" element={<Parameters />} />
-            <Route path="/paramètres/Categories" element={<Categories />} />
+            <Route path="/paramètres/Catégories" element={<Categories />} />
             {/* Autres sous-routes */}
           </Routes>
-          <Outlet />
-        </div>
       </div>
     </div>
   );

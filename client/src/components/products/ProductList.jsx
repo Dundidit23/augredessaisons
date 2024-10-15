@@ -1,10 +1,11 @@
+//ProductList.Jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchProducts, addProduct, updateProduct, deleteProduct } from '../../services/api';
 import AllProducts from './AllProducts';
-import DashAction from '../dashboard/DashAction';
+import DashAction from '../dashboard/DashAction1';
 import Modal from '../modal/Modal';
-import CreateProduct from '../forms/CreateProduct';
-import './productList.scss';
+import CreateProduct from '../forms/CreateProduct2';
+import './text.scss';
 
 const ProductList = () => {
   const [productList, setProductList] = useState([]);
@@ -30,27 +31,41 @@ const ProductList = () => {
   }, []); // Le tableau de dépendances est vide, donc ça s'exécute une seule fois.
 
   // Utilise useCallback pour mémoriser la fonction handleDelete
-  const handleDelete = useCallback((productId) => {
-    deleteProduct(productId)
-      .then(() => {
-        const updatedProducts = productList.filter(product => product._id !== productId);
-        setProductList(updatedProducts);
-        setFilteredProducts(updatedProducts);
-      })
-      .catch(err => console.error('Erreur lors de la suppression du produit:', err));
-  }, [productList]); // Dépend de productList, mais ne se recrée que quand productList change.
+  const handleDelete = async (productId) => {
+    const confirmDelete = window.confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');
+    if (confirmDelete) {
+      try {
+    await deleteProduct(productId);
+  } catch (error) {
+    setErrorMessage('Une erreur est survenue lors de la suppression du produit.');
+    console.error('Une erreur est survenue lors de la suppression du produit');   
+  }
+}
+};
+
+    //const updatedProducts = productList.filter(product => product._id !== productId);
+        //setProductList(updatedProducts);
+        //setFilteredProducts(updatedProducts);
+     // })
+    //  .catch(err => console.error('Erreur lors de la suppression du produit:', err));
+  //}, [productList]); // Dépend de productList, mais ne se recrée que quand productList change.
 
   // Utilise useCallback pour mémoriser la fonction handleAdd
   const handleAdd = useCallback((newProduct) => {
-    addProduct(newProduct)
+    addProduct(newProduct) // newProduct est maintenant un FormData
       .then(() => {
         const updatedProducts = [...productList, newProduct];
         setProductList(updatedProducts);
         setFilteredProducts(updatedProducts);
       })
       .catch(err => console.error('Erreur lors de l\'ajout du produit:', err));
-  }, [productList]); // Dépend de productList, mais ne se recrée que quand productList change.
+  }, [productList]);
 
+  const handleEdit = (product) => {
+    setEditingProduct(product._id);
+    setIsEditing(true); // Passer en mode édition
+    setShowModal(true);
+  };
   // Utilise useCallback pour mémoriser la fonction handleUpdate
   const handleUpdate = useCallback((updatedProduct) => {
     updateProduct(updatedProduct)
@@ -81,7 +96,7 @@ const ProductList = () => {
   }, []); // Ne change jamais, donc ne déclenche pas de re-rendu.
 
   return (
-    <div className='product-list-principal'>
+    <div className='products-content'>
       <div className="title-action">
         <h1>Produits en ligne</h1>
         <DashAction 

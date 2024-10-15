@@ -1,10 +1,10 @@
 //UserList.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchUsers, addUser, updateUser, deleteUser } from '../../services/api';
-import DashAction from '../dashboard/DashAction';
+import DashAction from '../dashboard/DashAction1';
 import Modal from '../modal/Modal';
 import CreateUser from '../forms/CreateClient'; // Votre composant de formulaire pour les users
-import '../products/productList.scss';
+//import '../products/productList.scss';
 
 const UserList = () => {
   const [userList, setUserList] = useState([]);

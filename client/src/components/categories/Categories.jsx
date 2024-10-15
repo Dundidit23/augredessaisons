@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Modal from '../modal/Modal'; 
-import CreateCategory from '../forms/CreateCategory';
 import { useCategory } from '../../context/CategoryContext';
 import './categories.scss';
 
@@ -56,14 +54,28 @@ const ManageCategories = () => {
         await deleteExistingCategory(categoryId);
       } catch (error) {
         setErrorMessage('Une erreur est survenue lors de la suppression de la catégorie.');
-        console.error('Erreur lors de la suppression de la catégorie:', error);
+        console.error('Erreur lors de la suppression de la catégorie:');
       }
     }
   };
 
   return (
-    <div>
+    <div className='categories-content'>
       <h2>Gestion des Catégories</h2>
+      <h4>Modifier les catégories existantes</h4>
+      <ul className='modify'>
+        {categories.map((category) => (
+          <li key={category._id}>
+            {category.category}
+            <button onClick={() => handleEditCategory(category)}>Éditer</button>
+            <button onClick={() => handleDeleteCategory(category._id)}>Supprimer</button>
+          </li>
+        ))}
+        
+      </ul>
+      <h4>Ajouter une nouvelle catégorie</h4>
+      <fieldset>
+   
       <input
         type="text"
         value={newCategoryName}
@@ -75,16 +87,8 @@ const ManageCategories = () => {
       </button>
       
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-  
-      <ul>
-        {categories.map((category) => (
-          <li key={category._id}>
-            {category.category}
-            <button onClick={() => handleEditCategory(category)}>Éditer</button>
-            <button onClick={() => handleDeleteCategory(category._id)}>Supprimer</button>
-          </li>
-        ))}
-      </ul>
+      </fieldset>
+     
     </div>
   );
 };

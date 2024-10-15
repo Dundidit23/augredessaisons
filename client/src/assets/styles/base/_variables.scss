@@ -1,3 +1,5 @@
+//@import '../dashboard/dashboard.scss';
+
 $col-titre: #849129;
 $primary-col:#BDCF2B;
 $secondary-col:#B3B287;
@@ -10,3 +12,37 @@ $bg-card:#728F69;
 $shadow: 0px 2px 0px #3c7e4d;
 $hover: #ddd;
 
+$themes: (
+  "dark": (
+    app-bg: #101827,
+    sidebar: rgba(21, 30, 47,1),
+    sidebar-main-color: #fff,
+    table-border: #1a2131,
+    table-header: #1a2131,
+    app-content-main-color: #fff,
+    sidebar-link: #fff,
+    sidebar-active-link: #1d283c,
+    sidebar-hover-link: #1a2539,
+    action-color: #2869ff,
+    action-color-hover: #6291fd,
+    app-content-secondary-color: #1d283c,
+    filter-reset: #2c394f,
+    filter-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+  ),
+  "light": (
+    app-bg: #fff,
+    sidebar: #f3f6fd,
+    sidebar-main-color: #1f1c2e,
+    app-content-secondary-color: #f3f6fd,
+    app-content-main-color: #1f1c2e,
+    sidebar-link: #1f1c2e,
+    sidebar-hover-link: rgba(195, 207, 244, 0.5),
+    sidebar-active-link: rgba(195, 207, 244, 1),
+    filter-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px,
+  ),
+);
+  
+  $font-small: 14px;
+  $font-medium: 16px;
+  $font-large: 24px;
+  

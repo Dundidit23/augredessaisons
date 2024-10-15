@@ -1,7 +1,46 @@
-.dashboard-content {
-  color: white;
+.categories-content {
+  height: 100%;
+  width: auto;
+  margin: 0.5rem;
+  background-color: rgb(251, 245, 237);
 }
-
-button {
-  background: red;
+.categories-content h2 {
+  font-size: 2rem;
+  margin: 0;
+}
+.categories-content h4 {
+  text-align: left;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  margin: 1rem 0 1rem 3rem;
+}
+.categories-content button {
+  padding: 1.5rem 0;
+  width: 8rem;
+}
+.categories-content fieldset {
+  border: none;
+  margin: 0 auto;
+  width: 80%;
+  display: block;
+  margin: auto;
+}
+.categories-content button {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.categories-content ul {
+  margin: 0 auto;
+  border: 1px solid black;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-bottom: 1px solid black;
+  width: 80%;
+}
+.categories-content ul li {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  vertical-align: middle;
+  gap: 1rem;
+  padding-bottom: 1rem;
 }/*# sourceMappingURL=categories.css.map */

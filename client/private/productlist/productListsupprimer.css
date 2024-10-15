@@ -1,0 +1,131 @@
+.products-conten {
+  margin: 5px;
+  overflow: hidden;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.products-conten .title-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(231, 236, 208);
+}
+.products-conten .product-grid {
+  display: grid;
+  height: 100vh;
+  gap: 0px;
+}
+.products-conten .product-grid.gridView, .products-conten .product-grid .dashboard-style {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  margin: 0.2rem;
+}
+
+.tableView {
+  background-color: var(--app-bg);
+}
+.tableView .dashboard-style {
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+  background-color: var(--app-content-secondary-color);
+}
+.tableView .dashboard-style:hover {
+  box-shadow: var(--filter-shadow);
+  background-color: var(--app-content-secondary-color);
+}
+.tableView .dashboard-style .product-cell {
+  flex: 1;
+  padding: 0px 16px;
+  color: var(--app-content-main-color);
+  font-size: small;
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 780px) {
+  .tableView .dashboard-style .product-cell {
+    font-size: 12px;
+  }
+  .tableView .dashboard-style .product-cell .image span {
+    display: none;
+  }
+  .tableView .dashboard-style .product-cell .image {
+    flex: 0.2;
+  }
+}
+@media screen and (max-width: 520px) {
+  .tableView .dashboard-style .product-cell .category, .tableView .dashboard-style .product-cell .sales, .tableView .dashboard-style .product-cell .status-cell, .tableView .dashboard-style .product-cell .category {
+    display: none;
+  }
+  .tableView .dashboard-style .product-cell .stock, .tableView .dashboard-style .product-cell .price {
+    flex: 0.2;
+  }
+}
+@media screen and (max-width: 480px) {
+  .tableView .dashboard-style .product-cell .stock {
+    display: none;
+  }
+  .tableView .dashboard-style .product-cell .price {
+    flex: 0.4;
+  }
+}
+.tableView .dashboard-style .product-cell img {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  margin-right: 6px;
+}
+.tableView .modify {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  margin-right: 0.5rem;
+}
+.tableView .modify button {
+  background-color: var(--sidebar-active-link);
+  color: #d18b8b;
+  padding: 0.5rem;
+  border: none;
+  width: 70px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #d18b8b;
+  transition: background-color 0.3s;
+}
+.tableView .modify button :hover {
+  background-color: var(--sidebar-hover-link);
+}
+.tableView .tableView .products-header {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  background-color: blue;
+  position: sticky;
+  top: 0;
+}
+.tableView .tableView .products-row {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+.tableView .tableView .products-row .cell-more-button {
+  display: none;
+}
+.tableView .tableView .sort-button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--app-content-main-color);
+  margin-left: 4px;
+  display: flex;
+  align-items: center;
+}
+.tableView .tableView .sort-button:hover {
+  color: var(--action-color);
+}
+.tableView .tableView .sort-button svg {
+  width: 12px;
+}
+.tableView .tableView .cell-label {
+  display: none;
+}/*# sourceMappingURL=productListsupprimer.css.map */

@@ -19,14 +19,14 @@ const AsideBar = () => {
 
   return (
     <>
-      <aside className={isSidebarOpen ? 'open' : 'closed'}>
-        <div className="top">
+      <aside className={isSidebarOpen ? 'side open' : 'side closed'} >
+        <div className="side-top">
           <div className="close" id="close-btn" onClick={handleSidebarToggle}>
             <span className="material-icons-sharp"><MdClose /></span>
           </div>
-          <h4>Au gré des saisons</h4>
+         <a href="../../boutique"><h4 className='marque'>Au gré des saisons</h4></a> 
         </div>
-        <div className="sidebar">
+        <div className="side-links">
           <Link to="/dashboard">
             <span className="material-icons-sharp"><MdDashboard /></span>
             <h3>Accueil</h3>
@@ -37,7 +37,7 @@ const AsideBar = () => {
             <h3>Clients</h3>
           </Link>
 
-          <Link to="/dashboard/products">
+          <Link to="/dashboard/produits">
             <span className="material-icons-sharp"><FaProductHunt /></span>
             <h3>Produits</h3>
           </Link>
@@ -66,7 +66,7 @@ const AsideBar = () => {
                 <h3>Paramètres</h3>
               </Link>
               <ul className={`submenu ${isSubmenuOpen ? 'open' : ''}`}>
-                <li><Link to="/dashboard/paramètres/Categories"><h5>Catégories</h5></Link></li>
+                <li><Link to="/dashboard/paramètres/Catégories"><h5>Catégories</h5></Link></li>
               </ul>
             </li>
           </ul>

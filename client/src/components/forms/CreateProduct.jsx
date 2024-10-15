@@ -1,100 +1,110 @@
 import React, { useState, useEffect } from 'react';
-import { useCategory } from '../../context/CategoryContext';
-import './createProduct.scss';
+import { addProduct, updateProduct, fetchCategories } from '../../services/api';
 
-const CreateProduct = ({ isEditing, product, onSubmit }) => {
-  const { categories } = useCategory(); // Assurez-vous que les catégories sont récupérées ici
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    stock: '',
-    imageUrl: null,
-  });
+const CreateProduct = ({ isEditing, productToEdit, onSubmit }) => {
+    const [name, setName] = useState(productToEdit ? productToEdit.name : '');
+    const [category, setCategory] = useState(productToEdit ? productToEdit.category : '');
+    const [description, setDescription] = useState(productToEdit ? productToEdit.description : '');
+    const [stock, setStock] = useState(productToEdit ? productToEdit.stock : 0);
+    const [price, setPrice] = useState(productToEdit ? productToEdit.price : 0);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    if (isEditing && product) {
-      setFormData(product);
-      setSelectedCategory(product.category || '');
-    }
-  }, [isEditing, product]);
+    useEffect(() => {
+        const loadCategories = async () => {
+            try {
+                const fetchedCategories = await fetchCategories();
+                console.log('Fetched categories:', fetchedCategories); // Affichez les catégories dans la console
+                if (Array.isArray(fetchedCategories)) {
+                    setCategories(fetchedCategories);
+                } else {
+                    throw new Error('Les catégories récupérées ne sont pas au format attendu.');
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                setErrorMessage('Erreur lors du chargement des catégories.');
+            }
+        };
 
+        loadCategories();
+    }, []);
 
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'file' ? files[0] : value, // Gestion des fichiers
-    });
-  };
+    const handleImageChange = (event) => {
+        setSelectedImage(event.target.files[0]);
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    for (const key in formData) {
-      data.append(key, formData[key]);
-    }
-    if (isEditing && product && product._id) {
-      onSubmit({ ...formData, id: product._id }); // Passer l'ID du produit pour la mise à jour
-    } else {
-      onSubmit(formData); // Pour créer un nouveau produit
-    }
-  };
-  useEffect(() => {
-    console.log('Catégories chargées :', categories);
-  }, [categories]);
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>{isEditing ? 'Modifier le produit' : 'Ajouter un produit'}</h2>
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-      <fieldset>
-        <label htmlFor="name">Nom du produit</label>
-        <input id="name" name="name" value={formData.name} onChange={handleChange} required />
-      </fieldset>
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('category', category);
+        formData.append('description', description);
+        formData.append('stock', stock);
+        formData.append('price', price);
+        if (selectedImage) {
+            formData.append('image', selectedImage);
+        }
 
-      <fieldset>
-        <label htmlFor="category">Catégorie</label>
-        <select
-          id="category"
-          name="category"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          {categories.map((category) => (
-            <option key={category._id} value={category._id}>
-              {category.category}
-            </option>
-          ))}
-        </select>
-      </fieldset>
+        try {
+            if (isEditing) {
+                await updateProduct(productToEdit._id, formData);
+            } else {
+                await addProduct(formData);
+            }
+            onSubmit();
+            setErrorMessage('');
+        } catch (error) {
+            console.error('Error during product creation:', error);
+            setErrorMessage('Une erreur est survenue lors de la création du produit.');
+        }
+    };
 
-      <fieldset>
-        <label htmlFor="description">Description</label>
-        <input
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        />
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="imageUrl">Image</label>
-        <input id="imageUrl" name="imageUrl" type="file" onChange={handleChange} />
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="price">Prix (€)</label>
-        <input id="price" name="price" type="number" value={formData.price} onChange={handleChange} required />
-        <label htmlFor="stock">Stock</label>
-        <input id="stock" name="stock" type="number" value={formData.stock} onChange={handleChange} required />
-      </fieldset>
-
-      <button type="submit">{isEditing ? 'Mettre à jour le produit' : 'Créer le produit'}</button>
-    </form>
-  );
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Nom du produit"
+                required
+            />
+            <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+                <option value="">Sélectionnez une catégorie</option>
+                {categories.map((cat) => (
+                    <option key={cat._id} value={cat._id}>{cat.category}</option>
+                ))}
+            </select>
+            <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Description"
+                required
+            />
+            <input
+                type="number"
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
+                placeholder="Stock"
+                required
+            />
+            <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="Prix"
+                required
+            />
+            <input
+                type="file"
+                onChange={handleImageChange}
+                accept="image/*"
+            />
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <button type="submit">{isEditing ? 'Modifier' : 'Ajouter'}</button>
+        </form>
+    );
 };
 
 export default CreateProduct;

@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.dashboardHeader h1, .dashboardHeader h2 {
   color: white;
-  width: 100%;
 }/*# sourceMappingURL=dashboardHeader.css.map */

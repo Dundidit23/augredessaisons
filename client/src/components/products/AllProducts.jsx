@@ -1,9 +1,12 @@
+//AllProducts.jsx
 import React, { useState, useEffect } from 'react';
 import { fetchProducts } from '../../services/api';
 import ProductItem from './ProductItem';
 
-const AllProducts = ({ onEdit, onDelete, viewMode }) => {
+const AllProducts = ({ onEdit, onDelete}) => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filter, setFilter] = useState(''); // Filter by product name
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -14,22 +17,32 @@ const AllProducts = ({ onEdit, onDelete, viewMode }) => {
         console.error('Failed to fetch products', error);
       }
     };
-
+    // useEffect(() => {
+    //   // Apply filtering when filter state changes
+    //   const filtered = products.filter(product =>
+    //     product.name.toLowerCase().includes(filter.toLowerCase())
+    //   );
+    //   setFilteredProducts(filtered);
+    // }, [filter, products]);
+  
     loadProducts();
   }, []);
 
   return (
-    <div className={`all-products ${viewMode}`}>
-      {products.map(product => (
-        <ProductItem 
+    <div className="boutique">
+        {filteredProducts.map(product => (
+          <ProductItem 
           key={product._id} 
           product={product} 
           onEdit={onEdit} 
           onDelete={onDelete} 
         />
+
+        
       ))}
-    </div>
-  );
-};
+    
+      </div>   
+      );
+    };
 
 export default AllProducts;

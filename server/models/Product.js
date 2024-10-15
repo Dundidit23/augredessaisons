@@ -17,18 +17,18 @@ const productSchema = new mongoose.Schema({
       validator: function(v) {
         return v >= 0;
       },
-      message: 'Price must be a non-negative number.'
-    }
+      message: 'Price must be a non-negative number.',
+    },
   },
-  imageUrl: {
-    type: String,
-    required: true,
+  image: {
+    type: String, // Stocke le chemin de l'image (ex: "uploads/image.png")
+    required: false,
   },
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId, // Référence la collection Category
+    ref: 'Category',
     required: true,
   },
-  //category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
   stock: {
     type: Number,
     required: true,
@@ -36,13 +36,17 @@ const productSchema = new mongoose.Schema({
       validator: function(v) {
         return v >= 0;
       },
-      message: 'Stock must be a non-negative number.'
-    }
+      message: 'Stock must be a non-negative number.',
+    },
   },
 }, { timestamps: true });
 
+// Méthode pour formater le prix avec la devise et le séparateur des milliers
 productSchema.methods.formatPrice = function() {
-  return this.price.toLocaleString();
+  return this.price.toLocaleString('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+  });
 };
 
 module.exports = mongoose.model('Product', productSchema);

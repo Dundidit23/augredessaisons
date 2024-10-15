@@ -1,6 +1,51 @@
-.dashboard-content{
-    background-color: lightcyan;
+
+.categories-content{
+   height: 100%;
+    width: auto;
+    margin: 0.5rem;
+    background-color: rgb(251, 245, 237);
+    h2{
+        font-size: 2rem;
+        margin: 0;
+    }
+    h4 {
+    text-align: left;
+    margin: 0 auto;
+    font-size: 1.5rem;
+    margin: 1rem 0 1rem 3rem;
+   }
+   button{
+    padding: 1.5rem 0;
+    width: 8rem;
 }
-button{
-    background: red;
+
+    fieldset{
+        border: none;
+        margin: 0 auto;
+        width: 80%;
+        display: block;
+        margin: auto;
+    }
+    button{
+        padding: 0.5rem;
+        font-size: 1rem;
+        
+    }
+    ul{
+       margin: 0 auto;
+       border: 1px solid black;
+       box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.1);
+       padding: 2rem;
+       border-bottom: 1px solid black;
+       width: 80%;
+       
+        li{
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+       vertical-align: middle;
+        gap: 1rem;
+        padding-bottom: 1rem;
+      
+       }
+    }
 }

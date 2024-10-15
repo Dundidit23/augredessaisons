@@ -1,6 +1,5 @@
 .boutique {
-  margin-bottom: 2rem;
-  width: 100%;
+  margin: 2rem;
   background-color: white;
 }
 .boutique__title {
@@ -9,28 +8,17 @@
 }
 
 .boutique__container {
-  padding: 1rem;
-  text-align: center;
-  width: 100%;
   display: grid;
-  grid-template-columns: 17vw auto;
+  grid-template-columns: 1fr 4fr;
+  gap: 1rem;
 }
-.boutique__container__sidebar {
+.boutique__container__sideBar {
+  border: 1px solid lightgrey;
   padding: 1rem;
-  text-align: center;
-  border-radius: 10px;
-  margin-bottom: 2rem;
-  transition: background-color 0.3s ease;
-  background-color: red;
+  background-color: rgb(97, 143, 29);
 }
-
-.undefined {
+.boutique__container .boutique-style {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 2rem;
-}
-
-.card {
-  background-color: pink;
-  border: 2px solid black;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
 }/*# sourceMappingURL=boutique.css.map */

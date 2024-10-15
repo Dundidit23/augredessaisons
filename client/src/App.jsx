@@ -1,6 +1,9 @@
+//App.jsx
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CategoryProvider } from './context/CategoryContext';
+import { ProductProvider } from './context/ProductContext';
+
 import Header from './layout/header/Header';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
@@ -13,7 +16,6 @@ import AdminLogin from './pages/admin/AdminLogin';
 import AdminRegister from './pages/admin/AdminRegister';
 import DashboardLayout from './components/dashboard/DashboardLayout';
 import PrivateRoute from './components/PrivateRoute';
-
 function App() {
   const location = useLocation();
   const path = location.pathname.toLowerCase();
@@ -25,6 +27,7 @@ function App() {
     
     <AuthProvider>
       <CategoryProvider>
+      <ProductProvider>
         {/* Affichez le Header si on n'est pas sur une route liée au Dashboard */}
         {!isDashboardPath && <Header />} 
         
@@ -43,6 +46,7 @@ function App() {
 
           </Routes>
         </ErrorBoundary>
+      </ProductProvider>
       </CategoryProvider>
     </AuthProvider>
   );

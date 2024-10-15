@@ -1,146 +1,74 @@
 .modal-overlay {
-
     background: rgb(236, 236, 213);
-    //display: flex;
-    //justify-content: center;
-    //align-items: center;
-  //  backdrop-filter: black;
-    //z-index: 1000;
-   // color: white;
-
   }
   .modal-content {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-//    z-index: 1001;
-    background-color: darken($primary-col, 13%);
-    ;
+   // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: darken($primary-col, 23%);
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white; 
     width: 60%;
-    height: 100%;
+    height: 90%;
   }
-  
-
 form{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    background: transparent ;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem; // Espacement entre les éléments
-  
-      border-radius: 5%;
-        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white; 
-          margin-left: auto;
-          margin-right: auto; 
-           padding: 20px;  
-           h2{
-            color: $white-col;
-           }
-}
-.addProduct{
-    margin: 0;
-    padding: 0;
-    display: flex;
-
-}
-.newProduct{
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; // Espacement entre les éléments
+  margin-left: auto;
+  margin-right: auto; 
+  padding: 20px;  
+  h2{
+  color: $white-col;
+  text-align: unset;
+  margin-left: 0;
+  }
 }
 input, textarea, select{
- background: #ECECD5; 
-  border-radius: 15px; 
-  // box-shadow: inset 3px 3px 3px #3f4e24, inset -6px -6px 6px white;
-height: 3rem;
-margin-right: 3rem;
-font-size: 20px;
-font-family: $quicksand;
-color: black;
-padding: 2rem;
+  background-color: rgb(234, 223, 223);
+  height: 2.5rem;
+  border-radius: 5px;
+  padding: 10px;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(227, 224, 224, 0.1);
 
-box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
-0 2px 2px hsl(0deg 0% 0% / 0.075),
-0 4px 4px hsl(0deg 0% 0% / 0.075),
-0 8px 8px hsl(0deg 0% 0% / 0.075),
-0 16px 16px hsl(0deg 0% 0% / 0.075);
 }
 textarea{
-    height: 5rem;
-    width: 90%;
-    margin-right: 3rem;
-}
-#imageUrl{
-    width: 90%;
-}
-label {
-  display: block; // Afficher le label comme un bloc
-  font-weight: bold; // Mettre en gras
-  margin-bottom: 0.5rem; // Espacement sous le label
+  height: 5rem;
+  width: 90%;
+  margin-right: 3rem;
 }
 
 select {
-  width: 100%; // Remplir la largeur
-  padding: 0.5rem; // Espacement interne
-  border: 1px solid #ccc; // Bordure grise
-  border-radius: 4px; // Coins arrondis
-  font-size: 1rem; // Taille de police
-  appearance: none; // Retirer le style par défaut du navigateur
-  background-color: #fff; // Couleur de fond blanche
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 15l-5-5h10z" fill="#333"/></svg>'); // Flèche personnalisée
-  background-repeat: no-repeat;
-  background-position: right 10px center; // Positionner la flèche
-  background-size: 10px; // Taille de la flèche
-  cursor: pointer; // Changer le curseur
+width: 250px;// Remplir la largeur
+padding: 0.5rem; // Espacement interne
+border: 1px solid #ccc; // Bordure grise
+appearance: none; // Retirer le style par défaut du navigateur
+background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 15l-5-5h10z" fill="#333"/></svg>'); // Flèche personnalisée
+//background-position: right 10px center; // Positionner la flèche
+//background-size: 10px; // Taille de la flèche
+cursor: pointer; // Changer le curseur
 }
 
-.small-width-select {
-    width: 200px; // Adjust the width as needed
+.NameImageField, .stockPriceCat{
+  display: flex;
+  gap: 5rem;
+  align-items: flex-end;
 }
-
-.small-width-select option {
-    width: 25px; // Adjust the width as needed
-    color: black;
-    display: block;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+.productImage{
+  background-color: white;
+  height: 150px;
+  width: 150px;
+  margin-top: -100px;
 }
-
-.btn{
-    max-width: 8rem;
-    border-radius: 1rem;
-    padding: 15px;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-    margin: 0 auto;
-    &:hover {
-      color: $white-col;
-      transform: scale(1.1);  }
-    &.submit{
-      display: flex;
-      justify-content: center;
-      margin: 2rem auto;
-      background-color: darken($primary-col, 20%);
-      color: $white-col;
-      font-size: 1rem;
-  }
-  &.option{
-    color:  darken($primary-col, 20%);
-    background-color: lighten($primary-col, 43%);
-    line-height: 1;
-  }
-  }
-  fieldset {
-    border: none; // Retirer la bordure par défaut
-    padding: 0; // Pas de padding par défaut
-    margin: 0; // Pas de margin par défaut
-
-  } 
+fieldset{
+  border: none; 
+} 
   #category{
     color: black;
   }
   button {
-    background-color: #007bff; // Couleur de fond du bouton
-    color: white; // Couleur du texte
+    width: 8rem;
+    margin: 2rem auto;
+    background-color: $primary-col; // Couleur de fond du bouton
+    color: $white-col; // Couleur du texte
     padding: 0.5rem 1rem; // Espacement interne
     border: none; // Pas de bordure
     border-radius: 4px; // Coins arrondis

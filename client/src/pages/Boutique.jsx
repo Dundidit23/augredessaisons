@@ -8,8 +8,10 @@ const Boutique = () => {
   const [products, setProducts] = useState([]); // Initialisation en tant que tableau
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  
   const { categories } = useContext(CategoryContext); // Accès au contexte des catégories
+
+  // const Sidebar = ({ onCategorySelect }) => {
+  //   const { categories } = useCategory();
 
   useEffect(() => {
     fetchProducts()
@@ -38,6 +40,26 @@ const Boutique = () => {
     }
   };
 
+  // import { useCategory } from '../context/CategoryContext';
+
+  // const Sidebar = ({ onCategorySelect }) => {
+  //   const { categories } = useCategory();
+  
+  //   return (
+  //     <aside>
+  //       <h3>Catégories</h3>
+  //       <ul>
+  //         {categories.map((category) => (
+  //           <li key={category._id} onClick={() => onCategorySelect(category._id)}>
+  //             {category.name}
+  //           </li>
+  //         ))}
+  //       </ul>
+  //     </aside>
+  //   );
+  // };
+  
+
   return (
     <div className='boutique'>
       <div className='boutique__titre'>
@@ -45,10 +67,10 @@ const Boutique = () => {
         <p>Consultez nos produits en ligne pour une meilleure expérience.</p>
       </div>
       <section className='boutique__container'>
-        <aside className='boutique__sideBar'>
+        <aside className='boutique__container__sideBar'>
           <h3>Catégories</h3>
           <ul>
-            <li onClick={() => handleCategoryClick(null)}>Tous les produits</li>
+            {/* <li onClick={() => handleCategoryClick(null)}>Tous les produits</li> */}
             {categories.length > 0 ? (
               categories.map((category) => (
                 <li key={category._id} onClick={() => handleCategoryClick(category._id)}>
@@ -60,8 +82,8 @@ const Boutique = () => {
             )}
           </ul>
         </aside>
-        <div className='boutique__products'>
-          <AllProducts products={filteredProducts} />
+        <div className='boutique__products boutique-style'>
+        <AllProducts products={products} category={selectedCategory} />
         </div>
       </section>
     </div>
