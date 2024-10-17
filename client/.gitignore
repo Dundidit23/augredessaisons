@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Environment files
+*.local
+.env
+#.env.*  # Si tu as plusieurs fichiers d'environnement (ex: .env.production, .env.staging)
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json  # Garde le fichier d'extensions partagées si tu l'utilises
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Ignore the private folder
+/private/
+
+# Others
+coverage/  # Si tu fais des tests et génères des rapports de couverture
+*.log
+*.bak  # Fichiers de sauvegarde
+*.tmp  # Fichiers temporaires
