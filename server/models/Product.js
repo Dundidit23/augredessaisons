@@ -21,13 +21,13 @@ const productSchema = new mongoose.Schema({
     },
   },
   image: {
+    data: Buffer,
     type: String, // Stocke le chemin de l'image (ex: "uploads/image.png")
     required: false,
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId, // Référence la collection Category
-    ref: 'Category',
-    required: true,
+    type: String, // Référence la collection Category
+    required: false,
   },
   stock: {
     type: Number,

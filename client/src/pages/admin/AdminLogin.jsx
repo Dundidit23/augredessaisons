@@ -5,7 +5,7 @@ import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 import { useFormValidation } from '../../components/hooks/adminLoginFormValidations';
-import api from '../../services/api';
+import api from '../../../private/services/api';
 import '../../components/forms/connect/login.scss';
 
 export default function AdminLogin() {

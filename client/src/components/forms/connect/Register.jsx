@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from '../../../services/api'; // Import the centralized API configuration
+import api from '../../../../private/services/api'; // Import the centralized API configuration
 import './login.scss';
 
 const Register = ({ onBack }) => {

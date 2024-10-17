@@ -1,88 +1,72 @@
-//CategoryContext.jsx
+// CategoryContext.jsx
 
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { fetchCategories, addCategory, updateCategory, deleteCategory } from '../services/api';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import ky from 'ky';
 
-// Export CategoryContext
-export const CategoryContext = createContext();
-
-export const useCategory = () => {
-  return useContext(CategoryContext);
-};
+const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // État pour le chargement
-  const [errorMessage, setErrorMessage] = useState(''); // État pour gérer les messages d'erreur
+  const [loading, setLoading] = useState(true);
+ const [error, setError] = useState(null);
 
-
-  useEffect(() => {
-    // Fetch all categories when the component mounts
-    const loadCategories = async () => {
-      setIsLoading(true); // Commencer le chargement
-      try {
-        const data = await fetchCategories();
-        console.log('Catégories récupérées:', data); // Ajoutez cette ligne
-        setCategories(data);
-      } catch (error) {
-        console.error('Failed to fetch categories:', error);
-        setErrorMessage('Une erreur est survenue lors de la récupération des catégories.'); // Message d'erreur
-      } finally {
-        setIsLoading(false); // Fin du chargement
-      }
-    };
-
-    loadCategories();
-  }, []);
-
-
-  
-
-  const addNewCategory = async (newCategory) => {
+  const fetchCategories = async () => {
+    setLoading(true);
     try {
-      const addedCategory = await addCategory(newCategory); // Appel à l'API pour ajouter la catégorie
-      setCategories((prevCategories) => [...prevCategories, addedCategory]); // Mettre à jour l'état local avec la nouvelle catégorie ajoutée
-      setErrorMessage(''); // Réinitialiser le message d'erreur
+      const response = await ky.get('http://localhost:5000/api/categories').json();
+      setCategories(response);
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        setErrorMessage('Cette catégorie existe déjà. Veuillez en choisir une autre.'); // Message d'erreur convivial
-      } else {
-        setErrorMessage('Une erreur est survenue lors de l\'ajout de la catégorie.'); // Message d'erreur générique
-      }
+      console.error('Erreur lors de la récupération des catégories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addCategory = async (newCategory) => {
+    try {
+      const response = await ky.post('http://localhost:5000/api/categories', {
+        json: newCategory,
+      }).json();
+      setCategories((prev) => [...prev, response]);
+    } catch (error) {
       console.error('Erreur lors de l\'ajout de la catégorie:', error);
     }
   };
 
-  
-
-  const updateExistingCategory = async (categoryId, updatedCategory) => {
-    const updated = await updateCategory(categoryId, updatedCategory);
-    setCategories((prevCategories) =>
-      prevCategories.map((cat) => (cat._id === categoryId ? updated : cat))
-    );
+  const updateCategory = async (id, updatedCategory) => {
+    try {
+      const response = await ky.put(`http://localhost:5000/api/categories/${id}`, {
+        json: updatedCategory,
+      }).json();
+      setCategories((prev) =>
+        prev.map((cat) => (cat._id === id ? response : cat))
+      );
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour de la catégorie:', error);
+    }
   };
 
-
-  const deleteExistingCategory = async (categoryId) => {
-    await deleteCategory(categoryId);
-    setCategories((prevCategories) =>
-      prevCategories.filter((cat) => cat._id !== categoryId)
-    );
+  const deleteCategory = async (id) => {
+    try {
+      await ky.delete(`http://localhost:5000/api/categories/${id}`);
+      setCategories((prev) => prev.filter((cat) => cat._id !== id));
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la catégorie:', error);
+    }
   };
 
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
-    <CategoryContext.Provider
-      value={{
-        categories,
-        isLoading, // Ajout de l'état de chargement
-        errorMessage, // Ajout de l'état de message d'erreur
-        addNewCategory,
-        updateExistingCategory,
-        deleteExistingCategory,
-      }}
-    >
+    <CategoryContext.Provider value={{ categories, loading, error, addCategory, updateCategory, deleteCategory }}>
       {children}
     </CategoryContext.Provider>
   );
+};
+
+// Hook personnalisé pour utiliser le contexte
+export const useCategory = () => {
+  return useContext(CategoryContext);
 };

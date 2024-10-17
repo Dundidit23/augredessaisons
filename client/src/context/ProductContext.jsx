@@ -1,83 +1,73 @@
-// ProductContext.jsx
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import ky from 'ky';
 
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { fetchProducts, addProduct, updateProduct, deleteProduct } from '../services/api';
+const ProductContext = createContext();
 
-// Export ProductContext
-export const ProductContext = createContext();
-
-export const useProduct = () => {
-  return useContext(ProductContext);
-};
+export const useProduct = () => useContext(ProductContext);
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(''); // État pour gérer les messages d'erreur
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const fetchProducts = async () => {
+    setIsLoading(true);
+    try {
+        const response = await ky.get('http://localhost:5000/api/products').json();
+        console.log("Produits:", response); // Pour vérifier le format de la réponse
+        setProducts(response.products); // Mettre à jour l'état avec response.products
+    } catch (error) {
+        setErrorMessage('Erreur lors du chargement des produits');
+        console.error(error);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
 
   useEffect(() => {
-    // Fetch all products when the component mounts
-    const loadProducts = async () => {
-      try {
-        const data = await fetchProducts();
-        console.log('Produits récupérés:', data); // Ajoutez cette ligne
-        setProducts(data || []);
-      } catch (error) {
-        console.error('Échec de la récupération des produits:', error);
-      }
-    };
-    
-    loadProducts();
+    fetchProducts();
   }, []);
 
-  const addProductHandler = async (newProduct) => {
+  // const addProduct = async (formData) => {
+  //   try {
+  //     await ky.post('http://localhost:5000/api/products', { body: formData });
+  //     fetchProducts(); // Rafraîchir la liste des produits après ajout
+  //   } catch (error) {
+  //     console.error('Erreur lors de l\'ajout du produit :', error);
+  //   }
+  // };
+  const addProduct = async (productData) => {
     try {
-      const addProduct = await addProduct(newProduct);
-      setProducts([...products, addProduct]); // Mettre à jour l'état local avec le nouveau produit ajouté
-      setErrorMessage(''); // Réinitialiser le message d'erreur
+      const response = await ky.post(`http://localhost:5000/api/products/`, {
+        body: productData,
+      }).json();
+      
+      return response;
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        setErrorMessage('Ce produit existe déjà. Veuillez en choisir un autre.');
-      } else {
-        setErrorMessage('Une erreur est survenue lors de l\'ajout du produit.');
-      }
-      console.error('Erreur lors de l\'ajout du produit:', error);
+      throw error;
+    }
+  };
+  const updateProduct = async (id, formData) => {
+    try {
+      await ky.put(`http://localhost:5000/api/products/${id}`, { body: formData });
+      fetchProducts(); // Rafraîchir la liste des produits après modification
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du produit :', error);
     }
   };
 
-  const updateProductHandler = async (productId, updatedProduct) => {
+  const deleteProduct = async (id) => {
     try {
-      const updated = await updateProduct(productId, updatedProduct);
-      setProducts(products.map((prod) => (prod._id === productId ? updated : prod)));
-      setErrorMessage(''); // Réinitialiser le message d'erreur
+      await ky.delete(`http://localhost:5000/api/products/${id}`);
+      fetchProducts(); // Rafraîchir la liste des produits après suppression
     } catch (error) {
-      setErrorMessage('Une erreur est survenue lors de la mise à jour du produit.');
-      console.error('Erreur lors de la mise à jour du produit:', error);
-    }
-  };
-
-  const deleteProductHandler = async (productId) => {
-    const confirmDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');
-    if (confirmDelete) {
-      try {
-        await deleteProduct(productId);
-        setProducts(products.filter((prod) => prod._id !== productId));
-        setErrorMessage(''); // Réinitialiser le message d'erreur
-      } catch (error) {
-        setErrorMessage('Une erreur est survenue lors de la suppression du produit.');
-        console.error('Erreur lors de la suppression du produit:', error);
-      }
+      console.error('Erreur lors de la suppression du produit :', error);
     }
   };
 
   return (
-    <ProductContext.Provider
-      value={{
-        products,
-        addProduct: addProductHandler,
-        updateProduct: updateProductHandler,
-        deleteProduct: deleteProductHandler,
-      }}
-    >
+    <ProductContext.Provider value={{ products, isLoading, errorMessage, addProduct, updateProduct, deleteProduct }}>
       {children}
     </ProductContext.Provider>
   );

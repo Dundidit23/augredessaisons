@@ -1,23 +1,21 @@
-// categoryControllers
-const Category = require('../models/Category');
 
+const Category = require('../models/Category');
 
 const addCategory = async (req, res) => {
   try {
-    const { category } = req.body;
-    if (!category) {
-      return res.status(400).json({ message: 'Category is required' });
-    }
+    const { category } = req.body; // Récupère le champ 'category' du corps de la requête
+    // if (!category) {
+    //   return res.status(400).json({ message: 'Category is required' });
+    // }
 
-    // Check if the category already exists
+    // Vérifie si la catégorie existe déjà
     const existingCategory = await Category.findOne({ category });
     if (existingCategory) {
       return res.status(409).json({ message: 'Category already exists' });
     }
 
-    // Create a new category
-    const categoryData = req.body;
-    const newCategory = new Category(categoryData);
+    // Crée une nouvelle catégorie
+    const newCategory = new Category({ category }); // Directement passer { category }
     await newCategory.save();
 
     res.status(201).json(newCategory);
@@ -27,11 +25,14 @@ const addCategory = async (req, res) => {
   }
 };
 
-
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const { category } = req.body;
+    if (!category) {
+      return res.status(400).json({ message: 'Category is required' });
+    }
+    
     const updatedCategory = await Category.findByIdAndUpdate(id, { category }, { new: true });
     if (!updatedCategory) {
       return res.status(404).json({ message: 'Category not found' });
@@ -66,6 +67,7 @@ const getAllCategories = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 const getOneCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -79,6 +81,7 @@ const getOneCategory = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 module.exports = {
   addCategory,
   updateCategory,

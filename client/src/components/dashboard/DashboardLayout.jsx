@@ -1,8 +1,7 @@
 //DashboarLayout.jsx
-
 import { Routes, Route, Outlet } from 'react-router-dom';
 import DashboardAccueil from './DashboardAccueil';
-import AdminProducts from '../products/AdminProducts.jsx';
+import GestionProducts from '../products/GestionProducts.jsx';
 import ClientList from '../clients/ClientList';
 import Parameters from './Parameters.jsx';
 import Categories from '../categories/Categories.jsx';
@@ -19,7 +18,7 @@ const DashboardLayout = () => {
         <Outlet />
           <Routes>
             <Route path="/" element={<DashboardAccueil />} />
-            <Route path="produits" element={<AdminProducts />} />
+            <Route path="produits" element={<GestionProducts />} />
             <Route path="clients" element={<ClientList />} />
             <Route path="/paramètres" element={<Parameters />} />
             <Route path="/paramètres/Catégories" element={<Categories />} />

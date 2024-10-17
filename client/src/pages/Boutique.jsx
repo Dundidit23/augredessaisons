@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './boutique.scss';
-import AllProducts from '../components/products/AllProducts';
-import { fetchProducts, fetchCategories } from '../services/api'; 
-import { CategoryContext } from '../context/CategoryContext'; // Importation correcte du contexte
+//import AllProducts from '../components/products/AllProducts';
+import { fetchProducts, fetchCategories } from '../../private/services/api'; 
+import { CategoryContext } from '../../private/CategoryContextOriginal'; // Importation correcte du contexte
 
 const Boutique = () => {
   const [products, setProducts] = useState([]); // Initialisation en tant que tableau

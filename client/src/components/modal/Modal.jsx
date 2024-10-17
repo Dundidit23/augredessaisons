@@ -11,18 +11,14 @@ const Modal = ({ show, onClose, children }) => {
   useEffect(() => {
     if (show) {
       document.addEventListener('keydown', handleEscape);
-    } else {
-      document.removeEventListener('keydown', handleEscape);
-    }
-
+    } 
+    // Cleanup function
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [show]);
 
-  if (!show) {
-    return null;
-  }
+  if (!show) return null; // Return null if not showing
 
   return (
     <div className="modal-overlay" onClick={onClose}>
