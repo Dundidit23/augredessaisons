@@ -3,12 +3,14 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CategoryProvider } from './context/CategoryContext';
 import { ProductProvider } from './context/ProductContext';
-
+import { CartProvider } from './context/CartContext';
 import Header from './layout/header/Header';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 import ConseilsEnHerboristerie from './pages/ConseilEnHerboristerie';
 import Boutique from './pages/Boutique';
+import DetailsProduct from './pages/DetailsProduct';
+import CartPage from './pages/CartPage.jsx';
 import Soins from './pages/Soins';
 import Ateliers from './pages/Ateliers';
 import Register from './pages/Register';
@@ -28,13 +30,17 @@ function App() {
     <AuthProvider>
       <CategoryProvider>
       <ProductProvider>
+      <CartProvider>
         {/* Affichez le Header si on n'est pas sur une route liée au Dashboard */}
         {!isDashboardPath && <Header />} 
         
         <ErrorBoundary>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path="/Conseils_En_Herboristerie" element={<ConseilsEnHerboristerie />} />            <Route path="/boutique" element={<Boutique />} />
+            <Route path="/Conseils_En_Herboristerie" element={<ConseilsEnHerboristerie />} />
+            <Route path="/boutique" element={<Boutique />} />
+            <Route path="/product/:id" element={<DetailsProduct />} />
+            <Route path="/cart" element={<CartPage />} />
             <Route path="/soins" element={<Soins />} />
             <Route path="/ateliers" element={<Ateliers />} />
             <Route path='/register' element={<Register />} />
@@ -46,6 +52,7 @@ function App() {
 
           </Routes>
         </ErrorBoundary>
+      </CartProvider>
       </ProductProvider>
       </CategoryProvider>
     </AuthProvider>

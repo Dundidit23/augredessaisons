@@ -1,29 +1,118 @@
-.boutique{
-    margin: 2rem;
-    background-color: white;
-    &__title{
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-}
-   .boutique__container{
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    gap: 1rem;
-    &__sideBar{
-        border: 1px solid lightgrey;
-        padding: 1rem;
-        background-color: rgb(97, 143, 29);
-   }
-.boutique-style{
+// .boutique{
+//     margin: 2rem;
+//     background-color: white;
+//     &__title{
+//         font-size: 1.5rem;
+//         font-weight: bold;
+//     }
+// }
+//    .boutique__container{
+//     display: grid;
+//     grid-template-columns: 1fr 4fr;
+//     gap: 1rem;
+//     &__sideBar{
+//         border: 1px solid lightgrey;
+//         padding: 1rem;
+//         background-color: rgb(97, 143, 29);
+//    }
+// .boutique-style{
+//     display: grid;
+//     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+//     gap: 1rem;
+// }
+  
+//     // .category{
+//     //     border: none;
+//     // }
+// }
+
+    /* Styles pour la page de la boutique */
+.boutique {
+    margin: 20px;
+  }
+  
+  .boutique-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .category-filter {
+    flex: 1;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .category-filter h4 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .category-filter ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .category-filter ul li {
+    margin: 5px 0;
+    cursor: pointer;
+    color: #007BFF;
+  }
+  
+  .category-filter ul li:hover {
+    text-decoration: underline;
+  }
+  
+  .product-list {
+    flex: 3;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-}
+    gap: 20px;
+    padding: 10px;
+  }
   
-    // .category{
-    //     border: none;
-    // }
-}
-
-    
+  .product-item {
+    border: 1px solid #ddd;
+    padding: 2px;
+    text-align: center;
+    border-radius: 8px;
+  }
+  
+  .product-item img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    border: none;
+    padding: none;
+  }
+  
+  .product-item h3 {
+    font-size: 1.1em;
+  }
+  
+  .product-item button {
+    margin: 5px;
+    padding: 10px;
+    background-color: $primary-col;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .product-item button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .boutique-container {
+      flex-direction: column;
+    }
+  
+    .category-filter {
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+  

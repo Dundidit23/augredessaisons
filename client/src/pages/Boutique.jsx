@@ -1,91 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useProduct } from '../context/ProductContext';
+import ListProducts from '../components/products/ListProducts';
+import CategoryFilter from '../components/categories/categoryFilter';
 import './boutique.scss';
-//import AllProducts from '../components/products/AllProducts';
-import { fetchProducts, fetchCategories } from '../../private/services/api'; 
-import { CategoryContext } from '../../private/CategoryContextOriginal'; // Importation correcte du contexte
 
 const Boutique = () => {
-  const [products, setProducts] = useState([]); // Initialisation en tant que tableau
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const { categories } = useContext(CategoryContext); // Accès au contexte des catégories
+ const { products } = useProduct();
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
-  // const Sidebar = ({ onCategorySelect }) => {
-  //   const { categories } = useCategory();
-
+  // const filterByCategory = (category) => {
+  //   setFilteredProducts(products.filter(product => product.category === category));
+  // };
   useEffect(() => {
-    fetchProducts()
-      .then((data) => {
-        console.log('Données récupérées:', data); // Log des données
-        if (Array.isArray(data.products)) {
-          setProducts(data.products); // Accédez à data.products
-          setFilteredProducts(data.products);
-        } else {
-          console.error('Les données des produits ne sont pas un tableau:', data.products);
-        }
-      })
-      .catch((err) => console.error('Erreur lors de la récupération des produits:', err));
-  }, []);
+    setFilteredProducts(products); // Mettre à jour la liste lorsque les produits changent
+  }, [products]);
 
-  const handleCategoryClick = (categoryId) => {
-    setSelectedCategory(categoryId);
-    console.log('Type de products avant le filtre:', typeof products); // Log du type
-    console.log('Valeur de products avant le filtre:', products); // Log de la valeur
-
-    if (!categoryId) {
-      setFilteredProducts(products); // Montre tous les produits
+  const filterByCategory = (categoryId) => {
+    if (categoryId) {
+      setFilteredProducts(products.filter(product => product.category === categoryId));
     } else {
-      const filtered = products.filter((product) => product.category === categoryId); // Filtrage
-      setFilteredProducts(filtered);
+      setFilteredProducts(products); // Affiche tous les produits si aucune catégorie n'est sélectionnée
     }
   };
 
-  // import { useCategory } from '../context/CategoryContext';
-
-  // const Sidebar = ({ onCategorySelect }) => {
-  //   const { categories } = useCategory();
-  
-  //   return (
-  //     <aside>
-  //       <h3>Catégories</h3>
-  //       <ul>
-  //         {categories.map((category) => (
-  //           <li key={category._id} onClick={() => onCategorySelect(category._id)}>
-  //             {category.name}
-  //           </li>
-  //         ))}
-  //       </ul>
-  //     </aside>
-  //   );
-  // };
-  
-
   return (
-    <div className='boutique'>
-      <div className='boutique__titre'>
-        <h2>La Boutique en ligne</h2>
-        <p>Consultez nos produits en ligne pour une meilleure expérience.</p>
-      </div>
-      <section className='boutique__container'>
-        <aside className='boutique__container__sideBar'>
-          <h3>Catégories</h3>
-          <ul>
-            {/* <li onClick={() => handleCategoryClick(null)}>Tous les produits</li> */}
-            {categories.length > 0 ? (
-              categories.map((category) => (
-                <li key={category._id} onClick={() => handleCategoryClick(category._id)}>
-                  {category.category} {/* Utilisez category.category au lieu de category.name */}
-                </li>
-              ))
-            ) : (
-              <li>Aucune catégorie disponible</li> // Affiche un message si aucune catégorie
-            )}
-          </ul>
-        </aside>
-        <div className='boutique__products boutique-style'>
-        <AllProducts products={products} category={selectedCategory} />
-        </div>
-      </section>
+    <div className="boutique">
+      <h2>La Boutique en ligne</h2>
+      <div className="boutique-container">
+        <CategoryFilter onSelectCategory={filterByCategory} />
+        <ListProducts products={filteredProducts} isBoutiqueView={true} />      </div>
     </div>
   );
 };

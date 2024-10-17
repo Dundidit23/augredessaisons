@@ -1,9 +1,11 @@
+//AdminProducts.jsx
 import React, { useRef, useEffect, useState } from 'react';
 import { useProduct } from '../../context/ProductContext';
 import { useCategory } from '../../context/CategoryContext';
+import ListProducts from './ListProducts';
 import '../categories/categories.scss';
 
-const GestionProducts = () => {
+const AdminProducts = () => {
   const { products, isLoading, errorMessage, addProduct, updateProduct, deleteProduct } = useProduct();
   console.log('Produits:', products);
   const { categories, fetchCategories, errorMessage: categoryError } = useCategory();
@@ -85,7 +87,7 @@ const GestionProducts = () => {
     setIsEditMode(false);
   };
 
-  const handleEdit = (product) => {
+  const handleUpdate = (product) => {
     setFormData({
       _id: product._id,
       name: product.name,
@@ -138,7 +140,7 @@ const GestionProducts = () => {
                             <p>Prix: {product.price} €</p>
                             <p>Stock: {product.stock}</p>
                         </div>
-                        <button onClick={() => handleEdit(product)}>Modifier</button>
+                        <button onClick={() => handleUpdate(product)}>Modifier</button>
                         <button onClick={() => deleteProduct(product._id)}>Supprimer</button>
                     </li>
                 ))
@@ -166,8 +168,20 @@ const GestionProducts = () => {
             <p>Aucun produit disponible.</p>
         )}
     </div>
+    <div>
+      <h2>Manage Products</h2>
+      <ListProducts
+        products={products}
+        onUpdate={updateProduct}
+        onDelete={deleteProduct}
+        isAdminView={true}
+        handleUpdate={handleUpdate}
+          handleDelete={handleDelete}
+        
+      />
+    </div>
     </div>
 );
 };
 
-export default GestionProducts;
+export default AdminProducts;
