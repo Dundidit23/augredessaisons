@@ -77,15 +77,22 @@ const updateProductById = async (req, res) => {
 
     // Vérifiez si une nouvelle image a été uploadée
     if (req.file) {
-      updatedData.imageUrl = req.file.path.replace(/\\/g, '/'); // Nettoyer le chemin de l'image
+      // Remplacer les antislashs par des slashs dans le chemin de l'image pour éviter les problèmes
+      updatedData.image = `/uploads/${req.file.filename}`.replace(/\\/g, '/');
     }
 
+    // Mettre à jour le produit dans la base de données
     const product = await Product.findByIdAndUpdate(req.params.id, updatedData, { new: true });
-    if (!product) return res.status(404).json({ message: 'Product not found' });
+
+    // Si le produit n'existe pas, retourner une erreur
+    if (!product) {
+      return res.status(404).json({ message: 'Produit non trouvé' });
+    }
+
     res.status(200).json(product);
   } catch (error) {
     console.error(error.message);
-    res.status(400).json({ message: 'Bad request' });
+    res.status(400).json({ message: 'Requête incorrecte', error: error.message });
   }
 };
 

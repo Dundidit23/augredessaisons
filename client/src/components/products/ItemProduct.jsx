@@ -1,12 +1,20 @@
-import React from 'react';
+//ItemProduct.jsx
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 
-const ItemProduct = ({ product, isAdminView = false, isDetailView = false, isBoutiqueView = false, handleUpdate, handleDelete }) => {
+const ItemProduct = ({ 
+  product, 
+  isAdminView, 
+  handleUpdate, 
+  handleDelete, 
+  startEditProduct, 
+  isEditMode 
+}) => {  
   const { addToCart } = useCart();
+  //const [updatedProduct, setUpdatedProduct] = useState(product);
   const navigate = useNavigate();
 
-  // Gestion des actions spécifiques à chaque vue
   const handleViewDetails = () => {
     navigate(`/product/${product._id}`);
   };
@@ -17,27 +25,32 @@ const ItemProduct = ({ product, isAdminView = false, isDetailView = false, isBou
 
   return (
     <div className="product-item">
-      <img src={product.imageUrl} alt={product.name} />
-      <h3>{product.name}</h3>
-      <p>{product.price} €</p>
+      {/* Image */}
+      <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} />
 
-      {/* Affichage conditionnel des boutons selon la vue */}
+      {/* Nom et Description */}
+      <h3>{product.name}</h3>
+      <p>{product.description}</p>
+
+      {/* Catégorie */}
+      <p>{product.category ? product.category || product.category : "N/A"}</p>
+      {/* Prix et Stock */}
+      <p>Prix : {product.price} €</p>
+      <p>Stock : {product.stock}</p>
+
+      {/* Boutons selon la vue */}
       {isAdminView && (
         <>
-          <button onClick={() => handleUpdate(product)}>Update</button>
-          <button onClick={() => handleDelete(product)}>Delete</button>
+          <button onClick={() => startEditProduct(product)}>Modifier</button>
+          <button onClick={() => handleDelete(product._id)}>Supprimer</button>
         </>
       )}
 
-      {isBoutiqueView && (
+      {!isAdminView && (
         <>
-          <button onClick={handleViewDetails}>View Details</button>
-          <button onClick={handleAddToCart}>Add to Cart</button>
+          <button onClick={handleViewDetails}>Voir</button>
+          <button onClick={handleAddToCart}>Ajouter au panier</button>
         </>
-      )}
-
-      {isDetailView && (
-        <button onClick={handleAddToCart}>Add to Cart</button>
       )}
     </div>
   );

@@ -23,20 +23,11 @@ export const ProductProvider = ({ children }) => {
         setIsLoading(false);
     }
 };
-
-
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  // const addProduct = async (formData) => {
-  //   try {
-  //     await ky.post('http://localhost:5000/api/products', { body: formData });
-  //     fetchProducts(); // Rafraîchir la liste des produits après ajout
-  //   } catch (error) {
-  //     console.error('Erreur lors de l\'ajout du produit :', error);
-  //   }
-  // };
+ 
   const addProduct = async (productData) => {
     try {
       const response = await ky.post(`http://localhost:5000/api/products/`, {
@@ -67,7 +58,7 @@ export const ProductProvider = ({ children }) => {
   };
 
   return (
-    <ProductContext.Provider value={{ products, isLoading, errorMessage, addProduct, updateProduct, deleteProduct }}>
+    <ProductContext.Provider value={{ products, isLoading, errorMessage, addProduct, updateProduct, deleteProduct, fetchProducts }}>
       {children}
     </ProductContext.Provider>
   );

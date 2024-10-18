@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useProduct } from '../context/ProductContext';
 import ListProducts from '../components/products/ListProducts';
+
 import CategoryFilter from '../components/categories/categoryFilter';
 import './boutique.scss';
 
