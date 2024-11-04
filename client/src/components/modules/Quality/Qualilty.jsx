@@ -6,7 +6,9 @@ const Qualilty = () => {
     <div className='quality'>
         <div className='quality__right'>
             <h2>Qualité garantie</h2>
-            <p>Au gré des saisons vend des produits à base de plantes naturelles depuis 2022. Nous fournissons un excellent service client avec une équipe dirigée par le fondateur Vincent Cassagne, joignable par e-mail à vincent.cassagne@agredessaison.com ou par téléphone au +33 6 99 48 87 55.</p>
+            <p>Au gré des saisons vend des produits à base de plantes naturelles depuis 2022. </p>
+            <p>                 Nous fournissons un excellent service client avec une équipe dirigée par le fondateur Vincent Cassagne, joignable par e-mail à vincent.cassagne@agredessaison.com ou par téléphone au +33 6 99 48 87 55.</p>
+
             <button>En savoir plus →</button>
         </div>
         <div className='quality__left' >

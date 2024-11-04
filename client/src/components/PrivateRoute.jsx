@@ -1,11 +1,11 @@
+//PrivateRoute.jsx
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAdminAuth } from '../context/AdminContext';
 
-const PrivateRoute = ({ element }) => {
-  const { isAuthenticated } = useAuth();
+const AdminPrivateRoute = ({ element: Element }) => {
+  const { isAuthenticated } = useAdminAuth();
 
-  return isAuthenticated ? element : <Navigate to="/AdminLogin
-  " />;
+  return isAuthenticated ? <Element /> : <Navigate to="/adminLogin" />;
 };
 
 export default PrivateRoute;

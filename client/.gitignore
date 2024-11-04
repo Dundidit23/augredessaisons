@@ -30,8 +30,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignore the private folder
+# Ignore the private folder and the server
 /private/
+/server/
 
 # Others
 coverage/  # Si tu fais des tests et génères des rapports de couverture

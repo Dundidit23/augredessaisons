@@ -4,7 +4,6 @@
   flex-direction: column;
 }
 .dashboard-layout .dashboard-main {
-  display: grid;
-  gap: 5px;
-  grid-template-columns: auto 87vw;
+  background-color: aqua;
+  display: flex;
 }/*# sourceMappingURL=dashboardLayout.css.map */

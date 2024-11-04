@@ -1,25 +1,25 @@
 //DashAction.jsx
-import React, { useState, useEffect, useCallback } from 'react';
-//import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Modal from '../modal/Modal'; 
-import CreateProduct from '../forms/CreateProduct';
+import CreateProduct from '../forms/CreateProduct2';
 import { useCategory } from '../../../private/CategoryContextOriginal';
 import './dashAction.scss';
-import '../../assets/styles/dashboard/dashboard.scss'
+//import '../../assets/styles/dashboard/dashboard.scss'
 
 
-const DashActions = ({ onAddProduct, onFilter, onViewChange }) => {
-    const { categories } = useCategory();
-    const [showFilterMenu, setShowFilterMenu] = useState(false);
-    const [filterCategory, setFilterCategory] = useState('All Categories'); // État pour le filtre de catégorie
+const DashAction = ({ onAdd, onFilter, onViewChange }) => {
+    const { categories } = useCategory();  
     const [showModal, setShowModal] = useState(false);
-    const [viewMode, setViewMode] = useState('table');
+    const [showFilterMenu, setShowFilterMenu] = useState(false);
+    //const [filterCategory, setFilterCategory] = useState('All Categories'); // État pour le filtre de catégorie
+    //const [newProduct, setNewProduct] = useState({ name: '', category: '', description: '', stock: 0, price: 0, imageUrl: '' });
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
-    const [newProduct, setNewProduct] = useState({ name: '', category: '', description: '', stock: 0, price: 0, imageUrl: '' });
-   const [products, setProducts] = useState([]);
-     [filteredProducts, setFilteredProducts] = useState([]);
-
-   
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
     const handleFilter = (category) => {
         if (category) {
             setFilteredProducts(products.filter(product => product.category === category));
@@ -28,35 +28,7 @@ const DashActions = ({ onAddProduct, onFilter, onViewChange }) => {
         }
     };
 
-    // useEffect(() => {
-    //     onFilter(filterCategory === 'All Categories' ? null : filterCategory);
-    // }, [filterCategory, onFilter]);
-   
 
-    useEffect(() => {
-        const modeSwitch = document.querySelector('.mode-switch');
-        if (modeSwitch) {
-            const handleModeSwitch = () => {
-                document.documentElement.classList.toggle('light');
-                modeSwitch.classList.toggle('active');
-            };
-            modeSwitch.addEventListener('click', handleModeSwitch);
-            return () => {
-                modeSwitch.removeEventListener('click', handleModeSwitch);
-            };
-        }
-    }, []);
-
-
-    const toggleFilterMenu = () => {
-        setShowFilterMenu(!showFilterMenu);
-    };
-    const handleViewChange = useCallback((mode) => {
-        setViewMode(mode);
-      }, []);
-    const toggleModal = () => {
-        setShowModal(!showModal);
-    };
     const handleAddProduct = async (product) => {
         console.log('Adding product:', product);
     
@@ -83,9 +55,30 @@ const DashActions = ({ onAddProduct, onFilter, onViewChange }) => {
     };
     
 
+    const toggleFilterMenu = () => {
+        setShowFilterMenu(!showFilterMenu);
+    };
+
+    // useEffect(() => {
+    //     onFilter(filterCategory === 'All Categories' ? null : filterCategory);
+    // }, [filterCategory, onFilter]);
+
    
 
-  
+    useEffect(() => {
+        const modeSwitch = document.querySelector('.mode-switch');
+        if (modeSwitch) {
+            const handleModeSwitch = () => {
+                document.documentElement.classList.toggle('light');
+                modeSwitch.classList.toggle('active');
+            };
+            modeSwitch.addEventListener('click', handleModeSwitch);
+
+            return () => {
+                modeSwitch.removeEventListener('click', handleModeSwitch);
+            };
+        }
+    }, []);
 
     return (
         <div className="actions-wrapper">
@@ -126,10 +119,10 @@ const DashActions = ({ onAddProduct, onFilter, onViewChange }) => {
             </button>
 
             <Modal show={showModal} onClose={toggleModal}>
-                <CreateProduct onSubmit={onAddProduct} />
+                <CreateProduct onSubmit={handleAddProduct} />
             </Modal>
 
-            <button className="action-button list" title="List View" onClick={() =>   onViewChange={handleViewChange} }>
+            <button className="action-button list" title="List View" onClick={() => onViewChange('table')}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-list">
                     <line x1="8" y1="6" x2="21" y2="6" />
                     <line x1="8" y1="12" x2="21" y2="12" />
@@ -140,7 +133,7 @@ const DashActions = ({ onAddProduct, onFilter, onViewChange }) => {
                 </svg>
             </button>
             
-            <button className="action-button grid" title="Grid View" onClick={() =>  onViewChange={handleViewChange} }>
+            <button className="action-button grid" title="Grid View" onClick={() => onViewChange('grid')}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-grid">
                     <rect x="3" y="3" width="7" height="7" />
                     <rect x="14" y="3" width="7" height="7" />
@@ -152,4 +145,4 @@ const DashActions = ({ onAddProduct, onFilter, onViewChange }) => {
     );
 };
 
-export default DashActions;
+export default DashAction;

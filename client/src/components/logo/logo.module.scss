@@ -1,4 +1,5 @@
 .logopic{
-    width: 30vw;
+    width: min(200em, max(0.5em, 30vmin)); 
+filter: drop-shadow(1px 1px 1px rgb(187, 194, 180));
 }
 

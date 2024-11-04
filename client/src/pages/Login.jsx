@@ -18,7 +18,7 @@ export default function Login() {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      await ky.post('http://localhost:5000/api/users/login', { json: formData }).json();
+      await ky.post('http://localhost:4000/api/users/login', { json: formData }).json();
       login();
       navigate('/dashboard');
     } catch (error) {

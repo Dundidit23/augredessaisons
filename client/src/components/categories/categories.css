@@ -18,13 +18,6 @@
   padding: 1.5rem 0;
   width: 8rem;
 }
-.categories-content fieldset {
-  border: none;
-  margin: 0 auto;
-  width: 80%;
-  display: block;
-  margin: auto;
-}
 .categories-content button {
   padding: 0.5rem;
   font-size: 1rem;
@@ -43,4 +36,8 @@
   vertical-align: middle;
   gap: 1rem;
   padding-bottom: 1rem;
+}
+
+img {
+  width: 100px;
 }/*# sourceMappingURL=categories.css.map */

@@ -9,7 +9,8 @@ $moderustic: Moderustic, sans-serif;
 
 body{
     font-family: $font-stack;
-    width: 100vw;
+    font-size: clamp(0.5rem, 1rem, 1.5rem); 
+
 }
 h1{
     color: $col-titre;
@@ -21,7 +22,7 @@ h2{
     @extend h1;
     font-weight: 600;
     text-align: center;
-    margin: 2rem auto;
+   // margin: 1rem auto;
     text-transform: unset;
     font-family: $moderustic;
 

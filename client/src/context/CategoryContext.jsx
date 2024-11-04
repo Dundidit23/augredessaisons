@@ -1,22 +1,30 @@
 // CategoryContext.jsx
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import ky from 'ky';
+import api from '../services/api';
 
 const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
- const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
-  const fetchCategories = async () => {
+  const fetchCategories = async (retryCount = 0) => {
+    if (categories.length > 0) return; // Ne pas re-fetch si les catégories sont déjà chargées
+
     setLoading(true);
     try {
-      const response = await ky.get('http://localhost:5000/api/categories').json();
+      const response = await api.get('categories').json();
       setCategories(response);
-    } catch (error) {
-      console.error('Erreur lors de la récupération des catégories:', error);
+      setError(null); // Réinitialiser l'erreur en cas de succès
+    } catch (err) {
+      console.error('Erreur lors de la récupération des catégories:', err);
+      setError('Erreur lors de la récupération des catégories.');
+      
+      if (retryCount < 3) {
+        setTimeout(() => fetchCategories(retryCount + 1), 2000); // Réessaye après 2 secondes
+      }
     } finally {
       setLoading(false);
     }
@@ -24,7 +32,7 @@ export const CategoryProvider = ({ children }) => {
 
   const addCategory = async (newCategory) => {
     try {
-      const response = await ky.post('http://localhost:5000/api/categories', {
+      const response = await api.post('categories', {
         json: newCategory,
       }).json();
       setCategories((prev) => [...prev, response]);
@@ -35,7 +43,7 @@ export const CategoryProvider = ({ children }) => {
 
   const updateCategory = async (id, updatedCategory) => {
     try {
-      const response = await ky.put(`http://localhost:5000/api/categories/${id}`, {
+      const response = await api.put(`categories/${id}`, {
         json: updatedCategory,
       }).json();
       setCategories((prev) =>
@@ -48,7 +56,7 @@ export const CategoryProvider = ({ children }) => {
 
   const deleteCategory = async (id) => {
     try {
-      await ky.delete(`http://localhost:5000/api/categories/${id}`);
+      await api.delete(`categories/${id}`);
       setCategories((prev) => prev.filter((cat) => cat._id !== id));
     } catch (error) {
       console.error('Erreur lors de la suppression de la catégorie:', error);
@@ -57,10 +65,10 @@ export const CategoryProvider = ({ children }) => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, []); // Appelle fetchCategories lors du premier rendu
 
   return (
-    <CategoryContext.Provider value={{ categories, loading, error, addCategory, updateCategory, deleteCategory }}>
+    <CategoryContext.Provider value={{ fetchCategories, categories, loading, error, addCategory, updateCategory, deleteCategory }}>
       {children}
     </CategoryContext.Provider>
   );

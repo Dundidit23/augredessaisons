@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from '../../../../private/services/api';
 import './login.scss';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
+import { useUser } from "../../../context/UserContext";
 import Forgot from './Forgot';
 import Register from './Register';
 
@@ -17,6 +17,7 @@ const Login = ({ onLogin }) => {
   const closeForm = () => {
     setIsFormOpen(false);
   };
+  const { login, error } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState('password');
@@ -24,7 +25,6 @@ const Login = ({ onLogin }) => {
   const [remember, setRemember] = useState(false);
   const [validate, setValidate] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {

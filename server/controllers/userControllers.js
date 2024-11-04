@@ -4,6 +4,33 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 // Register a new user
+const createUser = async (req, res) => {
+  try {
+    const { username, email, password, status, role } = req.body;
+
+    // Vérifiez que tous les champs obligatoires sont fournis
+    if (!username || !email || !password || !role) {
+      return res.status(400).json({ message: 'Tous les champs sont obligatoires.' });
+    }
+
+  //  const imageUrl = req.file ? req.file.path : null;  // Vérifiez l'image
+
+    const newUser = await User.create({
+      username,
+      email,
+      password,
+      status,
+      role,
+    });
+
+    res.status(201).json(newUser);
+    console.log('Requête reçue :', req.body);
+  } catch (error) {
+    res.status(400).json({ message: 'error.message' });
+  }
+};
+
+
 const registerUser = async (req, res) => {
   try {
     const { username, password, email, role } = req.body;
@@ -55,10 +82,32 @@ const loginUser = async (req, res) => {
 // Get all users
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
-    res.json(users);
+    const { page = 1, limit = 10, sortBy = 'createdAt', order = 'desc', ...filters } = req.query;
+
+    // Convert page and limit to numbers
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+
+    // Build the query with filters
+    const query = { ...filters };
+
+    // Execute the query with pagination and sorting
+    const users = await User.find(query)
+      .sort({ [sortBy]: order === 'asc' ? 1 : -1 })
+      .skip((pageNumber - 1) * limitNumber)
+      .limit(limitNumber);
+
+    // Get the total count for pagination
+    const totalUsers = await User.countDocuments(query);
+
+    res.status(200).json({
+      users,
+      totalPages: Math.ceil(totalUsers / limitNumber),
+      currentPage: pageNumber,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error.message);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -78,10 +127,10 @@ const getUserById = async (req, res) => {
 // Update user by ID
 const updateUserById = async (req, res) => {
   try {
-    const { username, email, role, statut, avatar, profilePic } = req.body;
+    const { username, email, role, status, avatar, profilePic } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { username, email, role, statut, avatar, profilePic },
+      { username, email, role, status, avatar, profilePic },
       { new: true }
     );
     if (!updatedUser) {
@@ -115,6 +164,7 @@ const dashboard = (req, res) => {
 };
 
 module.exports = {
+  createUser,
   registerUser,
   loginUser,
   getAllUsers,

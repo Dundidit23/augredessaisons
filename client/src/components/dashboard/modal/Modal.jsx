@@ -1,3 +1,4 @@
+//Modal.jsx
 import React, { useEffect } from 'react';
 import './modal.scss';
 

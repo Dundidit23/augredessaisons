@@ -1,96 +1,83 @@
-import { useState } from 'react';
+//AdminLogin.jsx
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAdminAuth } from '../../context/AdminContext'; // Assurez-vous que le chemin est correct
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 import { useFormValidation } from '../../components/hooks/adminLoginFormValidations';
-import api from '../../../private/services/api';
 import '../../components/forms/connect/login.scss';
 
 export default function AdminLogin() {
-  console.log('AdminLogin component rendered'); // Debug log
-
   const { data, errors, handleChange, validate } = useFormValidation({ username: '', password: '' }, 'admin');
-  
-  const { login } = useAuth();
+  const { loginAdmin, setUsername } = useAdminAuth(); // Vérifiez que cela retourne bien une fonction
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(data);
   const [showPassword, setShowPassword] = useState(false);
-  const [type, setType] = useState('password');
-  const [icon, setIcon] = useState(eyeOff);
 
-  const loginUser = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (!validate(formData)) {
+    if (!validate()) {
       console.error('Validation failed', errors);
       return;
     }
-    console.log('Form data before login:', formData); // Debug log
-    try {
-      const response = await api.post('api/users/login', { json: formData }).json();
-      if (response.isAdmin) {
-        login();
-        navigate('/dashboard'); // Correct path for navigation after login
-      } else {
-        console.error('Not an admin user');
-      }
-    } catch (error) {
-      console.error('Login failed', error);
+
+    // Appel à loginAdmin avec les bons arguments
+    const success = await loginAdmin(data.username, data.password);
+    
+    if (success) {
+      setUsername(data.username); // Met à jour le contexte avec le nom d'utilisateur
+      navigate('/admin/dashboard'); // Redirigez vers le tableau de bord
+    } else {
+      console.error('Login failed');
+      alert('Nom d\'utilisateur ou mot de passe incorrect.'); // Affichez un message d'erreur à l'utilisateur
     }
   };
 
   const handleToggle = () => {
-    if (type === 'password') {
-      setIcon(eye);
-      setType('text');
-    } else {
-      setIcon(eyeOff);
-      setType('password');
-    }
+    setShowPassword(!showPassword);
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    handleChange(e); // Call handleChange from useFormValidation
+    handleChange(e);
   };
 
   return (
-    <div className='auth-wrapper'>
-      <h3>Admin Connection</h3>
-      <form className='input-group' onSubmit={loginUser}>
-        <input
-          className='field'
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange}
-          placeholder="Username"
-        />
-        <div className='password-wrapper'>
+    <div className="auth-wrapper">
+      <form className="login" onSubmit={handleLogin}>
+        <h3>Admin Connection</h3>
+        <div className="input-group">
+          <label className="label" htmlFor="username">Nom</label>
           <input
-            className='field password-field'
-            type={type}
-            name="password"
-            value={formData.password}
+            id="username"
+            className="input"
+            type="text"
+            name="username"
+            value={data.username}
             onChange={handleInputChange}
-            placeholder="Password"
           />
-          <span className='icon-wrapper' onClick={handleToggle}>
-            <Icon icon={icon} size={20} />
-          </span>
+          {errors.username && <span className="error">{errors.username}</span>}
         </div>
-        <button className='btn' type="submit">Login</button>
+        <div className="input-group">
+          <label className="label" htmlFor="password">Mot de passe</label>
+          <input
+            className="input"
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            value={data.password}
+            onChange={handleInputChange}
+          />
+          <span className="icon-wrapper" onClick={handleToggle}>
+            <Icon icon={showPassword ? eye : eyeOff} size={20} />
+          </span>
+          {errors.password && <span className="error">{errors.password}</span>}
+        </div>
+        <div className="buttons">
+          <button className="btn" type="submit">Login</button>
+          <div className="options">
+            <Link to="/admin/admin-register" className="btn option register">Register</Link>
+          </div>
+        </div>
       </form>
-      <div className="options">
-        <button type="button" className="btn option register">
-          <Link to="/admin/admin-register">Register</Link> {/* Updated the path here */}
-        </button>
-      </div>
     </div>
   );
 }

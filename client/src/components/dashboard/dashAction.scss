@@ -9,12 +9,13 @@
   }
 }
 .mode-switch {
-  background-color: transparent;
+  background-color: var(--app-content-secondary-color);
   border: none;
   padding: 0;
   color:  var(--app-content-main-color);
   display: flex;
-  margin-right: 8px;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   .moon {
     fill: var(--app-content-main-color);
@@ -37,7 +38,7 @@ svg {
   display: flex;
   align-items: center;
   color:  var(--app-content-main-color);
-  font-size: $font-small;
+  font-size: small;
   margin-left: 8px;
   cursor: pointer;
   span { margin-right: 4px; }
@@ -94,7 +95,7 @@ svg {
   
   label {
     display: block;
-    font-size: $font-small;
+    font-size: small;
     color:  var(--app-content-main-color);
     margin-bottom: 8px;
   }

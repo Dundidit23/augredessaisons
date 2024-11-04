@@ -3,8 +3,7 @@
   display: flex;
   flex-direction: column;
   .dashboard-main {
-    display: grid;
-    gap: 5px;
-    grid-template-columns: auto 87vw;
+    background-color:aqua;
+    display: flex;
 }
 }

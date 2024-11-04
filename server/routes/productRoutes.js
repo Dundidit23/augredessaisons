@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/'); // Dossier de destination
   },
   filename: function (req, file, cb) {
-    const cleanFileName = file.originalname.replace(/[^a-zA-Z0-9.\-]/g, '_');
+    const cleanFileName = file.originalname.replace(/[^a-zA-Z0-9.\\-]/g, '_');
     cb(null, Date.now() + '-' + cleanFileName); // Nom unique du fichier avec timestamp
   }
 });

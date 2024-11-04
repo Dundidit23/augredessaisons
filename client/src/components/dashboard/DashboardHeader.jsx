@@ -1,13 +1,15 @@
-import React from 'react'
-import './dashboardHeader.scss'
+//DashboardHeader.jsx
+import React, { useState } from 'react';
+import {useAdminAuth} from '../../context/AdminContext';
+import './dashboardHeader.scss';
 
-const DashboardHeader = () => {
+export default function DashboardHeader({ username }) {
+
   return (
     <div className='dashboardHeader'>
       <h1>Tableau de bord</h1>
-      <h2>Welcome </h2>
+      <h3>Welcome {username} !</h3>
     </div>
   )
 }
 
-export default DashboardHeader

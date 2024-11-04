@@ -12,7 +12,7 @@ const ProductList = ({ products, onUpdate, onDelete, isAdminView }) => {
           onUpdate={isAdminView ? () => onUpdate(product._id) : null}
           onDelete={isAdminView ? () => onDelete(product._id) : null}
           isAdminView={isAdminView}
-          showStock={isAdminView}  /* N'affiche le stock que si isAdminView est true */
+          
         />
       ))}
     </div>

@@ -1,0 +1,2 @@
+.login{margin-top:5rem;display:flex;justify-content:space-between}.input-group{color:#000;position:relative;font-size:1.25rem}input{all:unset;position:relative}label{display:block;top:50%;margin-left:2rem;position:absolute;font-size:1rem;color:red;z-index:1}.input:focus{border:1px solid #000;position:relative}.input:focus.input:focus,.input:focus label{position:absolute;font-weight:bold;font-size:.5rem;box-shadow:none;top:1rem;background-color:#fff}
+/*# sourceMappingURL=login.min.css.map */

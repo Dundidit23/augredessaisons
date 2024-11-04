@@ -6,6 +6,12 @@
   padding: 2rem;
   align-items: center;
 }
+@media screen and (max-width: 650px) {
+  .decouvre {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
 
 h2 {
   margin: 0;
@@ -35,6 +41,12 @@ p {
   padding: 2rem;
   border: 1px solid lightgray;
 }
+@media screen and (max-width: 650px) {
+  .category {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
 .category button, .category .voir {
   width: 100px;
   padding: 0.5rem;
@@ -43,7 +55,7 @@ p {
   background: white;
 }
 
-img, .bycategory {
+.categoryImg img {
   width: 100%;
   height: auto;
 }/*# sourceMappingURL=products.css.map */

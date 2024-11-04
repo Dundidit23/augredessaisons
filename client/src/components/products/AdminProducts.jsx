@@ -1,16 +1,25 @@
-// AdminProducts.jsx
-import React, { useEffect, useState, useRef } from 'react';
+//AdminProducts.jsx
+import React, { useRef, useEffect, useState } from 'react';
 import { useProduct } from '../../context/ProductContext';
 import { useCategory } from '../../context/CategoryContext';
+import CategorySelector from '../categories/CategorySelector';
 import ItemProduct from './ItemProduct';
+import DashActions from '../dashboard/DashActions';
+import '../../assets/styles/dashboard/dashboard.scss';
+
+//import './productsAdmin.scss';
+//import './adminProduct.scss';
+import './adminp.scss';
 
 const AdminProducts = () => {
   const { products, isLoading, errorMessage, addProduct, updateProduct, deleteProduct, fetchProducts } = useProduct();
-  const { categories, fetchCategories, errorMessage: categoryError } = useCategory();
-  const formRef = useRef(null);
+ // const { categories, fetchCategories, errorMessage: categoryError } = useCategory();
+ const [selectedCategory, setSelectedCategory] = useState('');
+
   const [previewImage, setPreviewImage] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
+
   const [formData, setFormData] = useState({
     _id: '',
     name: '',
@@ -21,15 +30,20 @@ const AdminProducts = () => {
     image: '',
   });
   
-  const fileInputRef = useRef(null);
+  const formRef = useRef(null);
 
-  // Charger les catégories et produits une seule fois
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId);
+  };
   useEffect(() => {
-    fetchCategories && fetchCategories();
-    fetchProducts && fetchProducts();
-  }, [fetchCategories, fetchProducts]);
+    if (fetchCategories) {
+      fetchCategories();
+    }
+    if (fetchProducts) {
+    fetchProducts();
+    }
+  }, []);
 
-  // Fonction pour commencer l'édition d'un produit
   const startEditProduct = (product) => {
     setProductToEdit(product);
     setFormData({
@@ -41,65 +55,83 @@ const AdminProducts = () => {
       stock: product.stock,
       image: product.image,
     });
-    const imageUrl = `${import.meta.env.VITE_API_BASE_URL}${product.image.replace(/\\/g, '/')}`;
+    const imageUrl = `${import.meta.env.VITE_IMAGE_BASE_URL}/${product.image.replace(/\\/g, '/')}?t=${new Date().getTime()}`; 
     setPreviewImage(imageUrl);
     setIsEditMode(true);
   };
 
-  // Fonction pour gérer les changements dans les champs du formulaire
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Fonction pour gérer les changements dans le champ fichier (image)
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData((prevData) => ({ ...prevData, image: file }));
-      const previewUrl = URL.createObjectURL(file);
-      setPreviewImage(previewUrl);
+      setPreviewImage(URL.createObjectURL(file));
+      setFormData((prev) => ({ ...prev, image: file })); // stocke le fichier dans formData
     }
   };
+  
 
-  // Fonction pour réinitialiser le formulaire
+  const fileInputRef = useRef(null);
+
   const handleCancel = () => {
     setFormData({
-      _id: '',
       name: '',
       description: '',
-      category: '',
       price: '',
       stock: '',
-      image: '',
+      category: '',
+      image: null,
     });
     setPreviewImage(null);
-    fileInputRef.current.value = null;  // Réinitialiser le champ fichier
+    if (fileInputRef.current) {
+        fileInputRef.current.value = null; // Réinitialiser seulement si fileInputRef est défini
+    }
     setIsEditMode(false);
+};
+
+  const handleDelete = (productId) => {
+    if (window.confirm("Voulez-vous vraiment supprimer ce produit ?")) {
+      deleteProduct(productId);
+    }
   };
 
-  // Fonction pour gérer la soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formDataToSubmit = { ...formData };
-    if (isEditMode) {
-      await updateProduct(formDataToSubmit);
+  
+    if (isEditMode && productToEdit) {
+      await updateProduct(productToEdit._id, formData);
     } else {
-      await addProduct(formDataToSubmit);
+      await addProduct(formData);
     }
-
+  
     handleCancel(); // Réinitialiser après soumission
   };
+  
 
-  const handleDelete = async (productId) => {
-    await deleteProduct(productId);
-  };
+  if (isLoading) {
+    return <div>Chargement des produits...</div>;
+  }
+
+  if (errorMessage) {
+    return <div>Erreur : {errorMessage}</div>;
+  }
 
   return (
-    <div>
+    <div className='product-content'>
+      <div className="title-action">
+         <h2 className='title-page-product'>Gestion des produits</h2> 
+         <DashActions />
+        <div className='actions'></div>
+      </div>
+   
+      <form className="edit-product-form" onSubmit={handleSubmit} ref={formRef}>
       <h2>{isEditMode ? 'Modifier' : 'Ajouter'} un produit</h2>
-      <form onSubmit={handleSubmit} ref={formRef}>
+<div className='name-category'>
+<fieldset>
+  <legend>Nom</legend>
         <input
           name="name"
           type="text"
@@ -108,16 +140,10 @@ const AdminProducts = () => {
           placeholder="Nom du produit"
           required
         />
-
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-          placeholder="Description"
-          required
-        />
-
-        <select
+</fieldset> 
+<fieldset> 
+  <legend>Catégorie</legend>
+<select
           name="category"
           value={formData.category}
           onChange={handleInputChange}
@@ -125,22 +151,45 @@ const AdminProducts = () => {
         >
           <option value="">Sélectionnez une catégorie</option>
           {categories.map((category) => (
-            <option key={category._id} value={category._id}>
+            <option key={category._id} value={category.category}>
               {category.category}
             </option>
           ))}
         </select>
 
-        <input
+</fieldset>   
+</div>  
+<fieldset>
+  <legend>description</legend>
+<textarea
+          name="description"
+          type="text"
+          value={formData.description}
+          onChange={handleInputChange}
+          placeholder="Description"
+          required
+        />
+</fieldset>
+
+ <div className="image-price-stock">      
+<fieldset>
+  <legend>Choisir une image</legend>
+<input
           name="image"
           type="file"
           accept="image/*"
           ref={fileInputRef}
           onChange={handleFileChange}
+         // onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })}
         />
-        {previewImage && <img src={previewImage} alt="Aperçu" width="100" />}
+        {previewImage && (
+          <img src={previewImage} alt="Aperçu" width="100" />
+        )}
 
-        <input
+</fieldset> 
+ <fieldset>      
+        <legend>prix</legend>
+<input
           name="price"
           type="number"
           value={formData.price}
@@ -150,7 +199,9 @@ const AdminProducts = () => {
           step="0.01"
           required
         />
-
+        </fieldset> 
+        <fieldset>   
+ <legend>stock</legend>
         <input
           name="stock"
           type="number"
@@ -160,16 +211,21 @@ const AdminProducts = () => {
           min="0"
           required
         />
+</fieldset>
+</div>
+      
+        <div className='buttons'>
 
         <button type="submit">
           {isEditMode ? 'Modifier' : 'Ajouter'} le produit
         </button>
         <button type="button" onClick={handleCancel} style={{ marginLeft: '10px' }}>
-          Annuler
+          Annuler les changements
         </button>
+        </div>
       </form>
 
-      <h2>Gestion des produits (Admin)</h2>
+      <h2>Gestion des produits</h2>
       <div className="product-list">
         {products.map((product) => (
           <ItemProduct

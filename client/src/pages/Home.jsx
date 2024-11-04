@@ -5,7 +5,6 @@ import Quality from '../components/modules/Quality/Qualilty'
 import Products from '../components/modules/Products/Products';
 
 
-
 function Home() {
   return (
     <div className="home">

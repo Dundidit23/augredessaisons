@@ -1,125 +1,160 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Prevent horizontal overflow */
-  }
+// navbar.scss
+
 .nav {
     display: flex;
-    align-items: flex-end;
     justify-content: space-between;
-   background-color: var(--side-bar);
-     text-transform: uppercase;
-
-}
-
-.nav__brand {
-    text-transform: uppercase;
-}
-
-.nav__menu {
+    align-items: flex-end;
+    padding: 0px 1rem;
+    background-color: #f8f9fa;
+    margin-bottom: 0rem;
+    position: relative;
+    &__alllinks {
+        display: flex;
+        align-items: flex-end;
+    }
+    &__menu{
     display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.nav__toggler {
-    display: none;
-    margin-right: 2rem;
-
-}
-
-@media screen and (max-width: 768px) {
-    .nav {
-        position: fixed;
-        top: 0;
-        left: 0;
+      padding: 0;
+      li {
+          a {
+            text-transform: uppercase;
+            align-items: last baseline;
+            display: flex;
+            color: #611919;
+            padding: 0px 1rem;
+            transition: color 0.3s ease;
+  
+            // Apply underline effect on hover
+            &::after {
+              content: "";
+              display: block;
+              width: 0;
+              height: 2px;
+              background: #007bff;
+              transition: width 0.3s ease;
+              position: absolute;
+              left: 0;
+              bottom: -5px;  // Position the underline slightly below the link
+            &:hover::after {
+              width: 100%;
+            }}
+  
+            // Hover effect for link color change
+            // &:hover {
+            //   color: #007bff;
+            // }
+  
+            &.active {
+            font-weight: 700;
+            }
+          }
+        }
+      }
+   
+  
+    // Hamburger menu toggle button
+    &__toggler {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 1.5rem;  // Reduced width for smaller hamburger
+      height: 1rem; // Reduced height for a more compact look
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      position: relative;
+  
+      span {
         width: 100%;
-        z-index: 2;
-    }
-
-    .nav__toggler {
-        cursor: pointer;
-        background: transparent;
-        border: none;
-        z-index: 999;
-        display: block;
-        padding: 2px;
+        height: 0.15rem;  // Smaller span for thinner lines
+        background-color: #333;
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
         position: relative;
+      }
+  
+      // Span transformations for the open state (forming the "X")
+      &.toggle {
+        span:nth-child(1) {
+          transform: rotate(45deg);
+          bottom: 0.45rem;
+          position: absolute;
+        }
+  
+        span:nth-child(2) {
+          opacity: 0;
+        }
+  
+        span:nth-child(3) {
+          transform: rotate(-45deg);
+          bottom: 0.45rem;
+          position: absolute;
+        }
+      }
     }
-
-    .nav__toggler span {
-        display: block;
-        width: 25px; /* Larger for better visibility */
-        height: 3px; 
-        margin: 0.2rem;
-        background: $bg-nav;
-        transition: 0.3s ease-in-out;
-    }
-
-    .nav__toggler.toggle span:nth-child(1) {
-        transform: rotate(-45deg) translate(-4px, 5px);
-        background: $white-col;
-    }
-
-    .nav__toggler.toggle span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .nav__toggler.toggle span:nth-child(3) {
-        transform: rotate(45deg) translate(-4px, -5px);
-        background: $white-col;
-    }
-
-    .nav__menu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: 60vw; /* Adjust width for better responsiveness */
-        background: $bg-nav;
-        color: $white-col;
-        flex-direction: column;
-        transform: translateX(100%);
-        transition: 0.5s ease-in;
-        z-index: 1;
-    }
-
-    .nav__menu::before {
-        content: "";
-        width: 100vw;
-        height: 100vh;
+  
+    @media (max-width: 1034px) {
+        nav{
+            position: fixed;
+        }
+      // Responsive menu styles
+      .nav__menu {
         position: absolute;
-        top: 0;
-        right: 0;
-        background: rgba(37, 33, 33, 0.3);
-        opacity: 0;
-        transition: opacity 0.5s ease-in;
-        z-index: -1;
+        top: 100%;
+        right: 0rem;
+        background-color: #565a54;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 0;
+       height: 100vh;
+        overflow: hidden;
+        transition: max-width 0.6s ease;
+        &::before {
+            content: "";
+            width: 150vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(37, 33, 33, 0.3);
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+            z-index: -1;
+        }
+        .nav__active::before {
+            opacity: 1;
+            color: blanchedalmond;
+        }
+  
+        li {
+          width: 100%;
+          text-align: left;
+          padding: 0 1rem;
+  
+          a {
+            display: block;
+            width: 100%;
+            color: white;
+          }
+        }
+  
+        // When active (menu open)
+        &.nav__active {
+          max-width: 100%;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+      }
+  
+      // Show the hamburger toggle button on smaller screens
+      .nav__toggler {
+        display: flex;
+        align-items: center;
+        margin: 1rem;
+      }
+  
+      // Ensure StatusUser stays visible on small devices
+     
     }
-
-    .nav__active::before {
-        opacity: 1;
-    }
-
-    .navitem {
-        padding: 1rem;
-    }
-
-    .navitem:first-child {
-        margin-top: 5rem;
-    }
-
-    .nav__active {
-        transform: translateX(0%);
-    }
-}
-
-@media screen and (max-width: 568px) {
-    .nav__menu {
-        width: 80vw; /* Wider menu for smaller screens */
-    }
-    
-    .nav__menu::before {
-        right: 50vw; /* Adjust filter positioning to match the new menu width */
-    }
-}
+  }
+  

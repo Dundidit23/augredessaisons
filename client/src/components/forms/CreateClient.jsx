@@ -8,7 +8,7 @@ const CreateClient = ({ client, onSubmit, isEditing }) => {
     password: '',  // Changez MdPassword en password
     avatar: '',
     role: '',
-    statut: ''
+    status: ''
   });
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const CreateClient = ({ client, onSubmit, isEditing }) => {
       <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" required />
       <input name="avatar" value={formData.avatar} onChange={handleChange} placeholder="Avatar URL" />
       <input name="role" value={formData.role} onChange={handleChange} placeholder="Role" required />
-      <input name="statut" type="number" value={formData.statut} onChange={handleChange} placeholder="Statut" required />
+      <input name="status" type="number" value={formData.status} onChange={handleChange} placeholder="Statut" required />
       <button type="submit">{isEditing ? 'Update Client' : 'Create Client'}</button>
     </form>
   );

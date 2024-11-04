@@ -1,0 +1,71 @@
+@import '../../assets/styles/dashboard/dashboard.scss';
+.product-content{
+    background-color: rgb(226, 211, 214);
+    width: 100%;
+    margin: 3px;
+    .title-action{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: baseline;
+        background-color: var(--title-actions);
+        h2{
+            padding-left: 1rem;
+            margin: 0;
+            color: white;
+          }
+        }
+        .actions-content{
+            display: flex;
+            margin-left: 1rem;
+            .action-button {
+                border-radius: 4px;
+                height: 32px;
+                background-color:  var(--app-content-primary-color);
+                border: 1px solid  var(--app-content-secondary-color);
+                display: flex;
+                align-items: center;
+                color:  var(--app-content-main-color);
+                font-size: small;
+                margin-left: 8px;
+                cursor: pointer;
+                span { margin-right: 4px; }
+                 &:hover {
+                  border-color:  white;
+                  background-color: var(--sidebar-hover-link);
+                }
+                 &:focus, &.active {
+                  outline: none;
+                  color:  var(--action-color);
+                  border-color:  var(--action-color);
+                 }
+                 &.mode-switch{
+                    display: flex;
+                    justify-content: center;
+                 }
+              }
+          }
+    }
+    .edit-product-form { 
+        display: flex;
+   
+        gap: 20px;
+    }
+    .name-category, .image-price-stock{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0;
+        gap: 2rem;
+    }
+    fieldset{
+        border: none;
+    }
+    .icon-wrapper {
+        z-index: 1;
+        transform: translateY(-50%);
+        cursor: pointer;
+        position: absolute;
+        right: 1rem;
+        top: 35%;
+    }

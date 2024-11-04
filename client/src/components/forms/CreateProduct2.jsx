@@ -66,8 +66,10 @@ const ProductFormModal = ({ product, onClose }) => {
           onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
         />
         </fieldset>
+        <div className='buttons'>
         <button type="submit">{product ? 'Mettre à jour' : 'Ajouter'}</button>
         <button type="button" onClick={onClose}>Annuler</button>
+        </div>
       </form>
     </div>
   );
