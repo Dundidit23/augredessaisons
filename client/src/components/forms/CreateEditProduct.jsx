@@ -1,7 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useCategory } from '../../context/CategoryContext';
+import { useProduct } from '../../context/ProductContext';
+import './createEditProduct.scss';
 
-const CreateEditProduct = ({ isEditMode = false, productToEdit = {}, onSubmit }) => {
+const CreateEditProduct = ({ productToEdit = {}, onSubmit, isEditMode, onCancel }) => {
   const { categories, fetchCategories } = useCategory();
   const [formData, setFormData] = useState({
     name: '',
@@ -13,17 +15,20 @@ const CreateEditProduct = ({ isEditMode = false, productToEdit = {}, onSubmit })
   });
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
-  const formRef = useRef(null);
 
   useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
 
   useEffect(() => {
-    if (isEditMode) {
+    if (isEditMode && productToEdit) {
       setFormData({
-        ...formData,
-        ...productToEdit,
+        name: productToEdit.name || '',
+        description: productToEdit.description || '',
+        category: productToEdit.category || '',
+        price: productToEdit.price || '',
+        stock: productToEdit.stock || '',
+        image: productToEdit.image || null,
       });
       if (productToEdit.image) {
         setPreviewImage(`${import.meta.env.VITE_IMAGE_BASE_URL}/${productToEdit.image.replace(/\\/g, '/')}`);
@@ -44,8 +49,6 @@ const CreateEditProduct = ({ isEditMode = false, productToEdit = {}, onSubmit })
     }
   };
 
-
-
   const handleCancel = () => {
     setFormData({
       name: '',
@@ -56,128 +59,117 @@ const CreateEditProduct = ({ isEditMode = false, productToEdit = {}, onSubmit })
       image: null,
     });
     setPreviewImage(null);
-    fileInputRef.current.value = null;
-    setIsEditMode(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
+    onCancel();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    if (isEditMode && productToEdit) {
-      await updateProduct(productToEdit._id, formData);
-    } else {
-      await addProduct(formData);
+    try {
+      await onSubmit(formData);
+      handleCancel(); // Réinitialiser après soumission
+    } catch (error) {
+      console.error('Error during submission:', error);
     }
-  
-    handleCancel(); // Réinitialiser après soumission
   };
-  
-
-  if (isLoading) {
-    return <div>Chargement des produits...</div>;
-  }
-
-  if (errorMessage) {
-    return <div>Erreur : {errorMessage}</div>;
-  }
-
 
   return (
-    <form className="edit-product-form" onSubmit={handleSubmit} ref={formRef}>
-    <h2>{isEditMode ? 'Modifier' : 'Ajouter'} un produit</h2>
-<div className='name-category'>
-<fieldset>
-<legend>Nom</legend>
-      <input
-        name="name"
-        type="text"
-        value={formData.name}
-        onChange={handleInputChange}
-        placeholder="Nom du produit"
-        required
-      />
-</fieldset> 
-<fieldset> 
-<legend>Catégorie</legend>
-<select
-        name="category"
-        value={formData.category}
-        onChange={handleInputChange}
-        required
-      >
-        <option value="">Sélectionnez une catégorie</option>
-        {categories.map((category) => (
-          <option key={category._id} value={category.category}>
-            {category.category}
-          </option>
-        ))}
-      </select>
-
-</fieldset>   
-</div>  
-<fieldset>
-<legend>description</legend>
-<textarea
-        name="description"
-        type="text"
-        value={formData.description}
-        onChange={handleInputChange}
-        placeholder="Description"
-        required
-      />
-</fieldset>
-
-<div className="image-price-stock">      
-<fieldset>
-<legend>Choisir une image</legend>
-<input
-        name="image"
-        type="file"
-        accept="image/*"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-       // onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })}
-      />
-      {previewImage && (
-        <img src={previewImage} alt="Aperçu" width="100" />
-      )}
-
-</fieldset> 
-<fieldset>      
-      <legend>prix</legend>
-<input
-        name="price"
-        type="number"
-        value={formData.price}
-        onChange={handleInputChange}
-        placeholder="Prix"
-        min="0"
-        step="0.01"
-        required
-      />
-      </fieldset> 
-      <fieldset>   
-<legend>stock</legend>
-      <input
-        name="stock"
-        type="number"
-        value={formData.stock}
-        onChange={handleInputChange}
-        placeholder="Stock"
-        min="0"
-        required
-      />
-</fieldset>
-</div>
-    
-      <div className='buttons'>
-
-      <button type="submit">
-        {isEditMode ? 'Modifier' : 'Ajouter'} le produit
-      </button>
-      <button type="button" onClick={handleCancel} style={{ marginLeft: '10px' }}>
-        Annuler les changements
-      </button>
+    <form className="edit-product-form" onSubmit={handleSubmit}>
+      <h2>{isEditMode ? 'Modifier' : 'Ajouter'} un produit</h2>
+      <div className="name-category">
+        <fieldset>
+          <legend>Nom</legend>
+          <input
+            name="name"
+            type="text"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder="Nom du produit"
+            required
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Catégorie</legend>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Sélectionnez une catégorie</option>
+            {categories.map((category) => (
+              <option key={category._id} value={category.category}>
+                {category.category}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+      </div>
+      <div>
+        <legend>Description</legend>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          placeholder="Description"
+          required
+        />
+      </div>
+      <div className="image-input">
+        <fieldset>
+          <legend>Choisir une image</legend>
+          <input
+            name="image"
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+          />
+        </fieldset>
+        <span className="image-position">
+          {previewImage ? (
+            <img src={previewImage} alt="Aperçu" />
+          ) : (
+            "Aperçu"
+          )}
+        </span>
+      </div>
+      <div className="price-stock">
+        <fieldset>
+          <legend>Prix</legend>
+          <input
+            name="price"
+            type="number"
+            value={formData.price}
+            onChange={handleInputChange}
+            placeholder="Prix"
+            min="0"
+            step="0.01"
+            required
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Stock</legend>
+          <input
+            name="stock"
+            type="number"
+            value={formData.stock}
+            onChange={handleInputChange}
+            placeholder="Stock"
+            min="0"
+            required
+          />
+        </fieldset>
+      </div>
+      <div className="buttons">
+        <button type="submit">
+          {isEditMode ? 'Modifier' : 'Ajouter'} le produit
+        </button>
+        <button type="button" onClick={handleCancel} style={{ marginLeft: '10px' }}>
+          Annuler les changements
+        </button>
       </div>
     </form>
   );

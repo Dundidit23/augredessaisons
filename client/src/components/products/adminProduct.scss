@@ -1,79 +1,79 @@
-.modal-overlay {
-    background: rgb(196, 196, 124);
-  }
-  .modal-content {
-   // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: darken($primary-col, 23%);
-    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white; 
-    width: 60%;
-    height: 90%;
-  }
-form{
-  display: flex;
-  flex-direction: column;
-  gap: 2rem; // Espacement entre les éléments
-  margin-left: auto;
-  margin-right: auto; 
-  padding: 20px;  
-  h2{
-  color: $white-col;
-  text-align: unset;
-  margin-left: 0;
-  }
-}
-input, textarea, select{
-  background-color: rgb(234, 223, 223);
-  height: 2.5rem;
-  border-radius: 5px;
-  padding: 10px;
-  align-items: center;
-  box-shadow: 0 2px 10px rgba(227, 224, 224, 0.1);
+// .modal-overlay {
+//     background: rgb(196, 196, 124);
+//   }
+//   .modal-content {
+//    // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+//     background-color: darken($primary-col, 23%);
+//     box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white; 
+//     width: 60%;
+//     height: 90%;
+//   }
+// form{
+//   display: flex;
+//   flex-direction: column;
+//   gap: 2rem; // Espacement entre les éléments
+//   margin-left: auto;
+//   margin-right: auto; 
+//   padding: 20px;  
+//   h2{
+//   color: $white-col;
+//   text-align: unset;
+//   margin-left: 0;
+//   }
+// }
+// input, textarea, select{
+//   background-color: rgb(234, 223, 223);
+//   height: 2.5rem;
+//   border-radius: 5px;
+//   padding: 10px;
+//   align-items: center;
+//   box-shadow: 0 2px 10px rgba(227, 224, 224, 0.1);
 
-}
-textarea{
-  height: 5rem;
-  width: 90%;
-  margin-right: 3rem;
-}
+// }
+// textarea{
+//   height: 5rem;
+//   width: 90%;
+//   margin-right: 3rem;
+// }
 
-select {
-width: 250px;// Remplir la largeur
-padding: 0.5rem; // Espacement interne
-border: 1px solid #ccc; // Bordure grise
-appearance: none; // Retirer le style par défaut du navigateur
-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 15l-5-5h10z" fill="#333"/></svg>'); // Flèche personnalisée
-//background-position: right 10px center; // Positionner la flèche
-//background-size: 10px; // Taille de la flèche
-cursor: pointer; // Changer le curseur
-}
+// select {
+// width: 250px;// Remplir la largeur
+// padding: 0.5rem; // Espacement interne
+// border: 1px solid #ccc; // Bordure grise
+// appearance: none; // Retirer le style par défaut du navigateur
+// background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 15l-5-5h10z" fill="#333"/></svg>'); // Flèche personnalisée
+// //background-position: right 10px center; // Positionner la flèche
+// //background-size: 10px; // Taille de la flèche
+// cursor: pointer; // Changer le curseur
+// }
 
-.NameImageField, .stockPriceCat{
-  display: flex;
-  gap: 5rem;
-  align-items: flex-end;
-}
-.productImage{
-  background-color: white;
-  height: 150px;
-  width: 150px;
-  margin-top: -100px;
-}
+// .NameImageField, .stockPriceCat{
+//   display: flex;
+//   gap: 5rem;
+//   align-items: flex-end;
+// }
+// .productImage{
+//   background-color: white;
+//   height: 150px;
+//   width: 150px;
+//   margin-top: -100px;
+// }
 
-  #category{
-    color: black;
-  }
-  button {
-    width: 8rem;
-    margin: 2rem auto;
-    background-color: $primary-col; // Couleur de fond du bouton
-    color: $white-col; // Couleur du texte
-    padding: 0.5rem 1rem; // Espacement interne
-    border: none; // Pas de bordure
-    border-radius: 4px; // Coins arrondis
-    cursor: pointer; // Changer le curseur
-    transition: background-color 0.3s; // Animation pour le survol
+//   #category{
+//     color: black;
+//   }
+//   button {
+//     width: 8rem;
+//     margin: 2rem auto;
+//     background-color: $primary-col; // Couleur de fond du bouton
+//     color: $white-col; // Couleur du texte
+//     padding: 0.5rem 1rem; // Espacement interne
+//     border: none; // Pas de bordure
+//     border-radius: 4px; // Coins arrondis
+//     cursor: pointer; // Changer le curseur
+//     transition: background-color 0.3s; // Animation pour le survol
 
-    &:hover {
-      background-color: #0056b3; // Couleur de fond au survol
-    }
-  }
+//     &:hover {
+//       background-color: #0056b3; // Couleur de fond au survol
+//     }
+//   }

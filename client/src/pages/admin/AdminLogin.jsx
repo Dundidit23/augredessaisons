@@ -74,7 +74,7 @@ export default function AdminLogin() {
         <div className="buttons">
           <button className="btn" type="submit">Login</button>
           <div className="options">
-            <Link to="/admin/admin-register" className="btn option register">Register</Link>
+            {/* <Link to="/admin/admin-register" className="btn option register">Register</Link> */}
           </div>
         </div>
       </form>

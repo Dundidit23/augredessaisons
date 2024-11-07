@@ -1,0 +1,159 @@
+// Variables (ajoutez vos variables ici)
+$primary-col: #BDCF2B; // Couleur principale
+$white-col: #ffffff; // Couleur blanche
+$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; // Police de caractères
+
+.modal-overlay {
+  position: fixed; // Assurez-vous que le modal est fixe
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(192, 189, 168);
+
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: darken($primary-col, 23%);
+  width: 100%; // Ajustement pour les petits écrans
+  max-width: 600px; // Limite de largeur pour grands écrans
+  max-height: 90vh; // Hauteur maximale
+ padding: 1rem;
+ display: flex;
+ flex-direction: column;
+ //justify-content: center;
+  overflow-y: auto;
+  border-radius: 8px; // Ajout d'un léger arrondi aux coins
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; // Espacement entre les éléments réduit
+  padding: 0.5rem;
+  color: #fff;
+
+  h2 {
+    font-size: 1.5rem;
+    padding: 0;
+    text-align: center; // Centrer le titre
+  }
+}
+
+input,
+textarea,
+select {
+  background-color: rgb(244, 244, 230);
+  height: 2.5rem; // Hauteur augmentée pour une meilleure accessibilité
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(227, 224, 224, 0.1);
+  color: black; // Couleur du texte
+  font-family: $font-stack; // Application de la police
+  font-size: 0.8rem; // Taille de police
+  font-weight: 500; // Poids de police
+ width: 100%; // Prendre toute la largeur disponible
+  box-sizing: border-box; // Inclure le padding et la bordure dans la largeur totale
+
+  &::placeholder {
+    color: #ccc; // Couleur du placeholder
+    opacity: 1; // S'assurer que le placeholder est opaque
+  }
+
+  // Réglages pour les fichiers
+  input[type="file"] {
+    background-color: #fff; // Couleur de fond de l'input
+  }
+}
+
+textarea {
+  height: 5rem; // Hauteur fixe
+  width: 80%; // Prendre toute la largeur
+  box-sizing: border-box; // Inclure le padding et la bordure dans la largeur totale
+}
+
+legend {
+  font-size: 12px;
+  font-family: $font-stack;
+  margin-bottom: 0; // Pas de marge
+}
+
+.buttons {
+  display: flex; // Utiliser flex pour le centrage
+  justify-content: center; // Centrer horizontalement
+  margin: 1rem 0; // Espacement vertical
+
+  button {
+    width: 6rem; // Largeur fixe des boutons
+    margin: 0 0.5rem; // Espacement horizontal entre les boutons
+    background-color: $primary-col; // Couleur de fond
+    color: $white-col; // Couleur du texte
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($primary-col, 10%); // Couleur de fond au survol
+    }
+  }
+}
+
+.image-input {
+  display: flex;
+  flex-wrap: wrap; // Permet le passage à la ligne si nécessaire
+   //ign-items: flex-start; // Alignez à gauche
+  gap: 2rem; // Réduisez l'espacement
+
+
+  legend {
+    margin-bottom: 0; // Pas de marge pour la légende
+  }
+}
+
+.image-position {
+  height: 100px; // Taille de l'image positionnée
+  width: 100px;
+  border: 1px solid #ccc; // Bordure
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; // Maintenir les proportions
+  }
+}
+
+.name-category,
+.price-stock {
+  display: flex;
+  flex-wrap: wrap; // Permet le passage à la ligne si nécessaire
+  //align-items: center;
+  gap: 1rem; 
+  width: 100%;// Réduit l'espacement
+}
+.buttons {
+  display: flex;
+  flex-direction: row; // Colonne pour les petits écrans
+  gap: 0.5rem; // Espacement entre les boutons
+ 
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 0.5rem; // Réduire le padding pour les petits écrans
+  }
+  
+  input,
+  textarea,
+  select {
+    font-size: 1rem; // Augmentez la taille de la police pour une meilleure lisibilité
+  }
+ 
+}

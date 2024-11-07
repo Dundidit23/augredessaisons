@@ -1,0 +1,151 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(242, 243, 208);
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #646e17;
+  width: 100%;
+  max-width: 600px;
+  max-height: 94%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+@media (max-width: 768px) {
+  .modal-content {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 0.5rem;
+    margin: 0;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  color: #fff;
+}
+form h2 {
+  font-size: 1.5rem;
+  padding: 0;
+  text-align: center;
+}
+
+input,
+textarea,
+select {
+  background-color: rgb(244, 244, 230);
+  height: 2.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(227, 224, 224, 0.1);
+  color: black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  width: 100%;
+  box-sizing: border-box;
+}
+input::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+input input[type=file],
+textarea input[type=file],
+select input[type=file] {
+  background-color: #fff;
+}
+
+textarea {
+  height: 5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+legend {
+  font-size: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.buttons button {
+  width: 6rem;
+  margin: 0 0.5rem;
+  background-color: #BDCF2B;
+  color: #ffffff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.buttons button:hover {
+  background-color: #96a522;
+}
+
+.image-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+.image-input legend {
+  margin-bottom: 0;
+}
+
+.image-position {
+  height: 100px;
+  width: 100px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.image-position img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.name-category,
+.price-stock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .buttons {
+    margin: 1rem 0;
+  }
+  button {
+    width: 100%;
+  }
+}/*# sourceMappingURL=createEditProduct.css.map */
