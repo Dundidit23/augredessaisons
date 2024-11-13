@@ -1,0 +1,35 @@
+.adminAuthUsers, .adminUsers{
+    background-color: rgb(211, 185, 185);
+    width: 100%;
+    margin-top: 3px;
+    margin-left: 3px;
+    .title{
+        background-color: rgb(64, 3, 111);
+        display: flex;
+        justify-content: space-between;
+        color: white;
+        padding: 1rem;
+        font-size: 1.5rem;
+    }
+.user-item{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(120, 120, 120);
+
+    &:hover{
+        background-color: rgb(180, 180, 180);
+    }
+    .user-info{
+        margin-left: 1rem;
+        .user-name{
+            font-weight: bold;
+        }
+        p{
+            font-size: 0.8rem;
+        }
+    }
+   
+    }
+}

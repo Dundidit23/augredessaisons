@@ -1,9 +1,239 @@
-.dashboard-layout {
-  margin: 0.5rem;
+// Variables de couleur (assurez-vous de les définir ou ajuster selon votre thème)
+$sidebar-bg-color: #2c3e50;
+$sidebar-marque: #A4B730;
+$sidebar-link-color: #ecf0f1;
+$sidebar-hover-bg-color: #34495e;
+$sidebar-active-bg-color: #1abc9c;
+$action-color: #e74c3c;
+$font-small: 0.9rem;
+
+.dashboard-main {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  margin: 2px;
+}
+
+
+/* ------------ BASE STYLE POUR ASIDEBAR (sidebar) ---------- */
+// Par défaut, masquer le texte (h3) dans .btn-logout
+
+// Afficher le texte dans .btn-logout lorsque la barre latérale est ouverte
+.side.open .btn-logout h3 {
+  display: inline-block;
+}
+
+// Masquer le texte dans .btn-logout lorsque la barre latérale est fermée
+.side.closed .btn-logout h3 {
+  display: none;
+}
+
+// Style de la sidebar
+.side {
+  flex-shrink: 0;
+  background-color: $sidebar-bg-color;
+  transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
-  .dashboard-main {
-    background-color:rgb(173, 189, 158);
+  height: 100vh;
+  overflow-y: auto;
+  margin-right: 2px;
+
+  &.closed {
+    flex-basis: 50px;
+    max-width: 50px;
+    .marque {
+      display: none;
+    }
+    .toggle-btn {
+      top: 1rem;
+      left: 10%;
+    }
+  }
+
+  &.open {
+    flex-basis: 200px;
+    max-width: 200px;
+  }
+
+  .side-top {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-bottom: 2rem;
+    .marque {
+      font-size: clamp(1px, 10px + 1vw, 20px);
+      color: $sidebar-marque;
+      text-decoration: none;
+      margin: 20px;
+    }
+  }
+
+  .side-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    a {
+      display: flex;
+      align-items: center;
+      padding: 10px 16px;
+      color: $sidebar-link-color;
+      text-decoration: none;
+      font-size: $font-small;
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+
+      &:hover {
+        background-color: $sidebar-hover-bg-color;
+      }
+
+      &.active {
+        background-color: $sidebar-active-bg-color;
+        &:before {
+          content: '';
+          position: absolute;
+          right: 0;
+          background-color: $action-color;
+          height: 100%;
+          width: 4px;
+        }
+      }
+
+      svg {
+        margin-right: 16px;
+        width: 1.5rem;
+        height: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      h3 {
+        flex-grow: 1;
+        display: none; // Par défaut, masquer le texte
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  .btn-logout {
+    padding:10px;
+    margin: 2rem auto;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    span {
+      margin-right: 8px;
+    }
+
+    h3 {
+      display: none; // Masquer le texte de "Déconnexion" par défaut
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      background-color: $sidebar-hover-bg-color;
+    }
+  }
+
+  // Si la barre latérale est ouverte, afficher le texte de déconnexion
+  .side.open .btn-logout h3 {
+    display: inline-block;
+  }
+
+  // Si la barre latérale est fermée, masquer le texte de déconnexion
+  .side.closed .btn-logout  {
+    padding: 0;
+    h3{
+      display: none; // Cacher le texte
+
+    }
+  }
 }
+
+// Toggle button pour ouvrir/fermer la barre latérale
+.toggle-btn {
+  background: none;
+  color: $sidebar-link-color;
+  cursor: pointer;
+  position: relative;
+  top: 150px;
+  left: 80px;
+  width: 2rem;
+  margin-bottom: 2rem;
+
+  svg {
+    width: 0.8rem;
+  }
+}
+/* ------------ MEDIA QUERIES POUR TABLETTE ET MOBILE ---------- */
+
+/* Pour les écrans mobiles (petits appareils comme iPhone) */
+@media screen and (max-width: 768px) {
+  .side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 10;
+    background-color: $sidebar-bg-color;
+    transition: all 0.3s ease-in-out;
+
+    &.closed {
+      width: 50px;
+      a h3 {
+        display: none; /* Masquer le texte sur mobile si fermé */
+      }
+     
+    }
+
+    &.open {
+      width: 150px;
+      a h3 {
+        display: block; /* Afficher le texte en mode ouvert */
+      }
+    }
+
+    .marque {
+      display: none; /* Cacher le branding sur petit écran */
+    }
+  }
+
+  .dashboard-main {
+ //   margin-left: 50px; /* Ajuster le contenu principal en fonction de la barre */
+    transition: all 0.3s ease-in-out;
+  }
+
+ 
+}
+
+/* Pour les écrans tablettes (largeur > 768px mais < 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .side {
+    &.open {
+      flex-basis: 200px;
+    }
+    .side-links a h3 {
+      display: block; /* Afficher le texte sur tablette */
+    }
+  }
+ 
+}
+
+/* Pour les écrans de bureau (plus de 1024px) */
+@media screen and (min-width: 1024px) {
+  .side {
+    flex-basis: 200px; /* Toujours ouverte sur grand écran */
+    max-width: 200px;
+    .side-links a h3 {
+      display: block; /* Toujours afficher le texte */
+    }
+  }
+ 
 }

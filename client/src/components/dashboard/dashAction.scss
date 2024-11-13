@@ -1,7 +1,6 @@
-.actions-wrapper{
+.actions-content{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+ // justify-content: space-between;
   padding: 16px 4px;
   @media screen and (max-width: 768px) {
     flex-direction: column;

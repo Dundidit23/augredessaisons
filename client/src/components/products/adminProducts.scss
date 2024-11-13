@@ -1,116 +1,183 @@
-/* Styles généraux pour la liste des produits */
-.product-grid {
+@mixin line-clamp($lines, $line-height) {
+  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  max-height: $lines * $line-height;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+$primary-col: #A4B730;
+
+.product-content {
+  width: 100%;
+
+  .title-action {
     display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    padding: 10px;
-  }
-  
-  .product-item {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-    width: 100%; /* Par défaut pour le mode table */
-  }
-  
-  .product-item:hover {
-    transform: translateY(-3px);
-  }
-  
-  /* Image du produit */
-  .product-item img {
-    width: 100%;
-    height: auto;
-    max-height: 100px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(119, 127, 83);
+    padding: 0 1rem;
     border-radius: 4px;
-    object-fit: cover;
-  }
-  
-  /* Texte du produit */
-  .product-item h3 {
-    font-size: 1.1em;
-    margin: 10px 0 5px;
-  }
-  
-  .product-item p {
-    color: #555;
-    margin: 5px 0;
-    font-size: 1rem;
-  }
-  
-  .product-item button {
-    background-color: $primary-col;
-    border: none;
-    color: white;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    &:hover {
-        background-color: #0056b3;
-      }
+    margin-bottom: 2rem;
+
+    h2 {
+      margin: 0;
+      color: white;
+      font-size: 1.5rem;
+    }
   }
 
-  /* Mode Liste (Table View) */
-  .tableView .product-item {
-    display: flex;
+  .product-grid {
+    margin: 1rem;
+
+   &.tableView {
+   .product-item-dashboard {
+     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 20px;
+    border-radius: 8px;
+    border: 0.01em solid rgb(225, 220, 220);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+     margin-bottom: 0.5rem;
+     align-items: center;
+     padding: 5px;
+     transition: transform 0.3s ease;
+
+     &:hover {
+       transform: translateY(-5px);
+     }
+    img{
+      width: 60px;
+      height: 60px;
+      border: none;
+    }
+    .info-container{
+      display: flex;
+      align-items: center;
+      margin-left: 1rem;
+      text-align: left;
+     h3, p{
+        color: black;
+        font-size: 1rem;
+        width: 180px;
+        //max-width: max-content;
+      }
+      .product-description{
+        color: #666;
+        border: none;
+        width: 150px;
+        transition: none;
+        box-shadow: none;
+        @include line-clamp(2, 1.5em);
+        &:hover {
+          transform: none;
+        }
+      }
+      .category{
+        width: 275px;
+        margin: 0;
+      margin-left: 2.5rem;
+      border: none;
+      }
+      .price, .stock{
+        width: 100px;
+      }
+    }
+   }
   }
-  
-  /* Image pour la vue liste */
-  .tableView .product-item img {
-    width: 50px;
-    height: 50px;
   }
-  
-  /* Contenu du produit en vue liste */
-  .tableView .product-item h3,
-  .tableView .product-item p {
-    margin: 0;
-    padding: 0;
-    text-align: left;
-  }
-  
-  .tableView .product-item .product-details {
-    flex: 1;
-    padding: 0 20px;
-  }
-  
-  /* Boutons en vue liste */
-  .tableView .product-item button {
-    padding: 8px 12px;
-  }
-  
-  /* Mode Grille (Grid View) */
   .gridView {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
-    gap: 10px;
-    img{
-        height: 60px;
-        object-fit: cover;
-    }
-    .product-item, p{
-        font-size: 12px;
-        line-height: 1;
-        text-align: left;
-    }
-button, .buttons-actions{
-    display: flex;
-    font-size: 11px;
-    margin: 0;
-    width: 60px;
-    gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+      gap: 0.5rem;
     
-}
+    .product-item-dashboard {
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      border: 0.01em solid rgb(225, 220, 220);
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+      transition: transform 0.3s ease;
+      &:hover {
+        transform: translateY(-5px);
+      }
+      img {
+        width: 100%;
+        max-height: 100px;
+        border-radius: 4px;
+        object-fit: cover;
+        transition: none;
+        &:hover{
+          transform: none;
+        }
+      }
+      .info-container {
+        background-color: white;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.8rem;
+        gap: 0.2rem;
+        h3, p{
+          font-size: 0.8rem;
+        }
+        .product-description {
+          color: #666;
+          border: none;
+          height: 150px;
+          transition: none;
+          box-shadow: none;
+          @include line-clamp(2, 1.5em); // Limite la description à 2 lignes
+          transition: none;
+          &:hover{
+            transform: none;
+          }
+        }
+        .category{
+          padding: 0;
+          margin: 0;
+          border: none;
+          width: 300px;
+        }
+      }
     }
-  
+ 
+}
+}
+.buttons-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem auto;
+
+  button {
+    background-color: $primary-col;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.delete {
+      background-color: #e7a012;
+    }
+
+    svg {
+      width: 100%; // Utilise la taille entière du conteneur
+      height: 100%;
+      max-width: 24px; // Taille maximale pour éviter qu'elle soit trop grande
+      max-height: 24px; // Taille maximale pour éviter qu'elle soit trop grande
+    }
+  }
+}
+// .product-item-boutique,
+// .category {
+//   border: none;
+//   line-height: 1;
+//   padding: 0;
+// }

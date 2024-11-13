@@ -27,6 +27,21 @@ const DashActions = ({ onFilterCategory, onAddProduct, onViewChange, currentView
         loadCategories();
     }, [fetchCategories]);
 
+    useEffect(() => {
+        const modeSwitch = document.querySelector('.mode-switch');
+        if (modeSwitch) {
+            const handleModeSwitch = () => {
+                document.documentElement.classList.toggle('light');
+                modeSwitch.classList.toggle('active');
+            };
+            modeSwitch.addEventListener('click', handleModeSwitch);
+
+            return () => {
+                modeSwitch.removeEventListener('click', handleModeSwitch);
+            };
+        }
+    }, []);
+
     return (
         <div className="actions-content">
             <button className="action-button mode-switch" title="Switch Theme"> 

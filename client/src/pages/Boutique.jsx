@@ -1,3 +1,4 @@
+//Boutique.jsx
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useProduct } from '../context/ProductContext';
@@ -22,22 +23,20 @@ const Boutique = () => {
   // Filtrer les produits par catégorie
   const filterByCategory = (categoryId) => {
     if (categoryId) {
-      // Mettre à jour l'URL sans recharger la page
-      navigate(`/boutique/${categoryId}`, { replace: true });
+       setFilteredProducts(products.filter(product => product.category === categoryId));
+     } else {
+       // Remettre l'URL à l'état d'origine si aucune catégorie n'est sélectionnée
+       navigate('/boutique', { replace: true });
+       setFilteredProducts(products); // Affiche tous les produits si aucune catégorie n'est sélectionnée
+     }
 
-      // Filtrer les produits en fonction de la catégorie
-      setFilteredProducts(products.filter(product => product.category === categoryId));
-    } else {
-      // Remettre l'URL à l'état d'origine si aucune catégorie n'est sélectionnée
-      navigate('/boutique', { replace: true });
-      setFilteredProducts(products); // Affiche tous les produits si aucune catégorie n'est sélectionnée
-    }
+  
   };
 
   return (
-    <div className="boutique">
+    <div className="boutique-content">
       <h2>La Boutique en ligne</h2>
-      <div className="boutique-container">
+      <div className="boutique">
         {/* Filtre par catégorie */}
         <CategoryFilter onSelectCategory={filterByCategory} />
 

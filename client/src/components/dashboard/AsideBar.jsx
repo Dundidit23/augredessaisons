@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { MdDashboard, MdReceipt, MdInsights, MdEmail, MdAdminPanelSettings, MdOutlineLogout, MdClose } from "react-icons/md";
 import { FaPeopleGroup, FaProductHunt } from "react-icons/fa6";
-import { useAdminAuth } from '../../context/AdminContext'; 
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { useAdminAuth } from '../../context/AdminAuthContext';
 import Modal from '../../components/modal/Modal';
-import './asidebar.scss';
+//style dans dashboardLayout.scss;
 
 const AsideBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
-  const { logout, username, isAuthenticated } = useAdminAuth();  const navigate = useNavigate();
+  const { logout, username, isAuthenticated } = useAdminAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
@@ -21,24 +24,29 @@ const AsideBar = () => {
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const handleSubmenuToggle = () => {
     setIsSubmenuOpen(!isSubmenuOpen);
   };
 
   const handleLogout = () => {
-    setShowLogoutModal(true); // Affiche le modal de déconnexion
+    setShowLogoutModal(true);
   };
 
   const confirmLogout = () => {
     logout();
-    setShowLogoutModal(false); // Ferme le modal après déconnexion
-    navigate('/admin/login'); // Navigue vers la page de connexion
+    setShowLogoutModal(false);
+    navigate('/admin/login');
   };
 
   const cancelLogout = () => {
-    setShowLogoutModal(false); // Ferme le modal sans déconnexion
+    setShowLogoutModal(false);
   };
+
+  const isActiveLink = (path) => location.pathname === path;
 
   return (
     <>
@@ -52,33 +60,35 @@ const AsideBar = () => {
           </div>
         </Modal>
       )}
-      <aside className={isSidebarOpen ? 'side open' : 'side closed'}>
+      <aside className={`side ${isSidebarOpen ? 'open' : 'closed'}`}>
+      <button onClick={toggleSidebar} className="toggle-btn">
+        {isSidebarOpen ? <FaTimes /> : <FaBars />}
+      </button>
         <div className="side-top">
-          <div className="close" id="close-btn" onClick={handleSidebarToggle}>
-            <span className="material-icons-sharp"><MdClose /></span>
+        <a href="../../boutique">
+            <h4 className='marque'>Au gré des saisons</h4>
+          </a>
+          <div className="close" onClick={handleSidebarToggle}>
+           
           </div>
-          <a href="../../boutique"><h4 className='marque'>Au gré des saisons</h4></a> 
+         
         </div>
         <div className="side-links">
-          <Link to="/admin/dashboard">
+          <Link to="/admin/dashboard" className={isActiveLink('/admin/dashboard') ? 'active' : ''}>
             <span className="material-icons-sharp"><MdDashboard /></span>
             <h3>Accueil</h3>
           </Link>
-          <Link to="/admin/dashboard/utilisateurs" className="active">
+          <Link to="/admin/dashboard/utilisateurs" className={isActiveLink('/admin/dashboard/utilisateurs') ? 'active' : ''}>
             <span className="material-icons-sharp"><FaPeopleGroup /></span>
             <h3>Clients</h3>
           </Link>
-          <Link to="/admin/dashboard/produits">
+          <Link to="/admin/dashboard/produits" className={isActiveLink('/admin/dashboard/produits') ? 'active' : ''}>
             <span className="material-icons-sharp"><FaProductHunt /></span>
             <h3>Produits</h3>
           </Link>
-          <Link to="/admin/dashboard/orders">
+          <Link to="/admin/dashboard/orders" className={isActiveLink('/admin/dashboard/orders') ? 'active' : ''}>
             <span className="material-icons-sharp"><MdReceipt /></span>
             <h3>Commandes</h3>
-          </Link>
-          <Link to="/admin/dashboard/dash">
-            <span className="material-icons-sharp"><MdInsights /></span>
-            <h3>Analytics</h3>
           </Link>
           <Link to="/admin/dashboard/messages">
             <span className="material-icons-sharp"><MdEmail /></span>
@@ -93,14 +103,15 @@ const AsideBar = () => {
               </Link>
               <ul className={`submenu ${isSubmenuOpen ? 'open' : ''}`}>
                 <li><Link to="/admin/dashboard/paramètres/Catégories"><h5>Catégories</h5></Link></li>
+                <li><Link to="/admin/dashboard/paramètres/Administrateurs"><h5>Administrateurs</h5></Link></li>
               </ul>
             </li>
           </ul>
-          <button className='logout' type="button" onClick={handleLogout}>
-            <span className="material-icons-sharp"><MdOutlineLogout /></span>
-            <h3>Déconnexion</h3>
-          </button>
         </div>
+        <button className='btn-logout' type="button" onClick={handleLogout}>
+          <span className="material-icons-sharp"><MdOutlineLogout /></span>
+          <h3>Déconnexion</h3>
+        </button>
       </aside>
     </>
   );

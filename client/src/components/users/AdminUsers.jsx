@@ -1,63 +1,61 @@
-// AdminUsers.jsx
-import React, { useEffect, useState, useRef } from 'react';
-import { useUser } from '../../context/UserContext';
+import React, { useEffect, useState } from 'react';
+import { useUser } from '../../context/UserContext'; // Assurez-vous d'avoir le contexte UserContext
+import ItemUser from './ItemUser'; // Assurez-vous d'avoir ce composant pour afficher chaque utilisateur
+import './adminAuthUsers.scss';
 
 const AdminUsers = () => {
-  const { users, isLoading, errorMessage, addUser, updateUser, deleteUser, fetchUsers } = useUser();
-  const formRef = useRef(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [userToEdit, setUserToEdit] = useState(null);
-  const [formData, setFormData] = useState({
-    _id: user._id,
-    username: user.name,
-    email: user.email,
-    password: user.password,
-    role: user.role,
-    status: user.status,
-    avatar: user.avatar,
-    image: user.image,
-  });
-  
-  const fileInputRef = useRef(null);
+  const {
+    users,
+    isLoading,
+    errorMessage,
+    fetchUsers,
+    addUser,
+    updateUser,
+    deleteUser
+  } = useUser();
 
-  // Charger les catégories et produits une seule fois
- 
-  // Fonction pour commencer l'édition d'un produit
-  const startEditUser = (user) => {
-    setUserToEdit(user);
+  const [formData, setFormData] = useState({
+    _id: '',
+    username: '',
+    email: '',
+    password: '',
+    role: '',
+  });
+
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [showForm, setShowForm] = useState(false); // Contrôler l'affichage du formulaire
+
+  useEffect(() => {
+    fetchUsers(); // Charger les utilisateurs au montage du composant
+  }, []);
+
+  // Fonction pour démarrer l'édition d'un utilisateur
+  const handleEditUser = (user) => {
     setFormData({
       _id: user._id,
-      username: user.name,
+      username: user.username,
       email: user.email,
-      password: user.password,
+      password: '', // laisser vide pour la mise à jour
       role: user.role,
-      status: user.status,
-      //avatar: user.avatar,
-     // image: user.image,
     });
-    // const imageUrl = `${import.meta.env.VITE_API_BASE_URL}${user.image.replace(/\\/g, '/')}`;
-    // setPreviewImage(imageUrl);
-    // setIsEditMode(true);
+    setIsEditMode(true);
+    setShowForm(true);
   };
 
-  // Fonction pour gérer les changements dans les champs du formulaire
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  // Fonction pour initialiser le formulaire pour l'ajout d'un utilisateur
+  const handleAddUser = () => {
+    setFormData({
+      _id: '',
+      username: '',
+      email: '',
+      password: '',
+      role: '',
+    });
+    setIsEditMode(false);
+    setShowForm(true);
   };
 
-  // Fonction pour gérer les changements dans le champ fichier (image)
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setFormData((prevData) => ({ ...prevData, image: file }));
-  //     const previewUrl = URL.createObjectURL(file);
-  //     setPreviewImage(previewUrl);
-  //   }
-  // };
-
-  // Fonction pour réinitialiser le formulaire
+  // Fonction pour annuler l'ajout/modification
   const handleCancel = () => {
     setFormData({
       _id: '',
@@ -65,124 +63,123 @@ const AdminUsers = () => {
       email: '',
       password: '',
       role: '',
-      status: '',
-      //avatar: '',
-     // image: '',
     });
-    // setPreviewImage(null);
-    // fileInputRef.current.value = null;  // Réinitialiser le champ fichier
-    // setIsEditMode(false);
+    setIsEditMode(false);
+    setShowForm(false);
   };
 
-  // Fonction pour gérer la soumission du formulaire
+  // Gestion des changements dans le formulaire
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formDataToSubmit = { ...formData };
-    if (isEditMode) {
-      await updateUser(formDataToSubmit);
-    } else {
-      await addUser(formDataToSubmit);
+    const { _id, username, email, password, role } = formData;
+    const userToSubmit = { _id, username, email, role };
+
+    // Inclure le mot de passe seulement s'il a été saisi
+    if (isEditMode && password.trim() !== '') {
+      userToSubmit.password = password;
     }
 
-    handleCancel(); // Réinitialiser après soumission
+    if (isEditMode) {
+      await updateUser(userToSubmit);
+    } else {
+      await addUser(userToSubmit);
+    }
+
+    handleCancel(); // Réinitialiser et masquer le formulaire après soumission
+    fetchUsers(); // Rafraîchir la liste des utilisateurs
   };
 
-  const handleDelete = async (userId) => {
-    await deleteUser(userId);
+  // Fonction pour supprimer un utilisateur
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm('Voulez-vous vraiment supprimer cet utilisateur ?')) {
+      await deleteUser(userId);
+      fetchUsers(); // Actualiser la liste après suppression
+    }
   };
 
   return (
-    <div>
-      <h2>{isEditMode ? 'Modifier' : 'Ajouter'} un utilisateur</h2>
-      <form onSubmit={handleSubmit} ref={formRef}>
-        <input
-          name="username"
-          type="text"
-          value={formData.username}
-          onChange={handleInputChange}
-          placeholder="Nom de l/'utilisateur"
-          required
-        />
-
-        <textarea
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeholder="adresse mail"
-          required
-        />
-
-        {/* <select
-          name="category"
-          value={formData.category}
-          onChange={handleInputChange}
-          required
-        >
-          <option value="">Sélectionnez une catégorie</option>
-          {categories.map((category) => (
-            <option key={category._id} value={category._id}>
-              {category.category}
-            </option>
-          ))}
-        </select> */}
-
-        {/* <input
-          name="image"
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-        />
-        {previewImage && <img src={previewImage} alt="Aperçu" width="100" />} */}
-
-        <input
-          name="password"
-          type="test"
-          value={formData.password}
-          onChange={handleInputChange}
-          placeholder="mot de passe"
-          required
-        />
-
-        <input
-          name="role"
-          type="text"
-          value={formData.role}
-          onChange={handleInputChange}
-          placeholder="role"
-          required
-        />
-           <input
-          name="statut"
-          type="text"
-          value={formData.status}
-          onChange={handleInputChange}
-          placeholder="statut"
-          required
-        />
-
-        <button type="submit">
-          {isEditMode ? 'Modifier' : 'Ajouter'} l'utilisateur
+    <div className="adminUsers">
+      <div className="title">
+        <h3>Gestion des utilisateurs</h3>
+        <button onClick={handleAddUser} className="btn">
+          Ajouter un utilisateur
         </button>
-        <button type="button" onClick={handleCancel} style={{ marginLeft: '10px' }}>
-          Annuler
-        </button>
-      </form>
-
-      <h2>Gestion des utilisateurs (Admin)</h2>
-      <div className="user-list">
-        {users.map((user) => (
-          <ItemUser
-            key={user._id}
-            user={user}
-            isAdminView={true}
-            handleDelete={handleDelete}
-            startEditUser={startEditUser}
-            isEditMode={isEditMode && userToEdit?._id === user._id}
-          />
-        ))}
       </div>
+
+      {/* Formulaire d'ajout/modification */}
+      {showForm && (
+        <form onSubmit={handleSubmit} className="userForm">
+          <h2>{isEditMode ? 'Modifier' : 'Ajouter'} un utilisateur</h2>
+          <input
+            name="username"
+            type="text"
+            value={formData.username}
+            onChange={handleInputChange}
+            placeholder="Nom d'utilisateur"
+            required
+          />
+          <input
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Email"
+            required
+          />
+          <input
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            placeholder="Mot de passe"
+            required={!isEditMode} // Requis seulement lors de l'ajout
+          />
+          <input
+            name="role"
+            type="text"
+            value={formData.role}
+            onChange={handleInputChange}
+            placeholder="Rôle"
+            required
+          />
+         
+          <div className="formActions">
+            <button type="submit">{isEditMode ? 'Mettre à jour' : 'Ajouter'}</button>
+            <button type="button" onClick={handleCancel} className="btn-cancel">
+              Annuler
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* Liste des utilisateurs */}
+      {isLoading ? (
+        <div>Chargement...</div>
+      ) : errorMessage ? (
+        <div className="error">{errorMessage}</div>
+      ) : (
+        <div className="userList">
+          {users.length > 0 ? (
+            users.map((user) => (
+              <ItemUser
+                key={user._id}
+                user={user}
+                handleEdit={handleEditUser}
+                handleDelete={handleDeleteUser}
+              />
+            ))
+          ) : (
+            <p>Aucun utilisateur trouvé.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

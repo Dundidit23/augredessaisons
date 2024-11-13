@@ -1,9 +1,192 @@
-.dashboard-layout {
-  margin: 0.5rem;
+@charset "UTF-8";
+.dashboard-main {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  margin: 2px;
+}
+
+/* ------------ BASE STYLE POUR ASIDEBAR (sidebar) ---------- */
+.side.open .btn-logout h3 {
+  display: inline-block;
+}
+
+.side.closed .btn-logout h3 {
+  display: none;
+}
+
+.side {
+  flex-shrink: 0;
+  background-color: #2c3e50;
+  transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  margin-right: 2px;
 }
-.dashboard-layout .dashboard-main {
-  background-color: aqua;
+.side.closed {
+  flex-basis: 50px;
+  max-width: 50px;
+}
+.side.closed .marque {
+  display: none;
+}
+.side.closed .toggle-btn {
+  top: 1rem;
+  left: 10%;
+}
+.side.open {
+  flex-basis: 200px;
+  max-width: 200px;
+}
+.side .side-top {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 2rem;
+}
+.side .side-top .marque {
+  font-size: clamp(1px, 10px + 1vw, 20px);
+  color: #A4B730;
+  text-decoration: none;
+  margin: 20px;
+}
+.side .side-links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.side .side-links a {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.side .side-links a:hover {
+  background-color: #34495e;
+}
+.side .side-links a.active {
+  background-color: #1abc9c;
+}
+.side .side-links a.active:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  background-color: #e74c3c;
+  height: 100%;
+  width: 4px;
+}
+.side .side-links a svg {
+  margin-right: 16px;
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all 0.3s ease;
+}
+.side .side-links a h3 {
+  flex-grow: 1;
+  display: none;
+  transition: all 0.3s ease;
+}
+.side .btn-logout {
+  padding: 10px;
+  margin: 2rem auto;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.side .btn-logout span {
+  margin-right: 8px;
+}
+.side .btn-logout h3 {
+  display: none;
+  transition: all 0.3s ease;
+}
+.side .btn-logout:hover {
+  background-color: #34495e;
+}
+.side .side.open .btn-logout h3 {
+  display: inline-block;
+}
+.side .side.closed .btn-logout {
+  padding: 0;
+}
+.side .side.closed .btn-logout h3 {
+  display: none;
+}
+
+.toggle-btn {
+  background: none;
+  color: #ecf0f1;
+  cursor: pointer;
+  position: relative;
+  top: 150px;
+  left: 80px;
+  width: 2rem;
+  margin-bottom: 2rem;
+}
+.toggle-btn svg {
+  width: 0.8rem;
+}
+
+/* ------------ MEDIA QUERIES POUR TABLETTE ET MOBILE ---------- */
+/* Pour les écrans mobiles (petits appareils comme iPhone) */
+@media screen and (max-width: 768px) {
+  .side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 10;
+    background-color: #2c3e50;
+    transition: all 0.3s ease-in-out;
+  }
+  .side.closed {
+    width: 50px;
+  }
+  .side.closed a h3 {
+    display: none; /* Masquer le texte sur mobile si fermé */
+  }
+  .side.open {
+    width: 150px;
+  }
+  .side.open a h3 {
+    display: block; /* Afficher le texte en mode ouvert */
+  }
+  .side .marque {
+    display: none; /* Cacher le branding sur petit écran */
+  }
+  .dashboard-main {
+    transition: all 0.3s ease-in-out;
+  }
+}
+/* Pour les écrans tablettes (largeur > 768px mais < 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .side.open {
+    flex-basis: 200px;
+  }
+  .side .side-links a h3 {
+    display: block; /* Afficher le texte sur tablette */
+  }
+}
+/* Pour les écrans de bureau (plus de 1024px) */
+@media screen and (min-width: 1024px) {
+  .side {
+    flex-basis: 200px; /* Toujours ouverte sur grand écran */
+    max-width: 200px;
+  }
+  .side .side-links a h3 {
+    display: block; /* Toujours afficher le texte */
+  }
 }/*# sourceMappingURL=dashboardLayout.css.map */

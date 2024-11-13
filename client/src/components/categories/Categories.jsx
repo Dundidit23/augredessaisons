@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-//import Modal from '../modal/Modal'; 
-import { useCategory } from '../../context/CategoryContext'; 
+import { useCategory } from '../../context/CategoryContext';
+import { BsTrash3 } from "react-icons/bs";
+import { MdOutlineEditNote } from "react-icons/md"; 
 import './categories.scss';
 
 const ManageCategories = () => {
@@ -9,17 +10,18 @@ const ManageCategories = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
+  const [showInput, setShowInput] = useState(false); // État pour gérer l'affichage de l'input
 
   const handleAddCategory = async () => {
     if (!newCategoryCategory) {
       setErrorMessage('Le nom de la catégorie ne peut pas être vide.');
       return;
     }
-    
     try {
-      await addCategory({ category: newCategoryCategory});
+      await addCategory({ category: newCategoryCategory });
       setNewCategoryCategory(''); // Réinitialise le champ
       setErrorMessage('');
+      setShowInput(false); // Cacher l'input après l'ajout
     } catch (error) {
       if (error.response && error.response.status === 409) {
         setErrorMessage('Cette catégorie existe déjà. Veuillez en choisir une autre.');
@@ -34,6 +36,7 @@ const ManageCategories = () => {
     setEditingCategoryId(category._id);
     setNewCategoryCategory(category.category); // Remplir le champ avec le nom de la catégorie à éditer
     setIsEditing(true);
+    setShowInput(true); // Afficher l'input lors de l'édition
   };
 
   const handleUpdateCategory = async () => {
@@ -42,11 +45,12 @@ const ManageCategories = () => {
       return;
     }
     try {
-      await updateCategory(editingCategoryId, { category: newCategoryCategory }); // Assurez-vous que l'objet corresponde à ce qui est attendu par votre API
+      await updateCategory(editingCategoryId, { category: newCategoryCategory });
       setNewCategoryCategory('');
       setIsEditing(false);
       setEditingCategoryId(null);
       setErrorMessage('');
+      setShowInput(false); // Cacher l'input après la mise à jour
     } catch (error) {
       setErrorMessage('Une erreur est survenue lors de la mise à jour de la catégorie.');
       console.error('Erreur lors de la mise à jour de la catégorie:', error);
@@ -65,27 +69,52 @@ const ManageCategories = () => {
     }
   };
 
+  const handleButtonClick = () => {
+    if (isEditing) {
+      handleUpdateCategory(); // Mettre à jour la catégorie si en mode édition
+    } else {
+      handleAddCategory(); // Ajouter une catégorie si en mode ajout
+    }
+  };
+
   return (
-    <div>
-      <h2>Gestion des Catégories</h2>
-      <input
-        type="text"
-        value={newCategoryCategory}
-        onChange={(e) => setNewCategoryCategory(e.target.value)}
-        placeholder="Nouvelle catégorie"
-      />
-      <button onClick={isEditing ? handleUpdateCategory : handleAddCategory}>
-        {isEditing ? 'Mettre à jour' : 'Ajouter'}
-      </button>
-      
+    <div className='categories-content'>
+      <div className='title'>
+        <h2>Gestion des Catégories</h2>
+        <div className='btn-input-container'>
+          {showInput && (
+            <input
+              type="text"
+              value={newCategoryCategory}
+              onChange={(e) => setNewCategoryCategory(e.target.value)}
+              placeholder="Nouvelle catégorie"
+            />
+          )}
+          <button
+            className="btn"
+            onClick={() => {
+              if (!showInput) {
+                setShowInput(true); // Afficher l'input lors de l'ajout
+                setIsEditing(false); // Réinitialiser l'état d'édition
+                setNewCategoryCategory(''); // Réinitialiser le champ
+              } else {
+                handleButtonClick(); // Appeler la fonction appropriée (ajout ou mise à jour)
+              }
+            }}
+          >
+            {isEditing ? 'Mettre à jour' : 'Ajouter'} une catégorie
+          </button>
+        </div>
+      </div>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-  
       <ul>
         {categories.map((category) => (
           <li key={category._id}>
-            {category.category} {/* Assurez-vous que 'name' correspond à votre champ de catégorie */}
-            <button onClick={() => handleEditCategory(category)}>Éditer</button>
-            <button onClick={() => handleDeleteCategory(category._id)}>Supprimer</button>
+            {category.category}
+            <div className='buttons-actions'>
+              <button onClick={() => handleEditCategory(category)}><MdOutlineEditNote /></button>
+              <button onClick={() => handleDeleteCategory(category._id)}><BsTrash3 /></button>
+            </div>
           </li>
         ))}
       </ul>

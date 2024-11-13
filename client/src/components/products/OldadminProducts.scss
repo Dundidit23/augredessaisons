@@ -1,0 +1,115 @@
+/* Styles généraux pour la liste des produits */
+.product-grid {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+  
+  .product-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+    width: 100%; /* Par défaut pour le mode table */
+  }
+  
+  .product-item:hover {
+    transform: translateY(-3px);
+  }
+  
+  /* Image du produit */
+  .product-item img {
+    width: 100%;
+    height: auto;
+    max-height: 100px;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  
+  /* Texte du produit */
+  .product-item h3 {
+    font-size: 1.1em;
+    margin: 10px 0 5px;
+  }
+  
+  .product-item p {
+    color: #555;
+    margin: 5px 0;
+    font-size: 1rem;
+  }
+  
+  .product-item button {
+    background-color: $primary-col;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+        background-color: #0056b3;
+      }
+  }
+
+  /* Mode Liste (Table View) */
+  .tableView .product-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+  }
+  
+  /* Image pour la vue liste */
+  .tableView .product-item img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  /* Contenu du produit en vue liste */
+  .tableView .product-item h3,
+  .tableView .product-item p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+  
+  .tableView .product-item .product-details {
+    flex: 1;
+    padding: 0 20px;
+  }
+  
+  /* Boutons en vue liste */
+  .tableView .product-item button {
+    padding: 8px 12px;
+  }
+  
+  /* Mode Grille (Grid View) */
+  .gridView {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
+    gap: 10px;
+    img{
+        height: 60px;
+        object-fit: cover;
+    }
+    .product-item, p{
+        font-size: 12px;
+        line-height: 1;
+        text-align: left;
+    }
+button, .buttons-actions{
+    display: flex;
+    font-size: 11px;
+    margin: 0;
+    width: 60px;
+    gap: 5px;
+    
+}
+    }
+  
