@@ -1,33 +1,60 @@
-.adminAuthUsers, .adminUsers {
-  background-color: rgb(211, 185, 185);
+.adminUsers-content, .adminAuthUsers {
   width: 100%;
-  margin-top: 3px;
-  margin-left: 3px;
 }
-.adminAuthUsers .title, .adminUsers .title {
-  background-color: rgb(64, 3, 111);
+.adminUsers-content p, .adminAuthUsers p {
+  font-size: 1rem;
+}
+.adminUsers-content .title, .adminAuthUsers .title {
+  background-color: rgb(119, 143, 71);
+  color: white;
   display: flex;
   justify-content: space-between;
-  color: white;
+  align-items: center;
   padding: 1rem;
-  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
-.adminAuthUsers .user-item, .adminUsers .user-item {
+.adminUsers-content .title h3, .adminAuthUsers .title h3 {
+  font-size: 2rem;
+}
+.adminUsers-content .title .buttons-control, .adminAuthUsers .title .buttons-control {
   display: flex;
-  flex-direction: column;
-  align-items: left;
-  padding: 1rem;
-  border-bottom: 1px solid rgb(120, 120, 120);
+  gap: 2rem;
 }
-.adminAuthUsers .user-item:hover, .adminUsers .user-item:hover {
-  background-color: rgb(180, 180, 180);
+.adminUsers-content .title .buttons-control button, .adminAuthUsers .title .buttons-control button {
+  background-color: antiquewhite;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 1rem;
 }
-.adminAuthUsers .user-item .user-info, .adminUsers .user-item .user-info {
-  margin-left: 1rem;
+.adminUsers-content .user-list-container, .adminAuthUsers .user-list-container {
+  padding: 20px;
 }
-.adminAuthUsers .user-item .user-info .user-name, .adminUsers .user-item .user-info .user-name {
-  font-weight: bold;
+.adminUsers-content table, .adminAuthUsers table {
+  width: 98%;
+  margin: auto;
+  border-collapse: collapse;
 }
-.adminAuthUsers .user-item .user-info p, .adminUsers .user-item .user-info p {
-  font-size: 0.8rem;
+.adminUsers-content table th,
+.adminUsers-content table td, .adminAuthUsers table th,
+.adminAuthUsers table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+.adminUsers-content .grid, .adminAuthUsers .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 98%;
+  margin: auto;
+}
+.adminUsers-content .item, .adminAuthUsers .item {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.adminUsers-content .buttons-actions button, .adminAuthUsers .buttons-actions button {
+  margin-right: 10px;
 }/*# sourceMappingURL=adminAuthUsers.css.map */

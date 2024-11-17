@@ -35,7 +35,7 @@ const Boutique = () => {
 
   return (
     <div className="boutique-content">
-      <h2>La Boutique en ligne</h2>
+      <h1>La Boutique en ligne</h1>
       <div className="boutique">
         {/* Filtre par catégorie */}
         <CategoryFilter onSelectCategory={filterByCategory} />

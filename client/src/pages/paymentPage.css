@@ -1,32 +1,28 @@
 /* PaymentPage.css */
 .payment-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 20px;
   background-color: #f9f9f9;
-  min-height: 100vh;
 }
-
-.payment-page h2 {
+.payment-page .payment-page h2 {
   font-size: 2rem;
   margin-bottom: 20px;
 }
 
-.cart-summary {
+.form-cart {
+  display: flex;
+  gap: 2rem;
+  margin: 0 4rem;
+}
+.form-cart .cart-summary {
+  display: flex;
   background-color: #fff;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  width: 55%;
 }
-
-.cart-summary h3 {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.pay-button {
+.form-cart .cart-summary .pay-button {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -36,7 +32,12 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-.pay-button:hover {
+.form-cart .cart-summary .pay-button:hover {
   background-color: #0056b3;
+}
+.form-cart .final-cart {
+  width: 32%;
+  background-color: antiquewhite;
+  border: 1px solid #e8c69b;
+  border-radius: 5px;
 }/*# sourceMappingURL=paymentPage.css.map */

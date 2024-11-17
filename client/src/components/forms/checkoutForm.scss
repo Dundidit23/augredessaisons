@@ -1,0 +1,50 @@
+.customer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+  }
+  
+  .card-element-wrapper {
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    background-color: #f7fafc;
+  }
+  
+  .pay-button {
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pay-button:hover {
+    background-color: #1f78d1;
+  }
+  
+  .pay-button:disabled {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: #e53e3e;
+    margin-top: 10px;
+  }
+  
+  .success-message {
+    color: #38a169;
+    margin-top: 10px;
+  }
+  

@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Modal from '../modal/Modal'; 
 import CreateProduct from '../forms/CreateProduct2';
 import { useCategory } from '../../../private/CategoryContextOriginal';
-import './dashAction.scss';
-//import '../../assets/styles/dashboard/dashboard.scss'
+import './dashActions.scss';
 
 
 const DashAction = ({ onAdd, onFilter, onViewChange }) => {
@@ -89,7 +88,7 @@ const DashAction = ({ onAdd, onFilter, onViewChange }) => {
             </button>
             <div className="filter-button-wrapper">
                 <button className="action-button filter jsFilter" onClick={toggleFilterMenu}>
-                    <span>Filter</span>
+                    <span>Filtre</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-filter">
                         <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                     </svg>

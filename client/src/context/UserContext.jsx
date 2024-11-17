@@ -14,6 +14,44 @@ export function UserProvider({ children }) {
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
+
+  const token = localStorage.getItem('token'); // Vous avez déjà stocké le token dans localStorage
+
+  const checkAuth = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+        return;
+      }
+      
+      const response = await fetch('http://localhost:4000/api/auth/check-admin', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Token invalide');
+      }
+  
+      const data = await response.json();
+      setIsAuthenticated(true);
+      setCurrentUser(data.user);
+    } catch (error) {
+      console.error('Erreur API:', error.message);
+      setIsAuthenticated(false);
+      setCurrentUser(null);
+    }
+  };
+  
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   // Enregistrer un nouvel utilisateur
   const registerUser = async ({ username, email, password }) => {
     try {
@@ -34,35 +72,42 @@ export function UserProvider({ children }) {
     }
   };
 
-  // Connexion d'un utilisateur
-  const loginUser = async (email, password) => {
-    try {
-      const response = await api.post(LOGIN_URL, {
-        json: { email, password }
-        
-      });
-      console.log('Email:', email);
-      console.log('Password:', password);
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la connexion');
-      }
-  
-      const { token, user } = await response.json();
-      localStorage.setItem('token', token);
-      setIsAuthenticated(true);
-      setCurrentUser(user);
-      setUsername(data.username);
-      setErrorMessage('');
-  
-      return true;
-    } catch (error) {
-      console.error("Erreur lors de la connexion:", error);
-      setErrorMessage(error.message || 'Erreur lors de la connexion');
-      return false;
+ // Connexion d'un utilisateur
+ const loginUser = async (email, password) => {
+  try {
+    const response = await api.post(LOGIN_URL, {
+      json: { email, password }
+    });
+
+    console.log('Email:', email);
+    console.log('Password:', password);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Erreur lors de la connexion');
     }
-  };
+
+    const { token, user } = await response.json();
+    localStorage.setItem('token', token);
+    setIsAuthenticated(true);
+    setCurrentUser(user);
+    setUsername(user.username);
+    setErrorMessage('');
+
+    navigate('/boutique');
+
+    console.log("Réponse API: ", { user });
+    const tok = localStorage.getItem('token');
+console.log('Token actuel:', token);
+
+    return user; // Retourne l'utilisateur au lieu de `true`
+  } catch (error) {
+    console.error("Erreur lors de la connexion:", error);
+    setErrorMessage(error.message || 'Erreur lors de la connexion');
+    return null; // Retourne `null` en cas d'échec
+  }
+};
+
   
 
   // Déconnexion de l'utilisateur

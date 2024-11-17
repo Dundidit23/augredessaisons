@@ -1,50 +1,25 @@
-// .boutique{
-  @mixin line-clamp($lines, $line-height) {
-    display: block;
-    display: -webkit-box;
-    -webkit-line-clamp: $lines;
-    -webkit-box-orient: vertical;
-    max-height: $lines * $line-height;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 0.9rem;
-    border: none;
-    box-shadow: none;
-    
-     }
-  
-  
-  .boutique-content {
-    @media (max-width: 768px) {
-      flex-direction: column;
-    }
+.boutique-content {
+   
     .boutique{
       display: flex;
-          @media (max-width: 768px) {
-            flex-direction: column;
-          }
+      @include for-size(phone-only){
+        flex-direction: column;
+      }
   }
-
   .category-filter {
-    flex: 1;
-    max-width: 200px;
+    min-width: 240px;
     padding: 10px;
     border-right: 1px solid #ddd;
-  
     @media (max-width: 768px) {
       border-right: none;
       border-bottom: 1px solid #ddd;
     }
   
-    h4 {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-
-    }
+   
   
     ul {
-      list-style-type: none;
-      padding: 10px;
+      //list-style-type: none;
+     // padding: 10px;
   
       li {
         margin: 5px 0;
@@ -77,8 +52,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
-    width: 100%;
   
     &:hover {
       transform: translateY(-5px);
@@ -110,24 +83,18 @@
      // flex-grow: 1;
     
    
-    h3 {
-      font-size: 1.1rem;
+    h4 {
       margin: 5px 0;
-      color: #333;
-      font-weight: 700;
+     // color: #333;
+      font-weight: 600;
       text-align: center;
     }
   p{
     padding: 0 20px;
-    margin: 0;
-    gap: 0;
   }
-  
-   
   }
 }
 .product-item-boutique .category{
-  font-size: 0.9rem;
   width: 180px;
   line-height: 3;
   display: flex;
@@ -135,12 +102,10 @@
   justify-content: center;
   margin: auto;
   text-align: center;
-  align-items: center;
-  //background-color: antiquewhite;
+  background-color: antiquewhite;
   border: 1px solid #e8c69b;
 }
 .product-item-boutique .product-description {
-  margin: 1rem;
 border-radius: 0;
 line-height: 1.2;
 

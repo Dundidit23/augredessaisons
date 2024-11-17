@@ -58,7 +58,7 @@ export function AdminAuthProvider({ children }) {
       setIsAuthenticated(true);
       setUsername(data.username);
       setCurrentAdmin(data.admin); // Stocker l'admin connecté
-
+  
       // Mettre à jour le statut en ligne
       await updateAdminStatus(data.admin._id, true);
       return true;

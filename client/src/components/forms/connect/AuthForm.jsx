@@ -1,5 +1,5 @@
 //AuthForm.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
@@ -8,7 +8,7 @@ import { useUser } from "../../../context/UserContext";
 import Forgot from './Forgot';
 
 const AuthForm = ({ formType, onFormSwitch, onClose, setRole, setStatus }) => {
-    const { loginUser, registerUser, errorMessage } = useUser();
+    const { loginUser, registerUser, errorMessage, currentUser } = useUser();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
@@ -17,38 +17,39 @@ const AuthForm = ({ formType, onFormSwitch, onClose, setRole, setStatus }) => {
     const [showModal, setShowModal] = useState(true);
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // Empêche la soumission du formulaire par défaut
-        if (formType === "register" && password !== confirmPassword) {
-            alert("Les mots de passe ne correspondent pas");
-            return;
-        }
-        try {
-            if (formType === "register") {
-                const data = await registerUser({ username, email, password });
-                console.log(data); // Log the response data
-                alert("Utilisateur enregistré avec succès");
-                onFormSwitch("login"); // Passer au mode connexion après l'inscription réussie
-            } else if (formType === "login") {
-                const { user } = await loginUser(email, password); // Déstructuration pour récupérer l'utilisateur
-                console.log("Données de l'utilisateur :", user); // Log des informations de l'utilisateur
-                onClose();
-                // Redirection en fonction du rôle de l'utilisateur
-                if (user.role === "admin") {
-                    navigate('/dashboard'); // Redirigez vers le tableau de bord si l'utilisateur est admin
-                } else {
-                    navigate('/'); // Redirigez vers la page d'accueil si l'utilisateur est normal
-                }
 
-                // Fermer le formulaire après la connexion réussie
-                setShowModal(false); // Cela devrait fermer le modal
-                onFormSwitch("login"); // Cela devrait changer le type de formulaire si nécessaire
-            }
-        } catch (err) {
-            console.error("Error during registration/login:", err);
-            alert("Une erreur s'est produite. Veuillez réessayer.");
+    useEffect(() => {
+        if (currentUser) {
+            console.log('Utilisateur actuel après connexion:', currentUser);
+        } else {
+            console.log('Aucun utilisateur connecté');
         }
-    };
+    }, [currentUser]);
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          if (formType === "register") {
+            const data = await registerUser({ username, email, password });
+            console.log(data); // Log the response data
+            alert("Utilisateur enregistré avec succès");
+            onFormSwitch("login");
+          } else if (formType === "login") {
+            const user = await loginUser(email, password); // Récupère l'utilisateur directement
+            console.log("Données de l'utilisateur :", user);
+      
+            if (user) {
+              navigate('/'); // Redirige vers la page d'accueil si l'utilisateur est connecté
+              onClose();
+            } else {
+              alert("Échec de la connexion");
+            }
+          }
+        } catch (err) {
+          console.error("Error during registration/login:", err);
+          alert("Une erreur s'est produite. Veuillez réessayer.");
+        }
+      };
 
     const handleFormSwitch = (type) => {
         console.log("Changement de formulaire :", type);
@@ -57,6 +58,8 @@ const AuthForm = ({ formType, onFormSwitch, onClose, setRole, setStatus }) => {
         }
         setFormType(type); // Change le type de formulaire si nécessaire
     };
+
+      
     return (
         <div className="auth-wrapper">
             <h3>{formType === "login" ? "Connexion" : formType === "register" ? "Inscription" : "Mot de passe oublié"}</h3>

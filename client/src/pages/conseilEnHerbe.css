@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  width: 100vw;
+}
+
+.conseilEnHerbe {
+  background-color: burlywood;
+  margin: 0;
+  padding: 0;
+}
+.conseilEnHerbe .block {
+  width: 90%;
+  background-color: red;
+  margin: auto;
+  text-align: center;
+}/*# sourceMappingURL=conseilEnHerbe.css.map */

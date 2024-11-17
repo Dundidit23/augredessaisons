@@ -1,107 +1,216 @@
-aside{
-  margin-top: 0.2rem;
-  
+//asidebar.scss
+.side.open .btn-logout h3 {
+  display: inline-block;
+  margin: auto;
 }
-.marque a  {  background-color: yellow;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-margin: 0;
-  padding: 1rem;
-  margin: 0;
- font-size: clamp(1px, 10px + 1vw,20px);
- overflow: hidden;
+
+// Masquer le texte dans .btn-logout lorsque la barre latérale est fermée
+.side.closed .btn-logout h3 {
+  display: none;
 }
+
+// Style de la sidebar
 .side {
-    flex-basis: 200px;
-    max-width: 200px;
-    flex-shrink: 1;
-    background-color: var(--filter-reset);
-    display: flex;
-    flex-direction: column;
-  //   @media screen and (max-width: 1024px) {
-  //     display: none;
-  //  }
-    
-    &-top {
-        display: flex;
-        align-items: center;
-        padding: 1rem; 
-        background-color: transparent;
-        }
-    &-links {
-        a {
-          display: flex;
-          align-items: center;
-          padding: 10px 16px;
-          color: var(--sidebar-link);
-          text-decoration: none;
-          font-size: $font-small;
-          line-height: 24px;
-          &:hover {
-            background-color:var(--sidebar-hover-link);
-           }
-          &:focus {
-            background-color:var(--sidebar-active-link);
-            &:before {
-              content: '';
-              position: absolute;
-              right: 0;
-              background-color:var(--action-color);
-              height: 100%;
-              width: 4px;
-          }
-          &.active {
-            background-color:var(--sidebar-active-link);
-            
-            &:before {
-              content: '';
-              position: absolute;
-              right: 0;
-              background-color:var(--action-color);
-              height: 100%;
-              width: 4px;
-            }
-          }
-        }
+  flex-shrink: 0;
+  background-color: var(--sidebar-bg-color);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  margin-right: 2px;
+  &.closed {
+    flex-basis: 50px;
+    max-width: 50px;
+    .marque {
+      display: none;
+    }
+    .toggle-btn {
+     position: absolute;
+      top: 0px;
+      right: 0;
+      margin: 10px;
+    }
+  }
+  &.open {
+    flex-basis: 250px;
+    max-width: 250px;
+  }
+  
+  .side-top{
+    background-color: var(--color-dark);
+    position: relative;
+    .marque {
+      color: var(--sidebar-marque-col);
+      text-align: center;
+      font-weight: 500;
+      margin: 2rem;
+    }
+    .toggle-btn {
+      background: none;
+      color: var(--sidebar-bg-color);
+      background-color: var(--col-action);
+      position: absolute;
+      bottom: -40px;
+      right: 10px;
+      cursor: pointer;
       svg {
-         margin-right: 18px;
-         width: 2rem;
-         height: 2rem;
-      &:hover {
-         background-color: var(--sidebar-hover-link);
-         }
-    }
-  .logout {
-        margin-top: 2rem;
-        width: 2rem;
-        background-color: red;
+        width: 1rem;
+        height: 1rem;
+        color: antiquewhite;
       }
     }
-    .submenu {
-        display: none;
-      }
-      .submenu.open {
-        display: block;
-      }
-    
+  }
  
-    
-/* ------------ MEDIA QUERIES FOR MOBILES---------- */
-@media screen and (max-width: 568px) {
-    .side{
-        a h3{
-            display: none;
+  .side-links {
+    margin-top: 2rem;
+    a, h4{
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      color: var(--sidebar-links-col);
+      white-space: nowrap;
+      overflow: hidden;
+      &:hover {
+        background-color: var(--sidebar-hover-bg-color);
+      }
+
+      &.active {
+        background-color: var(--sidebar-active-link);
+        &:before {
+          content: '';
+          position: absolute;
+          right: 0;
+          background-color: var(--col-action);
+          height: 100%;
+          width: 4px;
         }
+      }
+      svg {
+        margin-right: 16px;
+        width: 1.5rem;
+        height: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      h4 {
+        display: none; // Par défaut, masquer le texte
+        transition: all 0.3s ease;
+        margin: 0 1rem;
+      }
     }
-    .side.open {
-        transform: translateX(0);
-      }
-      .side.close {
-        transform: translateX(-100%);
-        cursor: pointer;
-        display: inline-block;
-      }
+  }
+
+  .btn-logout {
+    padding:10px;
+    margin: 2rem auto;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: transparent;
+    color: var(--col-white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    span {
+      margin-right: 8px;
+    }
+    h4 {
+      display: none; // Masquer le texte de "Déconnexion" par défaut
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      background-color: var(--sidebar-hover-bg-color);
+    }
+  }
+
+  // Si la barre latérale est ouverte, afficher le texte de déconnexion
+  .side.open .btn-logout h4 {
+    display: inline-block;
+  }
+
+  // Si la barre latérale est fermée, masquer le texte de déconnexion
+  .side.closed .btn-logout  {
+    padding: 0;
+    h3{
+      display: none; // Cacher le texte
+    }
+  }
 }
-    }}
+.submenu {
+  display: none;
+}
+.submenu.open {
+  display: block;
+  margin-left: 5rem;
+  padding: 0;
+}
+// Toggle button pour ouvrir/fermer la barre latérale
+
+/* ------------ MEDIA QUERIES POUR TABLETTE ET MOBILE ---------- */
+
+/* Pour les écrans mobiles (petits appareils comme iPhone) */
+@media screen and (max-width: 768px) {
+  .side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 10;
+    background-color: var(--sidebar-bg-color);
+    transition: all 0.3s ease-in-out;
+    &.closed {
+      width: 50px;
+      a h4 {
+        display: none; /* Masquer le texte sur mobile si fermé */
+      }
+    }
+
+    &.open {
+      width: 250px;
+      a h4 {
+        display: block; 
+        font-size: (--font-size-h3);
+        text-align: center;
+        color: var(--col-white);
+        margin: 0;/* Afficher le texte en mode ouvert */
+      }
+    }
+
+    .marque {
+      display: none; /* Cacher le branding sur petit écran */
+    }
+  }
+
+  .dashboard-main {
+ //   margin-left: 50px; /* Ajuster le contenu principal en fonction de la barre */
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+/* Pour les écrans tablettes (largeur > 768px mais < 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .side {
+    &.open {
+      flex-basis: 200px;
+    }
+    .side-links a h4 {
+      display: block;
+      /* Afficher le texte sur tablette */
+    }
+  }
+}
+
+/* Pour les écrans de bureau (plus de 1024px) */
+@media screen and (min-width: 1024px) {
+  .side {
+    flex-basis: 200px; /* Toujours ouverte sur grand écran */
+    max-width: 200px;
+    .side-links a h4 {
+      display: block; /* Toujours afficher le texte */
+    }
+  }
+}
+
+

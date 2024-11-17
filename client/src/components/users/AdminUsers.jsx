@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext'; // Assurez-vous d'avoir le contexte UserContext
+
 import ItemUser from './ItemUser'; // Assurez-vous d'avoir ce composant pour afficher chaque utilisateur
 import './adminAuthUsers.scss';
 
@@ -24,6 +25,11 @@ const AdminUsers = () => {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [showForm, setShowForm] = useState(false); // Contrôler l'affichage du formulaire
+  const [isTableView, setIsTableView] = useState(false);
+
+  const toggleView = () => {
+    setIsTableView((prevMode) => !prevMode);
+  };
 
   useEffect(() => {
     fetchUsers(); // Charger les utilisateurs au montage du composant
@@ -105,12 +111,18 @@ const AdminUsers = () => {
   };
 
   return (
-    <div className="adminUsers">
+    <div className="adminUsers-content">
       <div className="title">
         <h3>Gestion des utilisateurs</h3>
+        <div className='buttons-control'>
         <button onClick={handleAddUser} className="btn">
           Ajouter un utilisateur
         </button>
+       
+        <button  className="view-toggle btn" onClick={toggleView}>
+          {isTableView ? 'Vue Grille' : 'Vue Tableau'}
+        </button>
+      </div>
       </div>
 
       {/* Formulaire d'ajout/modification */}
@@ -166,6 +178,39 @@ const AdminUsers = () => {
         <div className="error">{errorMessage}</div>
       ) : (
         <div className="userList">
+         {isTableView ? (
+        // Vue tableau
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Nom d'utilisateur</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length > 0 ? (
+              users.map((user) => (
+                <ItemUser
+                  key={user._id}
+                  user={user}
+                  handleEdit={handleEditUser}
+                  handleDelete={handleDeleteUser}
+                  isTableView={true}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">Aucun utilisateur trouvé.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      ) : (
+        // Vue grille
+        <div className="grid">
           {users.length > 0 ? (
             users.map((user) => (
               <ItemUser
@@ -173,12 +218,14 @@ const AdminUsers = () => {
                 user={user}
                 handleEdit={handleEditUser}
                 handleDelete={handleDeleteUser}
+                isTableView={false}
               />
             ))
           ) : (
             <p>Aucun utilisateur trouvé.</p>
           )}
-        </div>
+          </div>
+      )}</div>
       )}
     </div>
   );

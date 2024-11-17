@@ -5,7 +5,6 @@ import Modal from '../modal/Modal';
 import CreateProduct from '../forms/CreateProduct2';
 import { useCategory } from '../../../private/CategoryContextOriginal';
 import './dashAction.scss';
-//import '../../assets/styles/dashboard/dashboard.scss'
 
 
 const DashAction = ({ onAdd, onFilter, onViewChange }) => {

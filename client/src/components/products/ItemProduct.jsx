@@ -49,7 +49,7 @@ const ItemProduct = ({
       {/* Container pour les informations du produit */}
       <div className="info-container">
         {/* Afficher le nom du produit uniquement si ce n'est pas la vue de détail */}
-        {!isProductDetailView && <h3>{product.name}</h3>}
+        {!isProductDetailView && <h4>{product.name}</h4>}
         
         <p className={`product-description ${productClass}`}>{product.description}</p>
         <p className='category'>{product.category || "N/A"}</p>
@@ -74,7 +74,7 @@ const ItemProduct = ({
           {!isProductDetailView && (
             <button onClick={handleViewDetails}>Voir</button>
           )}
-          <button className="commander" onClick={handleAddToCart}>Commander</button>
+          <button className="commander"onClick={handleAddToCart}>Commander</button>
         </div>
       )}
     </div>

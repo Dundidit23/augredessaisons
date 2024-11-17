@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useAdminAuth } from './context/AdminAuthContext'; // Ajout de l'import manquant
+import ThemeProvider from './context/ThemeContext';
 import { UserProvider } from './context/UserContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import { CategoryProvider } from './context/CategoryContext';
@@ -44,6 +45,7 @@ function App() {
       }, []);
 
     return (
+        <ThemeProvider>
         <AdminAuthProvider>
             <UserProvider>
                 <CategoryProvider>
@@ -76,6 +78,7 @@ function App() {
                 </CategoryProvider>
             </UserProvider>
         </AdminAuthProvider>
+    </ThemeProvider>
     );
 }
 

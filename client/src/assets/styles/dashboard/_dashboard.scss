@@ -1,0 +1,73 @@
+//dashboard-scss
+@import '../utils/mixins';
+:root {
+  --primary-col: #BDCF2B;
+  --col-white: white;
+  --col-action:#e7a012;
+  --color: #8A9B0F; /* the main color */
+  --color-light: color-mix(in srgb,var(--color),#fff 25%);
+  --color-dark:  color-mix(in srgb,var(--color),#000 25%);
+
+  --font-size-h1: font-size: clamp(1vw, 8vw, 2.5rem);
+  --font-size-h2: font-size: clamp(1vw, 6vw, 2rem);
+  --font-size-h3: font-size: clamp(1vw, 4vw, 1.5rem);
+  --font-size-h4: font-size: clamp(1vw, 3vw, 1.2rem);
+  
+ // sidebar
+  --sidebar-bg-color:#061041;
+  --sidebar-marque-col: var(--primary-col);
+  --sidebar-links-col: #AC9378;
+  --sidebar-active-link: #8191ae;
+  --sidebar-hover-link: #1a2539;
+  --sidebar-top-bg: calc(var(--sidebar-bg-color) - 10%);
+
+  //page des produits
+  --product-content-bg: rgb(84, 93, 117);
+  --title-actions: rgb(33, 36, 39);
+  --bg-products: rgb(169, 174, 181);
+
+  //dashActions
+  --dash-actions-btn-col-font: var(--col-white);
+  //--app-content-main-color: #fff;
+  //--sidebar-list: #AC9378;
+
+  --action-color: #2869ff;
+  --action-color-hover: #6291fd;
+  --app-content-secondary-color: #1d283c;
+  --table-border: #1a2131;
+  --table-header: #1a2131;
+  --filter-reset: #2c394f;
+  --filter-shadow: rgba(16, 24, 39, 0.8) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+
+}
+
+.light:root {
+//sidebar
+  --sidebar-bg-color:#e1e4ca;
+  --sidebar-marque-col:rgb(190, 165, 24);
+  --sidebar-links-col: #201432;
+  --sidebar-active-link: #77b7c5;
+  --sidebar-hover-link: #82795e;
+  --sidebar-top-bg: calc(var(--sidebar-bg-color) - 10%);
+//page des produits
+  --product-content-bg: rgb(223, 214, 208);
+  --title-actions: rgb(197, 208, 153);
+  --bg-products: rgb(227, 229, 219);
+ //dashActions
+ --dash-actions-btn-col-font: black;
+
+  --app-content-secondary-color: #f3f6fd;
+  --app-content-main-color: #1f1c2e;
+  --sidebar-link-bg: #dadee6;
+  --sidebar-main-color: #1f1c2e;
+  --filter-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  --filter-reset: #e5ece4;
+}
+
+
+
+  $font-small: 14px;
+  $font-medium: 16px;
+  $font-large: 24px;
+

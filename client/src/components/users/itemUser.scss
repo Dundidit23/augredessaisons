@@ -1,0 +1,28 @@
+.buttons-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem auto;
+  
+    button {
+      background-color: $primary-col;
+      border-radius: 50%;
+      color: white;
+      border: none;
+      height: 30px;
+      width: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      &.delete {
+        background-color: #e7a012;
+      }
+  
+      svg {
+        width: 100%; // Utilise la taille entière du conteneur
+        height: 100%;
+        max-width: 24px; // Taille maximale pour éviter qu'elle soit trop grande
+        max-height: 24px; // Taille maximale pour éviter qu'elle soit trop grande
+      }
+    }
+  }

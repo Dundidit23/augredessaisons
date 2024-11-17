@@ -2,7 +2,7 @@
   margin: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.products-content .title-action {
+.products-content .title-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;

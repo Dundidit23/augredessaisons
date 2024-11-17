@@ -77,8 +77,8 @@ const AdminProducts = () => {
   if (errorMessage) return <div>Erreur : {errorMessage}</div>;
 
   return (
-    <div className="product-content">
-      <div className="title-action">
+    <div className="product content">
+      <div className="title-actions">
         <h2 className="title-page-product">Gestion des produits</h2>
         <DashActions
           onFilterCategory={handleFilterCategory}

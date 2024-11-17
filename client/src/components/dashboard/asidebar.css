@@ -1,87 +1,194 @@
-aside .side {
-  flex-basis: 200px;
-  max-width: 200px;
-  flex-shrink: 0;
-  background-color: var(--sidebar);
-  display: flex;
-  flex-direction: column;
+@charset "UTF-8";
+.side.open .btn-logout h3 {
+  display: inline-block;
+  margin: auto;
 }
-@media screen and (max-width: 1024px) {
-  aside .side {
-    display: none;
-  }
-}
-aside .side-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  background-color: var(--sidebar);
-}
-aside .side-links {
-  /* ------------ MEDIA QUERIES FOR MOBILES---------- */
-}
-aside .side-links a {
-  display: flex;
-  align-items: center;
-  padding: 10px 16px;
-  color: var(--sidebar-link);
-  text-decoration: none;
-  font-size: 14px;
-  line-height: 24px;
-}
-aside .side-links a:hover {
-  background-color: var(--sidebar-hover-link);
-}
-aside .side-links a:focus {
-  background-color: var(--sidebar-active-link);
-}
-aside .side-links a:focus:before {
-  content: "";
-  position: absolute;
-  right: 0;
-  background-color: var(--action-color);
-  height: 100%;
-  width: 4px;
-}
-aside .side-links a:focus.active {
-  background-color: var(--sidebar-active-link);
-}
-aside .side-links a:focus.active:before {
-  content: "";
-  position: absolute;
-  right: 0;
-  background-color: var(--action-color);
-  height: 100%;
-  width: 4px;
-}
-aside .side-links a svg {
-  margin-right: 8px;
-  width: 2rem;
-  height: 2rem;
-}
-aside .side-links a svg:hover {
-  background-color: var(--sidebar-hover-link);
-}
-aside .side-links a .logout {
-  margin-top: 1rem;
-}
-aside .side-links .submenu {
+
+.side.closed .btn-logout h3 {
   display: none;
 }
-aside .side-links .submenu.open {
-  display: block;
+
+.side {
+  flex-shrink: 0;
+  background-color: var(--sidebar-bg-color);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  margin-right: 2px;
 }
+.side.closed {
+  flex-basis: 50px;
+  max-width: 50px;
+}
+.side.closed .marque {
+  display: none;
+}
+.side.closed .toggle-btn {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  margin: 10px;
+}
+.side.open {
+  flex-basis: 250px;
+  max-width: 250px;
+}
+.side .side-top {
+  background-color: var(--color-dark);
+  position: relative;
+}
+.side .side-top .marque {
+  color: var(--sidebar-marque-col);
+  text-align: center;
+  font-weight: 500;
+  margin: 2rem;
+}
+.side .side-top .toggle-btn {
+  background: none;
+  color: var(--sidebar-bg-color);
+  background-color: var(--col-action);
+  position: absolute;
+  bottom: -40px;
+  right: 10px;
+  cursor: pointer;
+}
+.side .side-top .toggle-btn svg {
+  width: 1rem;
+  height: 1rem;
+  color: antiquewhite;
+}
+.side .side-links {
+  margin-top: 2rem;
+}
+.side .side-links a, .side .side-links h4 {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: var(--sidebar-links-col);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.side .side-links a:hover, .side .side-links h4:hover {
+  background-color: var(--sidebar-hover-bg-color);
+}
+.side .side-links a.active, .side .side-links h4.active {
+  background-color: var(--sidebar-active-link);
+}
+.side .side-links a.active:before, .side .side-links h4.active:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  background-color: var(--col-action);
+  height: 100%;
+  width: 4px;
+}
+.side .side-links a svg, .side .side-links h4 svg {
+  margin-right: 16px;
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all 0.3s ease;
+}
+.side .side-links a h4, .side .side-links h4 h4 {
+  display: none;
+  transition: all 0.3s ease;
+  margin: 0 1rem;
+}
+.side .btn-logout {
+  padding: 10px;
+  margin: 2rem auto;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: transparent;
+  color: var(--col-white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.side .btn-logout span {
+  margin-right: 8px;
+}
+.side .btn-logout h4 {
+  display: none;
+  transition: all 0.3s ease;
+}
+.side .btn-logout:hover {
+  background-color: var(--sidebar-hover-bg-color);
+}
+.side .side.open .btn-logout h4 {
+  display: inline-block;
+}
+.side .side.closed .btn-logout {
+  padding: 0;
+}
+.side .side.closed .btn-logout h3 {
+  display: none;
+}
+
+.submenu {
+  display: none;
+}
+
+.submenu.open {
+  display: block;
+  margin-left: 5rem;
+  padding: 0;
+}
+
+/* ------------ MEDIA QUERIES POUR TABLETTE ET MOBILE ---------- */
+/* Pour les écrans mobiles (petits appareils comme iPhone) */
 @media screen and (max-width: 768px) {
-  aside .side-links .side h3 {
-    display: none;
+  .side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 10;
+    background-color: var(--sidebar-bg-color);
+    transition: all 0.3s ease-in-out;
   }
-  aside .side-links .side.open {
-    transform: translateX(0);
+  .side.closed {
+    width: 50px;
   }
-  aside .side-links .side.close {
-    transform: translateX(-100%);
-    cursor: pointer;
-    display: inline-block;
+  .side.closed a h4 {
+    display: none; /* Masquer le texte sur mobile si fermé */
+  }
+  .side.open {
+    width: 250px;
+  }
+  .side.open a h4 {
+    display: block;
+    font-size: --font-size-h3;
+    text-align: center;
+    color: var(--col-white);
+    margin: 0; /* Afficher le texte en mode ouvert */
+  }
+  .side .marque {
+    display: none; /* Cacher le branding sur petit écran */
+  }
+  .dashboard-main {
+    transition: all 0.3s ease-in-out;
+  }
+}
+/* Pour les écrans tablettes (largeur > 768px mais < 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .side.open {
+    flex-basis: 200px;
+  }
+  .side .side-links a h4 {
+    display: block;
+    /* Afficher le texte sur tablette */
+  }
+}
+/* Pour les écrans de bureau (plus de 1024px) */
+@media screen and (min-width: 1024px) {
+  .side {
+    flex-basis: 200px; /* Toujours ouverte sur grand écran */
+    max-width: 200px;
+  }
+  .side .side-links a h4 {
+    display: block; /* Toujours afficher le texte */
   }
 }/*# sourceMappingURL=asidebar.css.map */

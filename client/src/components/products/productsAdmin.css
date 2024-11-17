@@ -3,7 +3,7 @@
   background-color: var(--bg-products);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.products-content .title-action, .products-content .dashboard-style {
+.products-content .title-actions, .products-content .dashboard-style {
   display: flex;
   justify-content: space-between;
   align-items: center;

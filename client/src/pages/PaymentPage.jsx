@@ -3,6 +3,7 @@ import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../components/forms/CheckoutForm';
+import CartPage from './CartPage'
 import { useContext } from 'react';
 import { useCart } from '../context/CartContext';
 import './paymentPage.scss';
@@ -15,15 +16,19 @@ const PaymentPage = () => {
   return (
     <div className="payment-page">
       <h2>Page de Paiement</h2>
-
+<div className='form-cart'>
       {/* Afficher le montant total du panier */}
       <div className="cart-summary">
         <h3>Montant Total: {totalAmount} €</h3>
-      </div>
+   
       <Elements stripe={stripePromise}>
         <CheckoutForm />
       </Elements>
-      <button className="pay-button">Procéder au paiement</button>
+      </div>
+      <div className='final-cart'>
+        <CartPage className='small'/>
+      </div>
+    </div>
     </div>
   );
 };

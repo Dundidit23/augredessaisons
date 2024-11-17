@@ -1,14 +1,14 @@
 .products-content {
   margin: 5px;
 }
-.products-content .title-action {
+.products-content .title-actions {
   margin: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: rgb(119, 127, 83);
 }
-.products-content .title-action h2 {
+.products-content .title-actions h2 {
   margin: 0;
   padding: 0;
   text-align: left;

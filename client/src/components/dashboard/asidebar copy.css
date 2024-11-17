@@ -1,0 +1,94 @@
+aside {
+  margin-top: 0.2rem;
+  background-color: var(--sidebar-link-bg);
+}
+
+.marque a {
+  background-color: yellow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  padding: 1rem;
+  margin: 0;
+  overflow: hidden;
+}
+
+.side {
+  flex-basis: 200px;
+  max-width: 200px;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+}
+.side-top {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: transparent;
+}
+.side-links {
+  /* ------------ MEDIA QUERIES FOR MOBILES---------- */
+}
+.side-links a {
+  display: flex;
+  color: red;
+}
+.side-links a:hover {
+  background-color: var(--sidebar-hover-link);
+}
+.side-links a:focus {
+  background-color: var(--sidebar-active-link);
+}
+.side-links a:focus:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  background-color: var(--action-color);
+  height: 100%;
+  width: 4px;
+}
+.side-links a:focus.active {
+  background-color: var(--sidebar-active-link);
+}
+.side-links a:focus.active:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  background-color: var(--action-color);
+  height: 100%;
+  width: 4px;
+}
+.side-links a svg {
+  margin-right: 18px;
+  width: 2rem;
+  height: 2rem;
+}
+.side-links a svg:hover {
+  background-color: var(--sidebar-hover-link);
+}
+.side-links a .logout {
+  margin-top: 2rem;
+  width: 2rem;
+  background-color: red;
+}
+.side-links .submenu {
+  display: none;
+}
+.side-links .submenu.open {
+  display: block;
+}
+@media screen and (max-width: 568px) {
+  .side-links .side a h3 {
+    display: none;
+  }
+  .side-links .side.open {
+    transform: translateX(0);
+  }
+  .side-links .side.close {
+    transform: translateX(-100%);
+    cursor: pointer;
+    display: inline-block;
+  }
+}/*# sourceMappingURL=asidebar copy.css.map */

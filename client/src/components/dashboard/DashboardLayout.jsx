@@ -11,7 +11,6 @@ import Categories from '../categories/Categories.jsx';
 import DashboardHeader from './DashboardHeader';
 import AsideBar from './AsideBar';
 import './dashboardLayout.scss';
-
 const DashboardLayout = () => {
   const { username } = useAdminAuth(); // Access the username from context
   return (

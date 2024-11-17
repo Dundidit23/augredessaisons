@@ -1,11 +1,12 @@
 //DashActions.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useCategory } from '../../context/CategoryContext';
-import './dashAction.scss';
-import '../../assets/styles/dashboard/dashboard.scss';
+import { ThemeContext } from '../../context/ThemeContext';
+import './dashActions.scss';
 
 const DashActions = ({ onFilterCategory, onAddProduct, onViewChange, currentViewMode }) => {
-    const { categories, fetchCategories } = useCategory(); 
+    const { categories, fetchCategories } = useCategory();
+    const { toggleTheme } = useContext(ThemeContext); 
     const [showFilterMenu, setShowFilterMenu] = useState(false);
     const [filterCategory, setFilterCategory] = useState('All Categories');
 
@@ -27,24 +28,9 @@ const DashActions = ({ onFilterCategory, onAddProduct, onViewChange, currentView
         loadCategories();
     }, [fetchCategories]);
 
-    useEffect(() => {
-        const modeSwitch = document.querySelector('.mode-switch');
-        if (modeSwitch) {
-            const handleModeSwitch = () => {
-                document.documentElement.classList.toggle('light');
-                modeSwitch.classList.toggle('active');
-            };
-            modeSwitch.addEventListener('click', handleModeSwitch);
-
-            return () => {
-                modeSwitch.removeEventListener('click', handleModeSwitch);
-            };
-        }
-    }, []);
-
     return (
         <div className="actions-content">
-            <button className="action-button mode-switch" title="Switch Theme"> 
+            <button className="action-button mode-switch" title="Switch Theme" onClick={toggleTheme}> 
                 <svg className="moon" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" width="24" height="24" viewBox="0 0 24 24"> 
                     <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path> 
                 </svg> 
