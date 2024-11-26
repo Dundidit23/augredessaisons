@@ -20,6 +20,7 @@ import Soins from './pages/Soins';
 import Ateliers from './pages/Ateliers';
 import AdminLogin from './pages/admin/AdminLogin';
 import DashboardLayout from './components/dashboard/DashboardLayout';
+import NotFound from './components/NotFound';
 
 const PrivateRoute = ({ children }) => {
     const { isAuthenticated } = useAdminAuth();
@@ -71,6 +72,7 @@ function App() {
                                             <DashboardLayout />
                                         </PrivateRoute>
                                     } />
+                                       <Route path="*" element={<NotFound />} />
                                 </Routes>
                             </ErrorBoundary>
                         </CartProvider>

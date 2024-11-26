@@ -1,13 +1,3 @@
-@charset "UTF-8";
-.side.open .btn-logout h3 {
-  display: inline-block;
-  margin: auto;
-}
-
-.side.closed .btn-logout h3 {
-  display: none;
-}
-
 .side {
   flex-shrink: 0;
   background-color: var(--sidebar-bg-color);
@@ -18,22 +8,27 @@
   overflow-y: auto;
   margin-right: 2px;
 }
+.side.open {
+  flex-basis: 250px;
+  max-width: 250px;
+}
 .side.closed {
   flex-basis: 50px;
   max-width: 50px;
+  padding-top: 1rem;
+}
+.side.closed .side-top {
+  background-color: transparent;
+  height: 10px;
 }
 .side.closed .marque {
   display: none;
 }
 .side.closed .toggle-btn {
-  position: absolute;
-  top: 0px;
-  right: 0;
-  margin: 10px;
-}
-.side.open {
-  flex-basis: 250px;
-  max-width: 250px;
+  position: unset;
+  margin: 0 10px;
+  background-color: var(--color-dark);
+  padding: 1px;
 }
 .side .side-top {
   background-color: var(--color-dark);
@@ -48,52 +43,61 @@
 .side .side-top .toggle-btn {
   background: none;
   color: var(--sidebar-bg-color);
-  background-color: var(--col-action);
+  background-color: transparent;
   position: absolute;
-  bottom: -40px;
+  bottom: 10px;
   right: 10px;
+  margin-top: 2rem;
   cursor: pointer;
 }
 .side .side-top .toggle-btn svg {
-  width: 1rem;
-  height: 1rem;
-  color: antiquewhite;
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--col-white);
 }
 .side .side-links {
   margin-top: 2rem;
 }
-.side .side-links a, .side .side-links h4 {
+.side .side-links a {
   display: flex;
   align-items: center;
   padding: 10px;
   color: var(--sidebar-links-col);
   white-space: nowrap;
   overflow: hidden;
+  position: relative;
 }
-.side .side-links a:hover, .side .side-links h4:hover {
+.side .side-links a:hover {
   background-color: var(--sidebar-hover-bg-color);
 }
-.side .side-links a.active, .side .side-links h4.active {
+.side .side-links a.active {
   background-color: var(--sidebar-active-link);
 }
-.side .side-links a.active:before, .side .side-links h4.active:before {
+.side .side-links a.active:before {
   content: "";
   position: absolute;
   right: 0;
   background-color: var(--col-action);
   height: 100%;
-  width: 4px;
+  width: 3px;
 }
-.side .side-links a svg, .side .side-links h4 svg {
+.side .side-links a svg {
   margin-right: 16px;
   width: 1.5rem;
   height: 1.5rem;
   transition: all 0.3s ease;
 }
-.side .side-links a h4, .side .side-links h4 h4 {
-  display: none;
+.side .side-links a h4 {
   transition: all 0.3s ease;
   margin: 0 1rem;
+}
+.side .side-links a .message-count {
+  display: block;
+  background-color: var(--col-action);
+  color: var(--col-white);
+  padding: 3px;
+  position: absolute;
+  right: 10px;
 }
 .side .btn-logout {
   padding: 10px;
@@ -117,78 +121,62 @@
 .side .btn-logout:hover {
   background-color: var(--sidebar-hover-bg-color);
 }
-.side .side.open .btn-logout h4 {
+.side.open .btn-logout h4 {
   display: inline-block;
 }
-.side .side.closed .btn-logout {
+.side.closed .btn-logout {
   padding: 0;
 }
-.side .side.closed .btn-logout h3 {
+.side.closed .btn-logout h3 {
   display: none;
 }
-
-.submenu {
+.side .submenu {
   display: none;
 }
-
-.submenu.open {
+.side .submenu.open {
   display: block;
   margin-left: 5rem;
   padding: 0;
 }
 
-/* ------------ MEDIA QUERIES POUR TABLETTE ET MOBILE ---------- */
-/* Pour les écrans mobiles (petits appareils comme iPhone) */
 @media screen and (max-width: 768px) {
   .side {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 10;
+    padding-top: 1rem;
     background-color: var(--sidebar-bg-color);
     transition: all 0.3s ease-in-out;
   }
   .side.closed {
     width: 50px;
   }
-  .side.closed a h4 {
-    display: none; /* Masquer le texte sur mobile si fermé */
+  .side.closed h4 {
+    display: none;
   }
   .side.open {
-    width: 250px;
+    width: 180px;
   }
   .side.open a h4 {
     display: block;
-    font-size: --font-size-h3;
+    font-size: var(--font-size-h3);
     text-align: center;
     color: var(--col-white);
-    margin: 0; /* Afficher le texte en mode ouvert */
+    margin: 0;
   }
   .side .marque {
-    display: none; /* Cacher le branding sur petit écran */
+    display: none;
   }
   .dashboard-main {
     transition: all 0.3s ease-in-out;
   }
 }
-/* Pour les écrans tablettes (largeur > 768px mais < 1024px) */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .side.open {
     flex-basis: 200px;
   }
   .side .side-links a h4 {
     display: block;
-    /* Afficher le texte sur tablette */
-  }
-}
-/* Pour les écrans de bureau (plus de 1024px) */
-@media screen and (min-width: 1024px) {
-  .side {
-    flex-basis: 200px; /* Toujours ouverte sur grand écran */
-    max-width: 200px;
-  }
-  .side .side-links a h4 {
-    display: block; /* Toujours afficher le texte */
   }
 }/*# sourceMappingURL=asidebar.css.map */

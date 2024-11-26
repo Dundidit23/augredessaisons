@@ -8,10 +8,12 @@
   --color-light: color-mix(in srgb,var(--color),#fff 25%);
   --color-dark:  color-mix(in srgb,var(--color),#000 25%);
 
-  --font-size-h1: font-size: clamp(1vw, 8vw, 2.5rem);
-  --font-size-h2: font-size: clamp(1vw, 6vw, 2rem);
-  --font-size-h3: font-size: clamp(1vw, 4vw, 1.5rem);
-  --font-size-h4: font-size: clamp(1vw, 3vw, 1.2rem);
+  --font-size-h1: clamp(1vw, 8vw, 2rem);
+  --font-size-h2: clamp(1vw, 6vw, 1.5rem);
+  --font-size-h3: clamp(1vw, 4vw, 1.3rem);
+  --font-size-h4: clamp(1vw, 3vw, 1.1rem);
+  --font-size-p: clamp(1vw, 2vw, 0.8rem);
+
   
  // sidebar
   --sidebar-bg-color:#061041;

@@ -1,1 +1,106 @@
-/*# sourceMappingURL=messages.css.map */
+@charset "UTF-8";
+.messages {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.message-list {
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.message-details {
+  background-color: #f0f0f0;
+  overflow-y: auto;
+}
+.message-details .message-details-title {
+  background-color: hsl(191, 45%, 59%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem;
+}
+.message-details .message-details-title h5 {
+  color: var(--col-white);
+  padding-left: 1rem;
+}
+.message-details .message-details-title .message-details-controlls {
+  display: flex;
+  align-self: last baseline;
+  gap: 0.5rem;
+  margin: 5px;
+}
+.message-details .message-details-title .message-details-controlls button {
+  background-color: #35c1c3;
+  padding: 5px 10px;
+}
+
+.resizer {
+  height: 2px;
+  width: 100%;
+  cursor: row-resize; /* Curseur spécifique pour redimensionnement */
+  background-color: #4b2574;
+  position: relative;
+}
+.resizer:after {
+  content: "";
+  display: inline-block;
+  background-color: inherit;
+  height: 2px;
+  width: inherit;
+  position: absolute;
+  top: 3px;
+}
+.resizer:hover {
+  background-color: #1da787;
+}
+
+.messages.resizing {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none; /* Désactive la sélection */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-p);
+  line-height: 1rem;
+}
+table td {
+  height: 1;
+  padding: 0 10px;
+  line-height: 1rem;
+}
+
+th {
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  background-color: rgb(176, 217, 225);
+}
+th:hover {
+  background-color: #f0f0f0;
+}
+
+tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+tr:nth-child(odd) {
+  background-color: #e2e1e1;
+}
+tr:hover {
+  background-color: #e0e7ff;
+}
+tr.unread {
+  font-weight: bold;
+  background-color: #fff9e6;
+}
+tr:not(.unread) {
+  font-weight: normal;
+}
+tr.msg-active {
+  background-color: aliceblue;
+}/*# sourceMappingURL=messages.css.map */

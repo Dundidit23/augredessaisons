@@ -13,7 +13,7 @@ const StatusUser = () => {
   const { currentUser, isAuthenticated } = useAuth();
   const { logoutUser } = useUser();
   const { cartCount } = useCart();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   console.log('Utilisateur actuel :', currentUser);
 

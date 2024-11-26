@@ -1,33 +1,51 @@
-.go-back-btn {
+@keyframes focusin {
+  0% {
+    transform: scale(1);
+    transform-origin: 0% 0%;
+  }
+  100% {
+    transform: scale(3);
+    transform-origin: 85% 10%;
+  }
+}
+.product-details {
+  margin: 4vw;
+}
+.product-details .go-back-btn {
   background-color: #ff9800;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 0.5em 1em;
   cursor: pointer;
-  margin: 2rem 2rem 0;
+  margin: 1vw;
 }
-
-.product-item-details {
-  display: grid;
-  grid-template-columns: 500px 2fr;
-  gap: 4rem;
+.product-details .product-item-details, .product-details .product-item {
+  display: flex;
   flex-wrap: wrap;
-  margin: 1rem 2rem;
-  position: relative;
+  gap: 2rem;
+  overflow: hidden;
 }
-.product-item-details img {
-  width: 500px;
+.product-details .product-item-details .product-img, .product-details .product-item .product-img {
+  flex: 350px 1;
+  overflow: hidden;
+}
+.product-details .product-item-details img, .product-details .product-item img {
+  width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 1.3s ease-in-out;
 }
-.product-item-details img:hover {
-  transform: scale(1.1);
+.product-details .product-item-details img:hover, .product-details .product-item img:hover {
+  animation-duration: 10s;
+  animation-iteration-count: 1;
+  animation-name: focusin;
+  animation-fill-mode: forwards;
 }
-.product-item-details .info-container {
+.product-details .product-item-details .info-container, .product-details .product-item .info-container {
+  flex: 400px 1;
   display: flex;
-  gap: 10px;
+  justify-content: flex-end;
+  gap: auto;
   flex-wrap: wrap;
   align-items: baseline;
   height: -moz-max-content;
@@ -35,16 +53,13 @@
   width: -moz-fit-content;
   width: fit-content;
 }
-.product-item-details .info-container h3 {
+.product-details .product-item-details .info-container p, .product-details .product-item .info-container p {
+  font-size: 16px;
+}
+.product-details .product-item-details .info-container h3, .product-details .product-item .info-container h3 {
   font-size: 1.5rem;
 }
-.product-item-details .info-container p {
-  font-size: 1rem;
-}
-.product-item-details .info-container .product-description {
-  width: 1000px !important;
-}
-.product-item-details .info-container .category {
+.product-details .product-item-details .info-container .category, .product-details .product-item .info-container .category {
   font-weight: 400;
   font-style: italic;
   color: #666;
@@ -53,27 +68,34 @@
   width: 100px;
   margin-top: 2rem;
 }
-.product-item-details .info-container .price {
+.product-details .product-item-details .info-container .price, .product-details .product-item .info-container .price {
   font-size: 1.2rem;
   color: #ff9800;
   font-weight: bold;
-  margin-left: 8rem;
+  margin: 0 4rem 0 6rem;
 }
-.product-item-details .commander {
-  background-color: green;
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
+.product-details .product-details-buttons {
+  height: 10rem;
+  width: 96%;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 2rem;
+}
+.product-details .product-details-buttons button {
+  background-color: #83901e;
+  width: 14rem;
   border-radius: 5px;
-  width: 9rem;
-  padding: 25px;
-  align-items: center;
-  cursor: pointer;
-  position: absolute;
-  right: 12rem;
-  bottom: 15%;
+  padding: 1.5rem 1rem;
+  font-family: Moderustic, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
   transition: transform 0.3s ease-in-out;
 }
-.product-item-details .commander:hover {
-  transform: scale(1.12);
+.product-details .product-details-buttons button:hover {
+  transform: scale(1.1);
+  background-color: rgb(135, 151, 87);
+}
+.product-details .product-details-buttons button.commander {
+  background-color: #ff9800;
+  color: white;
 }/*# sourceMappingURL=detailProduct.css.map */

@@ -1,0 +1,106 @@
+.messages {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+.message-list {
+// flex: 1;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+.message-details {
+//flex: 1;
+  background-color: #f0f0f0;
+  overflow-y: auto;
+  .message-details-title{
+    background-color: hsl(191, 45%, 59%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem;
+    h5{
+      color: var(--col-white);
+      padding-left: 1rem;
+    }
+    .message-details-controlls{
+      display: flex;
+      align-self: last baseline;
+   gap: 0.5rem;
+   margin: 5px;
+   button{
+    background-color: #35c1c3;
+    padding: 5px 10px;
+
+   }
+    }
+  }
+}
+.resizer {
+  height: 2px;
+  width: 100%;
+  cursor: row-resize; /* Curseur spécifique pour redimensionnement */
+  background-color: #4b2574;
+  position: relative;
+ &:after{
+    content: '';
+    display: inline-block;
+    background-color: inherit;
+    height: 2px;
+    width: inherit;
+   position: absolute;
+   top: 3px;
+
+  }
+&:hover {
+  background-color: #1da787;
+}}
+.messages.resizing {
+  user-select: none; /* Désactive la sélection */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-p);
+  line-height: 1rem;
+
+   td{
+    height: 1;
+    padding: 0 10px;
+    line-height: 1rem;
+  }
+ 
+}
+
+th{
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+   background-color: rgb(176, 217, 225);
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+tr {
+
+  &:nth-child(even) {
+      background-color: #f1f1f1; // Couleur alternée
+    }
+    &:nth-child(odd) {
+      background-color: #e2e1e1; // Couleur alternée
+    }
+    &:hover {
+      background-color: #e0e7ff; // Couleur au survol
+    }
+    &.unread {
+      font-weight: bold; // Applique en gras uniquement aux messages non lus
+      background-color: #fff9e6; // Légère coloration pour distinguer
+    }
+    &:not(.unread) {
+      font-weight: normal; // Applique en normal aux messages lus
+    }
+    &.msg-active{
+      background-color: aliceblue;
+  }
+}

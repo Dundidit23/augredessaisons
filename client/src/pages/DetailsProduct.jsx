@@ -10,7 +10,6 @@ const ProductDetails = () => {
   const { products } = useProduct();
   const { addToCart } = useCart(); // Utilisation du hook pour ajouter au panier
   const [product, setProduct] = useState(null);
-
   const navigate = useNavigate();
   const location = useLocation();
   const currentCategory = location.state?.category;
@@ -29,6 +28,8 @@ const ProductDetails = () => {
       setProduct(foundProduct);
     }
   }, [id, products]);
+
+
 
   const handleAddToCart = (product) => {
     addToCart(product);

@@ -2,12 +2,14 @@
 .dashboard-main {
   display: flex;
   height: 100vh;
- // width: 100vw;
- // overflow: hidden;
+  overflow: hidden;
   margin: 2px;
-  .content{
+  .dashboard-content{
     width: 100%;
-    height: 100vh;
+  }
+  .content{
+    height: 100%;
+    width: 100%;
   }
 }
 @media screen and (max-width: 768px) {
@@ -17,12 +19,46 @@
 }
 
 h1{
-  font-size: (--font-size-h1);
+  font-size: var(--font-size-h1);
 }
 h2{
-  font-size: (--font-size-h2);
+  font-size: var(--font-size-h2);
+}
+h3{
+  font-size: var(--font-size-h3);
+}
+h4{
+  font-size: var(--font-size-h4);
+}
+p{
+  font-size: var(--font-size-p);
 }
 
+
+.buttons-actions {
+  display: flex;
+  gap: 0.5rem;
+
+}
+.buttons-actions button {
+  background-color: #A4B730;
+  border-radius: 50%;
+  color: white;
+  border: none;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.buttons-actions button.delete {
+  background-color: #e7a012;
+}
+.buttons-actions button svg {
+  height: 100%;
+  max-width: 24px;
+  max-height: 24px;
+}
 
 
 

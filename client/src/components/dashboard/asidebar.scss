@@ -1,91 +1,111 @@
-//asidebar.scss
-.side.open .btn-logout h3 {
-  display: inline-block;
-  margin: auto;
-}
+// asidebar.scss
 
-// Masquer le texte dans .btn-logout lorsque la barre latérale est fermée
-.side.closed .btn-logout h3 {
-  display: none;
-}
+// Variables pour les couleurs
+$sidebar-bg-color: var(--sidebar-bg-color);
+$sidebar-marque-col: var(--sidebar-marque-col);
+$sidebar-links-col: var(--sidebar-links-col);
+$sidebar-hover-bg-color: var(--sidebar-hover-bg-color);
+$sidebar-active-link: var(--sidebar-active-link);
+$col-action: var(--col-action);
+$col-white: var(--col-white);
+$color-dark: var(--color-dark);
 
 // Style de la sidebar
 .side {
   flex-shrink: 0;
-  background-color: var(--sidebar-bg-color);
+  background-color: $sidebar-bg-color;
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow-y: auto;
   margin-right: 2px;
-  &.closed {
-    flex-basis: 50px;
-    max-width: 50px;
-    .marque {
-      display: none;
-    }
-    .toggle-btn {
-     position: absolute;
-      top: 0px;
-      right: 0;
-      margin: 10px;
-    }
-  }
+
   &.open {
     flex-basis: 250px;
     max-width: 250px;
   }
-  
-  .side-top{
-    background-color: var(--color-dark);
-    position: relative;
+
+  &.closed {
+    flex-basis: 50px;
+    max-width: 50px;
+    padding-top: 1rem;
+
+    .side-top {
+      background-color: transparent;
+      height: 10px;
+    }
+    
     .marque {
-      color: var(--sidebar-marque-col);
+      display: none;
+    }
+
+    .toggle-btn {
+      position: unset;
+      margin: 0 10px;
+      background-color: $color-dark;
+      padding: 1px;
+    }
+  }
+
+  .side-top {
+    background-color: $color-dark;
+    position: relative;
+
+    .marque {
+      color: $sidebar-marque-col;
       text-align: center;
       font-weight: 500;
       margin: 2rem;
     }
+
     .toggle-btn {
       background: none;
-      color: var(--sidebar-bg-color);
-      background-color: var(--col-action);
+      color: $sidebar-bg-color;
+      background-color: transparent;
       position: absolute;
-      bottom: -40px;
+      bottom: 10px;
       right: 10px;
+      margin-top: 2rem;
       cursor: pointer;
+
       svg {
-        width: 1rem;
-        height: 1rem;
-        color: antiquewhite;
+        width: 1.2rem;
+        height: 1.2rem;
+        color: $col-white;
       }
     }
   }
- 
+
   .side-links {
     margin-top: 2rem;
-    a, h4{
+
+    a {
       display: flex;
       align-items: center;
       padding: 10px;
-      color: var(--sidebar-links-col);
+      color: $sidebar-links-col;
       white-space: nowrap;
       overflow: hidden;
+      position: relative;
+
       &:hover {
-        background-color: var(--sidebar-hover-bg-color);
+        background-color: $sidebar-hover-bg-color;
       }
 
       &.active {
-        background-color: var(--sidebar-active-link);
+        background-color: $sidebar-active-link;
+
         &:before {
           content: '';
           position: absolute;
           right: 0;
-          background-color: var(--col-action);
+          background-color: $col-action;
           height: 100%;
-          width: 4px;
+          width: 3px;
         }
       }
+
       svg {
         margin-right: 16px;
         width: 1.5rem;
@@ -94,123 +114,121 @@
       }
 
       h4 {
-        display: none; // Par défaut, masquer le texte
         transition: all 0.3s ease;
         margin: 0 1rem;
+      }
+
+      .message-count {
+        display: block;
+        background-color: $col-action;
+        color: $col-white;
+        padding: 3px;
+        position: absolute;
+        right: 10px;
       }
     }
   }
 
   .btn-logout {
-    padding:10px;
+    padding: 10px;
     margin: 2rem auto;
     font-size: 10px;
     display: flex;
     align-items: center;
     justify-content: space-around;
     background-color: transparent;
-    color: var(--col-white);
+    color: $col-white;
     cursor: pointer;
     transition: all 0.3s ease;
+
     span {
       margin-right: 8px;
     }
+
     h4 {
       display: none; // Masquer le texte de "Déconnexion" par défaut
       transition: all 0.3s ease;
     }
 
     &:hover {
-      background-color: var(--sidebar-hover-bg-color);
+      background-color: $sidebar-hover-bg-color;
     }
   }
 
   // Si la barre latérale est ouverte, afficher le texte de déconnexion
-  .side.open .btn-logout h4 {
+  &.open .btn-logout h4 {
     display: inline-block;
   }
 
   // Si la barre latérale est fermée, masquer le texte de déconnexion
-  .side.closed .btn-logout  {
+  &.closed .btn-logout {
     padding: 0;
-    h3{
+
+    h3 {
       display: none; // Cacher le texte
     }
   }
-}
-.submenu {
-  display: none;
-}
-.submenu.open {
-  display: block;
-  margin-left: 5rem;
-  padding: 0;
-}
-// Toggle button pour ouvrir/fermer la barre latérale
 
-/* ------------ MEDIA QUERIES POUR TABLETTE ET MOBILE ---------- */
+  .submenu {
+    display: none;
 
-/* Pour les écrans mobiles (petits appareils comme iPhone) */
+    &.open {
+      display: block;
+      margin-left: 5rem;
+      padding: 0;
+    }
+  }
+}
+
+// MEDIA QUERIES
 @media screen and (max-width: 768px) {
   .side {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 10;
-    background-color: var(--sidebar-bg-color);
+    padding-top: 1rem;
+    background-color: $sidebar-bg-color;
     transition: all 0.3s ease-in-out;
+
     &.closed {
       width: 50px;
-      a h4 {
-        display: none; /* Masquer le texte sur mobile si fermé */
+
+      h4 {
+        display: none; // Masquer le texte sur mobile si fermé
       }
     }
 
     &.open {
-      width: 250px;
+      width: 180px;
+
       a h4 {
-        display: block; 
-        font-size: (--font-size-h3);
+        display: block;
+        font-size: var(--font-size-h3);
         text-align: center;
-        color: var(--col-white);
-        margin: 0;/* Afficher le texte en mode ouvert */
+        color: $col-white;
+        margin: 0; // Afficher le texte en mode ouvert
       }
     }
 
     .marque {
-      display: none; /* Cacher le branding sur petit écran */
+      display: none; // Cacher le branding sur petit écran
     }
   }
 
   .dashboard-main {
- //   margin-left: 50px; /* Ajuster le contenu principal en fonction de la barre */
     transition: all 0.3s ease-in-out;
   }
 }
 
-/* Pour les écrans tablettes (largeur > 768px mais < 1024px) */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .side {
     &.open {
       flex-basis: 200px;
     }
+
     .side-links a h4 {
-      display: block;
-      /* Afficher le texte sur tablette */
+      display: block; // Afficher le texte sur tablette
     }
   }
 }
-
-/* Pour les écrans de bureau (plus de 1024px) */
-@media screen and (min-width: 1024px) {
-  .side {
-    flex-basis: 200px; /* Toujours ouverte sur grand écran */
-    max-width: 200px;
-    .side-links a h4 {
-      display: block; /* Toujours afficher le texte */
-    }
-  }
-}
-
-
