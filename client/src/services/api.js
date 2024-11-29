@@ -19,7 +19,7 @@ const api = ky.create({
         if (!response.ok) {
           const data = await response.json();
           const errorMessage = data.message || 'Une erreur est survenue';
-          console.error('Erreur API:', errorMessage);
+          console.error('Erreur API:',response.statusText);
           throw new Error(errorMessage);
         }
       }

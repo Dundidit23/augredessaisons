@@ -9,6 +9,8 @@ import { ProductProvider } from './context/ProductContext';
 import { CartProvider } from './context/CartContext';
 import socket from './services/socketIoClient';
 import Header from './layout/header/Header';
+import Footer from './layout/footer/Footer';
+
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 import ConseilsEnHerboristerie from './pages/ConseilEnHerboristerie';
@@ -59,6 +61,7 @@ function App() {
                                     <Route path="/" element={<Home />} />
                                     <Route path="/Conseils_En_Herboristerie" element={<ConseilsEnHerboristerie />} />
                                     <Route path="/boutique" element={<Boutique />} />
+                                    <Route path="/boutique/:category" element={<Boutique />} />
                                     <Route path="/product/:id" element={<DetailsProduct />} />
                                     <Route path="/cart" element={<CartPage />} />
                                     <Route path="/checkout" element={<PaymentPage />} />
@@ -74,7 +77,9 @@ function App() {
                                     } />
                                        <Route path="*" element={<NotFound />} />
                                 </Routes>
+
                             </ErrorBoundary>
+                            {!isAdminPath &&<Footer />}
                         </CartProvider>
                     </ProductProvider>
                 </CategoryProvider>

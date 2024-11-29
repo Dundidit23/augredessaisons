@@ -10,30 +10,28 @@ $moderustic: Moderustic, sans-serif;
 body{
     font-family: $font-stack;
 }
-p{
-font-size: clamp(1vw, 2.4vw, 1.1rem);
-}
+ p{
+    font-size: $font-size-p;
+ }
 h1{
     color: $col-title;
-    font-family: $quicksand;
-    font-size: clamp(1vw, 8vw, 2.5rem);
+    font-family: $moderustic;
+    font-size: $font-size-h1;
 }
 h2{
-    font-size: clamp(1vw, 6vw, 2rem);
+    font-size: $font-size-h2;
     font-weight: 600;
     text-align: center;
     font-family: $moderustic;
     color: $col-title;
     }
 h3{
-    font-size: clamp(1vw, 4vw, 1.5rem);
+    font-size: $font-size-h3;
     }
 h4{
-    font-size: clamp(1vw, 4vw, 1.3rem);
     font-weight: 600;
-    text-align: center;
-    margin: 2rem auto;
     font-family: $moderustic;
+    font-size: $font-size-h4;
 }
 a, Link{
     text-decoration: none;

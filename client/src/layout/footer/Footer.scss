@@ -1,1 +1,30 @@
 /* your css code */
+footer{
+    background-color: green;
+    color: $white-col;
+    padding: 2rem 4rem 1rem 2rem;
+    .footer-content{
+        display: flex;
+        justify-content: space-between;
+        @include for-size(phone-only){
+            flex-direction: column;
+        }
+h4{
+    padding-bottom: 1rem;
+}
+       .social-media{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            .social-icons, img{
+                width: 2rem;
+                height: 2rem;  
+        }
+       }
+    }
+ .copyright{
+    text-align: center;
+    font-size: 0.8rem;
+    padding-bottom: 0rem;
+}
+}

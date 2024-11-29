@@ -43,18 +43,19 @@ const CartPage = ({ className }) => {
                     onChange={(e) => updateQuantity(item._id, parseInt(e.target.value))}
                   />
                 </div>
-                <button  className={`remove-btn ${className}`} onClick={() => removeFromCart(item._id)}>Supprimer</button>
+                <button  className={`remove-btn ${className}`} onClick={() => removeFromCart(item._id)}>🗑</button>
               </div>
             </div>
             
           ))}
-                      <button onClick={() => navigate('/boutique')} className="go-back-btn">Poursuivez vos achats</button>
+                  
 
           <div className={`cart-summary ${className}`}>
             <p className={`price ${className}`}>Total : {total} €</p>
-            <button className={`clear-cart-btn ${className}`} onClick={clearCart}>Vider le panier</button>
            <button className={`checkout-btn ${className}`} onClick={() => navigate('/checkout')}>Passer à la caisse</button>
           </div>
+          <button className={`clear-cart-btn ${className}`} onClick={clearCart}>Vider le panier</button>
+          <button onClick={() => navigate('/boutique')} className="go-back-btn">Poursuivez vos achats</button>
         </div>
       )}
        

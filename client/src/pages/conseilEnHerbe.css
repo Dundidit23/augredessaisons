@@ -10,7 +10,7 @@ body {
 }
 .conseilEnHerbe .block {
   width: 90%;
-  background-color: red;
+  background-color: oklch(45% 0.5 800);
   margin: auto;
   text-align: center;
 }/*# sourceMappingURL=conseilEnHerbe.css.map */

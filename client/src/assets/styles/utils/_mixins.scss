@@ -1,3 +1,4 @@
+//client\src\assets\styles\utils\_mixins.scss
 @mixin flex-center {
     display: flex;
     justify-content: center;
@@ -29,3 +30,16 @@
     }
   }
   
+
+//   // breakpoints
+// @mixin for-size($size) {
+//   @if $size == phone-only {
+//     @media (max-width: 768px) { @content; }
+//   } @else if $size == tablet-portrait {
+//     @media (min-width: 769px) and (max-width: 1024px) { @content; }
+//   } @else if $size == tablet-landscape {
+//     @media (min-width: 1025px) and (max-width: 1200px) { @content; }
+//   } @else if $size == desktop {
+//     @media (min-width: 1201px) { @content; }
+//   }
+// }

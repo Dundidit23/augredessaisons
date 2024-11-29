@@ -1,5 +1,6 @@
 //MailboxLayout.jsx
 import { Link, Outlet, Routes, Route } from 'react-router-dom';
+import { MailboxProvider } from "../../context/MailboxContext";
 import ControlPanel from './ControlPanel';
 import Messages from './Messages';
 import NewMessage from './NewMessage';
@@ -37,12 +38,14 @@ const MailboxLayout = ({
         setSearchTerm={setSearchTerm}
       />
         <Outlet /> {/* Affiche le contenu des routes enfants ici */}
+        <MailboxProvider>
         <Routes>
           <Route index element={<Messages />} /> {/* Par défaut */}
           <Route path="sent" element={<MessagesSent />} />
           <Route path="new" element={<NewMessage />} />
           <Route path="deleted" element={<DeletedMessages />} />
         </Routes>
+        </MailboxProvider>
       </div>
     </main>
   </div>

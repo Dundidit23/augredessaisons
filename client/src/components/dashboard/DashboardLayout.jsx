@@ -9,7 +9,7 @@ import Parameters from './Parameters';
 import Categories from '../categories/Categories';
 import DashboardHeader from './DashboardHeader';
 import AsideBar from './AsideBar';
-import './dashboardLayout.scss';
+//import './dashboardLayout.scss';
 
 const DashboardLayout = () => {
   const { username } = useAdminAuth(); // Accès au contexte pour récupérer le nom d'utilisateur

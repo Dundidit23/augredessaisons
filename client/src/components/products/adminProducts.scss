@@ -12,7 +12,6 @@
     padding: 0 1rem;
     border-radius: 4px;
     margin-bottom: 2rem;
-   
   }
   .product-grid {
     margin: 1rem;
@@ -21,14 +20,13 @@
     display: flex;
       flex-direction: row;
       border-radius: 8px;
-      border: 0.01em solid rgb(225, 220, 220);
+     // border: 0.01em solid rgb(225, 220, 220);
       background-color:var(--col-white);
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+     // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       margin-bottom: 0.5rem;
       align-items: center;
       padding: 5px;
       transition: transform 0.3s ease;
-
      &:hover {
        transform: translateY(-5px);
      }
@@ -36,6 +34,7 @@
       width: 60px;
       height: 60px;
       border: none;
+      padding: 0;
     }
     .info-container{
       display: flex;
@@ -85,8 +84,8 @@
       display: flex;
       flex-direction: column;
       border-radius: 8px;
-      border: 0.01em solid rgb(225, 220, 220);
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      //border: 0.01em solid rgb(225, 220, 220);
+   //   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
       transition: transform 0.3s ease;
       &:hover {
@@ -109,11 +108,9 @@
           display: flex;
           justify-content: center;
           align-items: center;
-      
           &.delete {
             background-color: #e7a012;
           }
-      
           svg {
             width: 100%; // Utilise la taille entière du conteneur
             height: 100%;
@@ -143,10 +140,11 @@
           font-size: 0.8rem;
         }
         h4{
-          height: 25px;
+          height: 45px;
           margin: 0;
           font-size: 1rem;
           text-align: center;
+          
         }
         .product-description {
           color: #666;

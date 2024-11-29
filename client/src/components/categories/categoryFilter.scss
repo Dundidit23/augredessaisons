@@ -1,0 +1,86 @@
+.category-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.2rem;
+    background: oklch(95% 0.02 116.11);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px oklch(81.38% 0.05 116.11 / 0.2);
+    
+    button {
+        padding: 0.8rem 1.2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+        
+        // Couleur de base pour tous les boutons
+        background-color: oklch(90% 0.05 116.11);
+        color: oklch(40% 0.1 116.11);
+        
+        &:hover {
+            background-color: oklch(85% 0.1 116.11);
+            transform: translateX(5px);
+        }
+        
+        // Style pour le bouton actif
+        &.active {
+            background-color: oklch(81.38% 0.1748 116.11);
+            color: oklch(98% 0.02 116.11);
+            font-weight: 600;
+            
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 4px;
+                background-color: oklch(60% 0.2 116.11);
+            }
+        }
+        
+        // Animation au hover
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 0;
+            background-color: oklch(70% 0.15 116.11);
+            transition: width 0.3s ease;
+        }
+        
+        &:hover::after {
+            width: 100%;
+        }
+    }
+    
+    // Style spécial pour "Toutes les catégories"
+    button:first-child {
+        background-color: oklch(95% 0.08 116.11);
+        border-bottom: 1px solid oklch(81.38% 0.1 116.11 / 0.2);
+        margin-bottom: 0.4rem;
+        
+        &.active {
+            background-color: oklch(75% 0.15 116.11);
+        }
+        
+        &:hover {
+            background-color: oklch(85% 0.12 116.11);
+        }
+    }
+}
+
+// Media query pour les écrans plus larges
+@media (min-width: 768px) {
+    .category-filter {
+        min-width: 250px;
+        max-width: 300px;
+    }
+}

@@ -1,3 +1,5 @@
+$button: oklch(81.38% 0.1748 116.11);
+
 body{
     margin: 0;
     width: 100vw;
@@ -5,13 +7,13 @@ body{
 }
 
 .conseilEnHerbe{
-    background-color: burlywood;
+    background-color: $primary-col ;
     margin: 0;
     padding: 0;
   
 .block{
     width: 90%;
-    background-color: red;
+    background-color: yellow;
     margin: auto;
     text-align: center;
     //font-size: clamp(14vw, 15vw, 1px);
