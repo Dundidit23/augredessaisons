@@ -29,7 +29,6 @@
     justify-content: space-between;
     align-items: center;
     margin: 1rem 0;
-    height: 15em;
     padding: 1rem;
     @include for-size(phone-only){
       display: flex;
@@ -38,14 +37,14 @@
     }
     h1 {
       display: block;
-      width: clamp(280px, 90%, 750px);
+   //   width: clamp(280px, 90%, 750px);
       margin: 2rem auto;
       font-family: Rotobo, Verdana, Times, serif;
-      font-size: $font-size-h1;
+     // font-size: $font-size-h1;
       text-align: center;
       position: relative;
       color: rgb(243, 240, 219);
-      animation: slideInTitle 1.5s ease-out;
+      animation: slideInTitle 1s ease-out;
       transform-style: preserve-3d;
       
       // Effet 3D amélioré
@@ -78,8 +77,9 @@
       }
   
       @include for-size(phone-only) {
-        font-size: clamp(1.5rem, 8vw, 3rem);
-        margin: 1rem auto;
+        font-size: 1.7rem;
+        margin: 1rem 0;
+        padding: 0;
       }
     }
   
@@ -93,38 +93,13 @@
       }
     
   }
-  .category-filter {
-    min-width: 240px;
-    padding: 10px;
-    border-right: 1px solid #ddd;
-    @media (max-width: 768px) {
-      border-right: none;
-      border-bottom: 1px solid #ddd;
-    }
-    ul {
-      li {
-        margin: 5px 0;
-        cursor: pointer;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
   .product-list {
     flex: 3;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 20px;
     padding: 1rem 0px;
-    @include for-size(phone-only){
-      h1{
-       font-size: 2rem;
-        margin-left: 1rem;
-        line-height: 2rem;
 
-      }
-    }
   }
   .product-item.product-item-boutique {
     background-color: #fff;
@@ -139,6 +114,9 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    p{
+      line-height: 1.3;
+    }
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -165,24 +143,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      p{
-        font-size: 16px;
-        @include for-size(phone-only){
-          h1{
-           font-size: 2rem;
-            margin-left: 1rem;
-            line-height: 2rem;
+      gap: 5px;
     
-          }
-        }
-      }
     h4 {
-      margin: 0;
-      font-weight: 600;
       text-align: center;
-      height: 2rem;
-      font-size: $font-size-h4;
+      height: 4rem;
+      padding: 15px 0;
+      @include for-size(phone-only){
+       font-size: 1.3rem;
+      }
     }
   }
 }
@@ -197,7 +166,7 @@
     font-style: italic;
     line-height: 1;
     padding: 0.3rem;
-    margin: 0 0 1.5rem 0;
+    margin: 1rem 0 2rem 0;
     transition: color 0.2s ease;
     &:hover {
       text-decoration: underline;
@@ -210,8 +179,6 @@
 //border-radius: 0;
 //line-height: 1.;
 padding: 0 20px;
-
-
   @include line-clamp(2, 1.5em);
   &:hover {
     transform: none !important;

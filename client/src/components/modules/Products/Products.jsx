@@ -50,7 +50,7 @@ const Products = () => {
         <div className='category'>
           <div className='text'>
             <h2>Huiles et Baumes</h2>
-            <p>Nous proposons une grande variété de mélanges de tisanes délicieuses et apaisantes à base de plantes.</p>
+            <p>Baume respiratoire, baume des rêves, baume des bobos, baume corporel, baume à lèvres..</p>
             <button 
               className='garanty button-quality voir'
               onClick={() => handleCategoryClick('Huiles et Baumes')}

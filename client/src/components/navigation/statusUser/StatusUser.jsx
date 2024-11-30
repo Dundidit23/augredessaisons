@@ -63,7 +63,7 @@ const StatusUser = () => {
           onClick={toggleModal}
           aria-label="Se connecter"
         >
-          Connexion
+        
         </button>
       )}
 

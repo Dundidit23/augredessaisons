@@ -2,37 +2,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
- // margin-bottom: 5px;
- // background-color: rgb(236, 241, 230);
-  //border-radius: 10px;
-  //padding: 8px;
- // box-shadow:inset 0px 0px 0px 2px rgb(233, 230, 230);
- // border:  2px solid rgb(206, 228, 193);
-  @media (max-width: 767px) {
-
+  z-index: -1;
+@include for-size(phone-only) {
     width: 150px;
   }
-  
   :hover{
     cursor: pointer;
   }
 &__button {
   display: flex;
 align-items: baseline;
-width: 80px;
-height: 80px;
+width: 3rem;
+height: 3rem;
     &__login {
-      width: 50px;
-      height: 2rem;
+      width: 3rem;
+      height: 3rem;
       background-image: url("../../../assets/images/icons/userg.png");
-      background-size: 2rem;
-
-     background-position: center;
+      background-size: 2.5rem;
+      background-position: center;
       background-color: transparent;
       background-repeat: no-repeat;
       border-radius: 50%;
       border: none;
-
       margin: 0;
       }
  &__basket {

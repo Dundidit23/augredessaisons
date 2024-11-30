@@ -18,6 +18,17 @@ const Footer = () => {
               <li>Sécurité et confidentialité</li>
           </ul>
         </div>
+        <div className='informations'>
+          <h4>Informations</h4>
+          <ul>
+            <li>CGV</li>
+            <li>Mentions légales</li>
+            <li>Livraison</li>
+            <li>Points fidèlité</li>
+            <li>FAQ</li>
+          </ul>
+
+        </div>
 
         <div className="contact">
             <h4>Contactez-nous</h4>

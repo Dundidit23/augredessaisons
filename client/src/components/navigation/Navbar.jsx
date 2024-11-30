@@ -14,7 +14,7 @@ function Navbar() {
       <Logo className="nav__logo"/>
  <div className="nav__alllinks">
       <ul className={`nav__menu ${isNavOpen ? 'nav__active' : ''}`}>
-        {["/", "/Conseils_En_Herboristerie", "/boutique", "/soins", "/ateliers"].map((path, index) => {
+        {["/", "/Conseils", "/boutique", "/soins", "/ateliers"].map((path, index) => {
           const formattedPath = path.substring(1).split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
           return (
             <li key={index} className="nav__item">
@@ -24,8 +24,6 @@ function Navbar() {
             </li>
           );
         })}
-        <li><NavLink className="nav__link" to="/dashboard/">D</NavLink></li> 
-       
       </ul>
      
       
